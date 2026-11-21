@@ -1,0 +1,32 @@
+---
+/* What happens after you send the form. Order Tracking pattern (21st.dev), rebuilt as a quiet promise. */
+const steps = [
+  ['Request received', 'You get a text back to confirm we have it.'],
+  ['We call you', 'Within one business day, to ask what we need to know.'],
+  ['Written price', 'Before any work starts. No surprises on the invoice.'],
+  ['On the schedule', 'A time window that works for you, and a text when we are on the way.'],
+];
+---
+<div class="panel trk" data-on>
+  <p class="trk-t">What happens next</p>
+  <ol class="trk-list">
+    {steps.map(([t, d], i) => (
+      <li class:list={{ now: i === 0 }}>
+        <span class="trk-dot" aria-hidden="true"></span>
+        <span><b>{t}</b><span>{d}</span></span>
+      </li>
+    ))}
+  </ol>
+</div>
+<style is:global>
+.trk{padding:24px 26px}
+.trk-t{font:500 .8125rem/1 var(--mono);color:var(--ink-2);margin-bottom:20px}
+.trk-list{list-style:none;display:flex;flex-direction:column}
+.trk-list li{position:relative;display:flex;gap:16px;padding-bottom:22px}
+.trk-list li:last-child{padding-bottom:0}
+.trk-list li:not(:last-child)::before{content:"";position:absolute;left:7px;top:20px;bottom:2px;width:1.5px;background:repeating-linear-gradient(180deg,var(--seam-2) 0 4px,transparent 4px 8px)}
+.trk-dot{flex:none;width:16px;height:16px;margin-top:4px;border-radius:50%;border:1.5px solid var(--seam-2);background:var(--night)}
+.trk-list .now .trk-dot{border-color:var(--gold);background:radial-gradient(circle,var(--gold) 0 4px,transparent 4.5px)}
+.trk-list b{display:block;font-weight:500;color:var(--ink)}
+.trk-list li>span>span{display:block;font-size:.9375rem;color:var(--ink-2)}
+</style>

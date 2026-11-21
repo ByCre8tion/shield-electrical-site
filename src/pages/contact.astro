@@ -5,15 +5,17 @@ import QuoteForm from '../components/QuoteForm.astro';
 import Socials from '../components/Socials.astro';
 import BbbSeal from '../components/BbbSeal.astro';
 import Icon from '../components/Icon.astro';
+import JobTracker from '../components/JobTracker.astro';
 import { company } from '../data/site';
 ---
 <Base title="Book service" description="Book an electrician in Chandler and the Phoenix Valley. Call, text or send the form with a photo." noChat>
-  <PageHead title='Book <span class="hl">service</span>' lead="Send the details and a photo if you have one. We reply within one business day." current="Book service" />
+  <PageHead title='Book service' lead="Send the details and a photo if you have one. We reply within one business day." current="Book service" />
   <section class="sec tight">
     <div class="wrap split-7-5">
       <QuoteForm />
       <div class="contact-side">
         <div class="panel em-alert"><span class="led fault" aria-hidden="true"></span><p><b>Emergency?</b> Do not use the form. Call us. If anything is smoking or sparking, call 911 first.</p></div>
+        <JobTracker />
         <ul class="panel contact-list">
           <li><Icon name="phone" size={20} class="tb-ico" /><span><span class="small">Call</span><a class="val link" href={`tel:${company.tel}`}>{company.phone}</a></span></li>
           <li><Icon name="envelope-simple" size={20} class="tb-ico" /><span><span class="small">Email</span><a class="link" href={`mailto:${company.email}`}>{company.email}</a></span></li>

@@ -24,9 +24,12 @@ const year = new Date().getFullYear();
     </div>
   </div>
   <div class="foot-base small"><span>© {year} {company.legal}</span><span>Bonded and insured in Arizona</span></div>
+  <div class="foot-word" aria-hidden="true">SHIELD</div>
 </footer>
 <style is:global>
-.foot{padding-block:clamp(40px,6vw,80px) 32px}
+.foot{padding-block:clamp(40px,6vw,80px) 0;overflow:hidden}
+/* Wordmark footer pattern (21st.dev), rebuilt: the name set huge, cut off by the page edge, fading into the night */
+.foot-word{margin:clamp(24px,4vw,48px) 0 0;font-weight:600;font-size:clamp(5rem,23vw,21rem);line-height:.74;letter-spacing:-.06em;text-align:center;background:linear-gradient(180deg,rgba(216,183,118,.22),rgba(216,183,118,0) 85%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-user-select:none;user-select:none;translate:0 12%}
 .foot-panel{display:grid;grid-template-columns:minmax(0,5fr) repeat(3,minmax(0,2.4fr));gap:40px;padding:clamp(24px,4vw,48px)}
 .foot-brand{display:flex;flex-direction:column;gap:20px;align-items:flex-start}
 .foot-brand img{height:44px;width:auto}

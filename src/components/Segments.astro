@@ -1,0 +1,22 @@
+---
+/* Seven segment digits, like a meter readout. 7 Segment Number pattern (21st.dev), rebuilt. */
+interface Props { value: string }
+const { value } = Astro.props;
+const map: Record<string, string> = { '0': 'abcdef', '1': 'bc', '2': 'abdeg', '3': 'abcdg', '4': 'bcfg', '5': 'acdfg', '6': 'acdefg', '7': 'abc', '8': 'abcdefg', '9': 'abcdfg' };
+---
+<span class="sevseg" role="img" aria-label={value}>
+  {[...value].map((ch) => (
+    <span class="seg-d">{['a','b','c','d','e','f','g'].map((k) => <i class:list={[k, { on: map[ch]?.includes(k) }]}></i>)}</span>
+  ))}
+</span>
+<style is:global>
+.sevseg{display:inline-flex;gap:clamp(10px,2vw,22px)}
+.seg-d{--t:clamp(8px,1.4vw,14px);--w:clamp(56px,10vw,104px);--h:calc(var(--w) * 1.8);position:relative;width:var(--w);height:var(--h)}
+.seg-d i{position:absolute;border-radius:var(--t);background:rgba(200,214,230,.05)}
+.seg-d i.on{background:var(--gold);box-shadow:inset 0 1px 0 rgba(255,248,226,.6)}
+.seg-d .a,.seg-d .d,.seg-d .g{left:calc(var(--t) * .9);right:calc(var(--t) * .9);height:var(--t)}
+.seg-d .a{top:0}.seg-d .g{top:calc(50% - var(--t) / 2)}.seg-d .d{bottom:0}
+.seg-d .b,.seg-d .c,.seg-d .e,.seg-d .f{width:var(--t);height:calc(50% - var(--t) * 1.1)}
+.seg-d .b{right:0;top:calc(var(--t) * .6)}.seg-d .c{right:0;bottom:calc(var(--t) * .6)}
+.seg-d .f{left:0;top:calc(var(--t) * .6)}.seg-d .e{left:0;bottom:calc(var(--t) * .6)}
+</style>

@@ -6,7 +6,7 @@ import Icon from '../components/Icon.astro';
 import { roles, perks } from '../data/site';
 ---
 <Base title="Careers" description="Electrician jobs at Shield Electrical in Chandler, Arizona. Journeyman, apprentice and service technician roles.">
-  <PageHead title='Build your career <span class="hl">with Shield</span>' lead="We are hiring electricians who take pride in clean work and treat customers well." current="Careers">
+  <PageHead title='Build your career with Shield' lead="We are hiring electricians who take pride in clean work and treat customers well." current="Careers">
     <div class="btn-row" data-on><a class="btn btn-gold" href="#apply">Apply now <Icon name="arrow-right" size={18} class="ico-go" /></a></div>
   </PageHead>
   <section class="sec tight" aria-labelledby="roles-h">
@@ -19,13 +19,13 @@ import { roles, perks } from '../data/site';
           </details>
         ))}
       </div>
-      <div class="head"><h2 id="roles-h" class="t-h2" data-on>Open <span class="hl">roles</span></h2><p class="lead" data-on>Roles and details are being finalized with Jason.</p></div>
+      <div class="head"><h2 id="roles-h" class="t-h2" data-on>Open roles</h2><p class="lead" data-on>Roles and details are being finalized with Jason.</p></div>
     </div>
   </section>
   <section class="sec tight" aria-labelledby="perk-h">
     <div class="wrap split">
       <div data-on><Photo k="crew" ratio="16 / 10" /></div>
-      <div class="story"><h2 id="perk-h" class="t-h2" data-on>What you <span class="hl">get</span></h2><ul class="chips" data-on>{perks.map((p) => <li><Icon name="check" size={16} />{p}</li>)}</ul></div>
+      <div class="story"><h2 id="perk-h" class="t-h2" data-on>What you get</h2><ul class="chips" data-on>{perks.map((p) => <li><Icon name="check" size={16} />{p}</li>)}</ul></div>
     </div>
   </section>
   <section class="sec" id="apply" aria-labelledby="apply-h">
@@ -49,7 +49,7 @@ import { roles, perks } from '../data/site';
         </form>
         <div class="qf-done" data-done hidden tabindex="-1"><span class="qf-tick" aria-hidden="true"><Icon name="check" size={26} /></span><h3 class="t-h3">Application sent</h3><p>Thanks. We will reach out within a week.</p></div>
       </div>
-      <div class="book-side"><h2 id="apply-h" class="t-h2" data-on>Apply in two <span class="hl">minutes</span></h2><p class="lead" data-on>We read every application and reply within a week.</p></div>
+      <div class="book-side"><h2 id="apply-h" class="t-h2" data-on>Apply in two minutes</h2><p class="lead" data-on>We read every application and reply within a week.</p></div>
     </div>
   </section>
 </Base>

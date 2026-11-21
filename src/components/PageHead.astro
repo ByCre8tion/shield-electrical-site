@@ -14,7 +14,6 @@ const { title, lead, crumbs = [], current } = Astro.props;
 </section>
 <style is:global>
 .phd{position:relative;overflow:hidden;margin-top:-76px;padding-top:76px}
-.phd::before{content:"";position:absolute;left:-10%;top:0;width:60%;height:100%;background:radial-gradient(closest-side,rgba(216,183,118,.1),transparent);pointer-events:none}
 .phd-in{position:relative;display:flex;flex-direction:column;gap:22px;padding-block:clamp(56px,8vw,112px) clamp(40px,5vw,72px);pointer-events:none}
 .phd-in>*{pointer-events:auto}
 .phd-in h1{max-width:17ch}

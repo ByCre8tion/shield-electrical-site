@@ -75,7 +75,8 @@ One theme, dark, locked. No section ever flips to a light background. Neutrals c
 - **Radius rule:** interactive controls are pills (999px). Surfaces and photos are 20px. Inputs are 14px. Nothing else.
 - **Panels, not lines.** Content groups sit on `--deck` panels with a 1px `--seam` edge and a 1px inner top highlight `rgba(255,255,255,.04)`. No hairline lists with rules under every row.
 - **Depth** comes from surface steps and light: a panel that is "on" gets a soft gold glow `0 0 0 1px rgba(216,183,118,.35), 0 20px 60px -30px rgba(216,183,118,.45)`. No drop shadows otherwise.
-- **Photography:** cool graded, dark, warm practical light. Always inside a 20px frame with a subtle top to bottom scrim when text sits near it. Never full bleed behind text.
+- **Photography: real jobs only.** No generated images anywhere on the site, ever. Until Jason sends job photos, every image slot is a viewfinder placeholder: a 20px frame on `--deck`, gold corner brackets, a mono caption naming the shot we need ("Panel upgrade, after"). When real photos land: dark, warm practical light, inside the same frame, never full bleed behind text.
+- **Gold is a material, not a glow.** Gold surfaces read as brushed brass: a top to bottom gradient `#F0D49A` to `#C9A25E`, a 1px light inner top edge and a 1px dark outer edge. No colored bloom shadows under buttons.
 
 ## 5. Signature: power
 
@@ -87,14 +88,38 @@ One theme, dark, locked. No section ever flips to a light background. Neutrals c
 
 ## 6. Components
 
-- **Nav:** floating pill bar inset 12px from the top, deck surface with blur. Logo left, five links center, open now status and one gold "Book service" pill right.
-- **Buttons:** primary gold pill, ink text. Secondary pill with `--seam-2` edge. Press scales to 0.97. One label per intent: "Book service" everywhere for booking, "Call" plus number for calls.
-- **Trust bar:** one rounded panel under the hero with four values inline: Google rating with the real G, years, ROC license, BBB seal slot.
-- **Panel check:** an honest quick tool. Panel size, central AC, what they want to add. It gives a plain recommendation and says it is a rough guide until a load calculation.
-- **Reviews:** one row of panels drifting at a constant pace, the only marquee on the page. G mark, stars, verified tick, Pause control.
-- **Forms:** dark panel, 14px inputs on `--deck-2`, labels above, errors in words below, photo drop zone.
-- **Text widget:** gold ringed round launcher with Jason's photo, deck panel, gold bubbles for the visitor.
-- **Footer:** quiet deck panel, large shield mark, socials, BBB slot, license, hours.
+Patterns studied on 21st.dev and rebuilt by hand for this system (no copied code, no React). Each line names the source pattern so the lineage is clear.
+
+### Buttons
+
+| Name | Use | Build | Source pattern |
+| --- | --- | --- | --- |
+| **Brass** (primary) | Book service, Send request | Brushed gold gradient, 1px light inner top edge, 1px dark outer edge, ink text. Hover: a narrow light sheen sweeps left to right once (450ms). Press: 0.96 and the inner edge flips to a shadow so it looks pushed in | Texture Button, Liquid Metal Button |
+| **Conduit** (secondary) | Call, secondary actions | Pill with `--seam-2` edge. Hover: a short gold beam runs around the edge once (conic gradient, 900ms). Phone number in mono | Spinning Border Button, Border Beam |
+| **Slide link** (tertiary) | "See the service", "All projects" | Text plus arrow. Hover: the label slides up and an identical gold copy slides in from below, arrow nudges 3px | One Button, hover slide |
+| **Switch** | Service tiles | The breaker toggle already in the tile throws on hover or focus | Shield original |
+
+One label per intent: "Book service" for booking, "Call" plus the number for calls. Press is 0.96 on every button. Disabled never scales.
+
+### Sections
+
+| Section | Build | Source pattern |
+| --- | --- | --- |
+| **Nav** | Floating pill bar, five links, open status LED, Brass "Book service". Active link sits on a soft pill | Limelight Nav (restrained) |
+| **Hero** | Headline and two buttons left. Right: a **panel schedule**, the printed card inside every breaker door, drawn as a corner framed instrument. Twelve numbered circuits, each labeled with a service, each with a live LED; hovering a row lights it and links to the service | Corner Frame, Shield original |
+| **Name plates** (trust) | Four engraved metal plates screwed to the page: Google rating, ROC license, Licensed and insured, BBB. Anodized dark finish, mono engraving, four screw heads | Engraved Client Plates |
+| **Odometer numbers** | Inside the name plates: years in business and Google review count sit on mechanical drums that roll into place once when seen. No separate stats band. Static under reduced motion | Mechanical Odometer, Rolling Digits |
+| **Breaker tiles** (services) | Bento of service tiles with the switch. Cursor spotlight: a soft gold radial follows the pointer inside the tile | Spotlight Card |
+| **Panel check** | The quick load tool. Output meter fills like a gauge | Shield original, KPI Tile |
+| **Conductor** (process) | Four steps on a line that fills as the section enters | Scroll Timeline |
+| **Before and after** (projects) | Draggable divider between two frames; keyboard arrows move it 5%. Placeholders until real photos | Image Compare |
+| **Job tracker** (book page) | What happens after you send the form: Received, Called back, Written price, Scheduled. First step lit | Order Tracking, Delivery Progress |
+| **FAQ** | Panels with a plus that turns into a minus | Accordion Plus Minus |
+| **Reviews** | One row drifting at constant pace, the only marquee on the page, Pause control | Testimonials marquee |
+| **Wordmark footer** | Link columns, status line, then SHIELD set huge and cut off at the bottom, fading into the night | Wordmark Footer, Large Name Footer |
+| **404** | "404" in seven segment digits, headline "This circuit is dead", buttons home and back | Oversized 404 Numeral, 7 Segment Number |
+| **Forms** | Dark panel, 14px inputs on `--deck-2`, labels above, errors in words below, photo drop zone | Shield original |
+| **Text widget** | Round launcher with Jason's photo, gold ring, deck panel | Shield original |
 
 ## 7. Motion values
 
@@ -104,7 +129,10 @@ One theme, dark, locked. No section ever flips to a light background. Neutrals c
 | Switch throw | 220ms | `cubic-bezier(.2,0,0,1)` |
 | Power on reveal | 260ms flicker then 500ms settle | steps then ease-out |
 | Panels open | 350ms in, 180ms out | `cubic-bezier(.16,1,.3,1)` |
-| Press | 0.97, 120ms | ease-out |
+| Press | 0.96, 150ms | ease-out |
+| Brass sheen | 450ms once per hover | ease-out |
+| Conduit beam | 900ms once per hover | linear |
+| Odometer roll | 900ms, drums staggered 60ms | `cubic-bezier(.2,0,0,1)` |
 
 Everything collapses to instant under `prefers-reduced-motion`.
 
@@ -123,3 +151,16 @@ Home, Services, six service pages, Projects, About, Service areas, Reviews, FAQ,
 - Square buttons, hairline lists, spec tables with a rule under every row.
 - Lightning bolt clip art, neon blue glows, stock sparks.
 - Two marquees on one page.
+- Generated images of any kind.
+
+## 11. Does this look made by AI?
+
+Run this before shipping any section. If any line is true, fix it.
+
+- A highlighted gold word in every headline. Gold emphasis appears in the hero only.
+- Every section opens with the same headline plus grey lead block. Vary it: some sections lead with the component, some with a single line.
+- Glow shadows under buttons or cards. Gold is a material (section 4).
+- Three or four equal cards in a row with an icon on top of each.
+- Vague claims ("top quality", "unmatched service"). Say the measured thing or say nothing.
+- Fake numbers. Stats show TODO values marked for Jason until real ones exist.
+- Stock or generated photos. Placeholders until real job photos.

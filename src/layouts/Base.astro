@@ -58,7 +58,7 @@ const schema = {
     /* Phones: a tap to call pill, kept clear of the chat button */
     .call-bar{display:none}
     @media (max-width:640px){
-      .call-bar{position:fixed;left:16px;bottom:max(16px,env(safe-area-inset-bottom));z-index:55;display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 22px;border-radius:999px;background:var(--gold);color:var(--on-gold);font-weight:500;box-shadow:0 14px 34px -12px rgba(0,0,0,.8),0 0 24px -6px rgba(216,183,118,.5)}
+      .call-bar{position:fixed;left:16px;bottom:max(16px,env(safe-area-inset-bottom));z-index:55;display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 22px;border-radius:999px;background:linear-gradient(180deg,#F0D49A,#D8B776 48%,#C9A25E);border:1px solid #8E6E37;color:var(--on-gold);font-weight:500;box-shadow:inset 0 1px 0 rgba(255,248,226,.75),0 14px 34px -12px rgba(0,0,0,.8)}
       .menu-open .call-bar{display:none}
       body{padding-bottom:88px}
     }

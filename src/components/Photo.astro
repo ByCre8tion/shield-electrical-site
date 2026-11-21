@@ -18,6 +18,6 @@ const srcset = has ? `${local(800)} 800w, ${local(1600)} 1600w, ${local(2400)} 2
   </div>
 ) : (
   <div class:list={['photo', 'ph', cls]} style={`aspect-ratio:${ratio}`} role="img" aria-label={m?.alt || label || 'Photo coming soon'}>
-    <span>{label || m?.alt || 'Photo'}<br />Photo coming soon</span>
+    <span class="ph-cap"><b>{label || m?.need || 'Job photo'}</b><small>Real photo coming</small></span>
   </div>
 )}

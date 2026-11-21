@@ -5,7 +5,7 @@ export const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export function initSite(company) {
   document.documentElement.classList.add('js');
-  menu(); openStatus(company); reveals(); meters(); forms(); reviews(); conductor(); panelCheck();
+  menu(); openStatus(company); reveals(); meters(); forms(); reviews(); conductor(); panelCheck(); odometers(); spotlights(); compares();
 }
 
 function menu() {
@@ -94,6 +94,44 @@ function panelCheck() {
     verdict.textContent = v; why.textContent = w;
   };
   form.addEventListener('change', run); run();
+}
+
+/* Odometer: digits printed on drums behind a window; they roll into place once when seen.
+   Mechanical Odometer pattern (21st.dev), rebuilt without a framework. */
+function odometers() {
+  $$('[data-odo]').forEach((el) => {
+    const txt = String(el.dataset.odo);
+    el.setAttribute('aria-label', txt); el.textContent = '';
+    const drums = [...txt].map((ch, i) => {
+      const w = document.createElement('span'); w.className = 'odo-w'; w.setAttribute('aria-hidden', 'true');
+      if (!/\d/.test(ch)) { w.textContent = ch; w.classList.add('odo-sep'); el.append(w); return null; }
+      const d = document.createElement('span'); d.className = 'odo-d';
+      d.innerHTML = '0123456789'.split('').map((n) => `<span>${n}</span>`).join('');
+      d.style.transitionDelay = `${i * 60}ms`; w.append(d); el.append(w);
+      return [d, +ch];
+    }).filter(Boolean);
+    const set = () => drums.forEach(([d, n]) => { d.style.translate = `0 ${-n * 10}%`; });
+    if (reduce) return set();
+    new IntersectionObserver(([e], o) => { if (!e.isIntersecting) return; o.disconnect(); requestAnimationFrame(set); }, { threshold: .6 }).observe(el);
+  });
+}
+
+/* Spotlight: a soft gold radial follows the pointer inside a tile */
+function spotlights() {
+  if (!matchMedia('(hover:hover)').matches) return;
+  $$('[data-spot]').forEach((el) => el.addEventListener('pointermove', (e) => {
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`); el.style.setProperty('--my', `${e.clientY - r.top}px`);
+  }));
+}
+
+/* Before and after: a range input drives the divider, so keyboard and touch work for free */
+function compares() {
+  $$('[data-compare]').forEach((el) => {
+    const r = el.querySelector('input[type=range]');
+    const upd = () => el.style.setProperty('--pos', `${r.value}%`);
+    r.addEventListener('input', upd); upd();
+  });
 }
 
 function meters() {

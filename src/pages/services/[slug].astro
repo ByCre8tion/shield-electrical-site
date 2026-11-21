@@ -28,7 +28,7 @@ const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEn
     <div class="wrap split">
       <div data-on><Photo k={s.img} ratio="4 / 3" sizes="(max-width: 900px) 100vw, 50vw" /></div>
       <div class="svc-inc">
-        <h2 id="inc-h" class="t-h2" data-on>What is <span class="hl">included</span></h2>
+        <h2 id="inc-h" class="t-h2" data-on>What is included</h2>
         <ul class="chips" data-on>{s.includes.map((x) => <li><Icon name="check" size={16} />{x}</li>)}</ul>
       </div>
     </div>
@@ -44,7 +44,7 @@ const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEn
   <section class="sec tight" aria-labelledby="sfaq-h">
     <div class="wrap split-7-5">
       <div class="qa" data-on>{s.faq.map((f) => <details><summary>{f.q}<Icon name="caret-down" size={18} /></summary><p class="ans">{f.a}</p></details>)}</div>
-      <div class="head"><h2 id="sfaq-h" class="t-h2" data-on>Common <span class="hl">questions</span></h2><a class="link small" href="/faq/">See every answer</a></div>
+      <div class="head"><h2 id="sfaq-h" class="t-h2" data-on>Common questions</h2><a class="link small" href="/faq/">See every answer</a></div>
     </div>
   </section>
 

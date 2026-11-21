@@ -3,14 +3,21 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Photo from '../components/Photo.astro';
 import CtaPanel from '../components/CtaPanel.astro';
+import Compare from '../components/Compare.astro';
 import { projects } from '../data/site';
 const cats = ['All', ...new Set(projects.map((p) => p.scope))];
 const ratios = ['4 / 5', '4 / 3', '4 / 3', '4 / 5', '16 / 10', '4 / 3'];
 ---
 <Base title="Projects" description="Recent commercial and residential electrical projects by Shield Electrical across the Phoenix Valley.">
-  <PageHead title='Recent <span class="hl">work</span>' lead="Panels, lighting, EV chargers and commercial build outs across the Valley." current="Projects">
+  <PageHead title='Recent work' lead="Panels, lighting, EV chargers and commercial build outs across the Valley." current="Projects">
     <p class="hint" data-on>Layout examples. Real Shield projects and photos replace these before launch.</p>
   </PageHead>
+  <section class="sec tight" aria-labelledby="ba-h">
+    <div class="wrap split-7-5 ba">
+      <div data-on><Compare before="panel" after="panel" label="200 amp panel upgrade" /></div>
+      <div class="ba-copy"><h2 id="ba-h" class="t-h2" data-on>Before and after</h2><p class="lead" data-on>Drag the handle to compare. A 100 amp panel on its last legs, replaced with a 200 amp service the same day.</p></div>
+    </div>
+  </section>
   <section class="sec tight" aria-label="Project list">
     <div class="wrap">
       <div class="seg proj-filter" role="group" aria-label="Filter projects">
@@ -26,7 +33,7 @@ const ratios = ['4 / 5', '4 / 3', '4 / 3', '4 / 5', '16 / 10', '4 / 3'];
       </ul>
     </div>
   </section>
-  <CtaPanel title='Have a project like <span class="hl">these</span>?' text="Send the plans or a few photos and we will price it." />
+  <CtaPanel title='Have a project like these?' text="Send the plans or a few photos and we will price it." />
 </Base>
 <script>
   const chips = [...document.querySelectorAll('[data-filter]')], items = [...document.querySelectorAll('.proj li')];
@@ -36,6 +43,7 @@ const ratios = ['4 / 5', '4 / 3', '4 / 3', '4 / 5', '16 / 10', '4 / 3'];
   }));
 </script>
 <style is:global>
+.ba{align-items:center}.ba-copy{display:flex;flex-direction:column;gap:18px}
 .proj-filter{margin-bottom:clamp(24px,3vw,40px)}
 .chip-btn{min-height:44px;padding:0 18px;border-radius:var(--r-pill);border:1px solid var(--seam-2);font-size:.9375rem;color:var(--ink-2);transition:background-color .15s ease-out,color .15s ease-out,border-color .15s ease-out}
 .chip-btn[aria-pressed=true]{background:rgba(216,183,118,.14);border-color:var(--gold);color:var(--ink)}

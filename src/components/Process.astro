@@ -21,7 +21,7 @@ import { steps } from '../data/site';
 .cond-steps{list-style:none;position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,3vw,40px)}
 .cond-step{display:flex;flex-direction:column;gap:12px;padding-right:8px}
 .cond-node{width:24px;height:24px;border-radius:50%;background:var(--night);border:2px solid var(--seam-2);margin-bottom:12px;transition:border-color .3s var(--snap),box-shadow .3s var(--snap),background-color .3s var(--snap)}
-.cond-step.on .cond-node{border-color:var(--gold);background:var(--gold);box-shadow:0 0 0 5px rgba(216,183,118,.18),0 0 18px rgba(243,221,168,.6)}
+.cond-step.on .cond-node{border-color:var(--gold);background:var(--gold);box-shadow:0 0 0 5px rgba(216,183,118,.14)}
 @media (max-width:760px){
   .cond-line{left:11px;right:auto;top:8px;bottom:8px;width:2px;height:auto}
   .cond-fill{transform:scaleY(var(--p,0));transform-origin:top;width:100%;height:100%}

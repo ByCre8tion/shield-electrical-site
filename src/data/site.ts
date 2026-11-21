@@ -26,19 +26,19 @@ export const nav = [
   { label: 'Careers', href: '/careers/' },
 ];
 
-/* Higgsfield stand in photography. CI downloads these into /media as WebP; until then the source URL is used. */
-const HF = 'https://d8j0ntlcm91z4.cloudfront.net/user_35tLGLYteZIKJz8NTX4aURcTw1k/';
-export const media: Record<string, { src: string; alt: string }> = {
-  hero: { src: HF + 'hf_20261121_224129_bc567220-847c-4be7-be21-ffc48e7b1d6c.png', alt: 'An electrician tightening a breaker in an open residential panel' },
-  commercial: { src: HF + 'hf_20261121_224129_ea104e30-7178-41a2-bc2d-5e8aa10c6ec8.png', alt: 'A commercial electrical room with switchgear cabinets and conduit' },
-  residential: { src: HF + 'hf_20261121_224127_78920464-41a3-48d0-bbf1-c383bc444c3b.png', alt: 'A modern Arizona living room lit by warm recessed lighting' },
-  panel: { src: HF + 'hf_20261121_224128_4ff7479f-3b90-4b63-a951-67c673d95c57.png', alt: 'A new 200 amp service panel on a stucco wall' },
-  ev: { src: HF + 'hf_20261121_224149_54b0d9d1-7ddd-403b-9b5f-39b661ee23f9.png', alt: 'A Level 2 EV charger mounted in a garage' },
-  lighting: { src: HF + 'hf_20261121_224149_05f9dffb-adfc-4adc-ab0a-bd9ba23ddaf1.png', alt: 'A desert modern home with landscape lighting at dusk' },
-  emergency: { src: HF + 'hf_20261121_224127_4590b6ec-d14d-4c43-b1d3-d84619c14f23.png', alt: 'An electrician with a headlamp inspecting a panel at night' },
-  tools: { src: HF + 'hf_20261121_224127_cb7630fd-e5c9-423e-aee5-98200f20ca5f.png', alt: 'An electrician tool belt and tools on a workbench' },
-  crew: { src: HF + 'hf_20261121_224127_0b572a2c-c3df-4a87-b703-c454b109614e.png', alt: 'Electricians pulling wire through a commercial ceiling' },
-  copper: { src: HF + 'hf_20261121_224128_f6f35dce-b1c1-4595-b664-84b66740254a.png', alt: 'Close up of stripped copper conductors' },
+/* Real job photos only. Drop a URL or a /media path into src when Jason sends them; CI turns them into WebP.
+   An empty src renders a labeled placeholder. No generated imagery. */
+export const media: Record<string, { src: string; alt: string; need?: string }> = {
+  hero: { src: '', need: 'Jason at a finished panel', alt: 'An electrician tightening a breaker in an open residential panel' },
+  commercial: { src: '', need: 'Commercial electrical room', alt: 'A commercial electrical room with switchgear cabinets and conduit' },
+  residential: { src: '', need: 'Finished home lighting', alt: 'A modern Arizona living room lit by warm recessed lighting' },
+  panel: { src: '', need: 'Panel upgrade, after', alt: 'A new 200 amp service panel on a stucco wall' },
+  ev: { src: '', need: 'EV charger install', alt: 'A Level 2 EV charger mounted in a garage' },
+  lighting: { src: '', need: 'Landscape lighting at dusk', alt: 'A desert modern home with landscape lighting at dusk' },
+  emergency: { src: '', need: 'Night service call', alt: 'An electrician with a headlamp inspecting a panel at night' },
+  tools: { src: '', need: 'The truck and tools', alt: 'An electrician tool belt and tools on a workbench' },
+  crew: { src: '', need: 'Crew on a job', alt: 'Electricians pulling wire through a commercial ceiling' },
+  copper: { src: '', need: 'Clean wiring, close up', alt: 'Close up of stripped copper conductors' },
 };
 
 export type Service = {

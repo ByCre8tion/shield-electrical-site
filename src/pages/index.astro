@@ -9,7 +9,8 @@ import Reviews from '../components/Reviews.astro';
 import Office from '../components/Office.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import CtaPanel from '../components/CtaPanel.astro';
-import Photo from '../components/Photo.astro';
+import SlideLink from '../components/SlideLink.astro';
+import JobTracker from '../components/JobTracker.astro';
 ---
 <Base>
   <Hero />
@@ -17,14 +18,15 @@ import Photo from '../components/Photo.astro';
 
   <section class="sec" aria-labelledby="svc-h">
     <div class="wrap">
-      <div class="head"><h2 id="svc-h" class="t-h2" data-on>One crew for every <span class="hl">circuit</span></h2><p class="lead" data-on>Homes, offices, chargers and emergencies. Pick a service, or describe the problem and we will sort it out.</p></div>
+      <div class="head"><h2 id="svc-h" class="t-h2" data-on>One crew for every circuit</h2><p class="lead" data-on>Homes, offices, chargers and emergencies. Pick a service, or describe the problem and we will sort it out.</p></div>
       <ServiceGrid />
+      <div class="more"><SlideLink href="/services/" text="Every service in detail" /></div>
     </div>
   </section>
 
   <section class="sec tight" aria-labelledby="pc-h">
     <div class="wrap">
-      <div class="head"><h2 id="pc-h" class="t-h2" data-on>Is your panel ready for <span class="hl">more</span>?</h2><p class="lead" data-on>Answer three questions for a quick read on whether your panel can take a charger, spa or casita.</p></div>
+      <div class="head"><h2 id="pc-h" class="t-h2" data-on>Is your panel ready for more?</h2><p class="lead" data-on>Answer three questions for a quick read on whether your panel can take a charger, spa or casita.</p></div>
       <div data-on><PanelCheck /></div>
     </div>
   </section>
@@ -32,10 +34,9 @@ import Photo from '../components/Photo.astro';
   <section class="sec" aria-labelledby="proc-h">
     <div class="wrap split-7-5 proc-wrap">
       <div>
-        <div class="head"><h2 id="proc-h" class="t-h2" data-on>From call to <span class="hl">inspected</span></h2><p class="lead" data-on>Every job runs the same four steps, so you always know what happens next.</p></div>
+        <div class="head"><h2 id="proc-h" class="t-h2" data-on>From call to inspected</h2></div>
         <Process />
       </div>
-      <div class="proc-photo" data-on><Photo k="tools" ratio="21 / 8" sizes="100vw" /></div>
     </div>
   </section>
 
@@ -43,8 +44,9 @@ import Photo from '../components/Photo.astro';
 
   <section class="sec tight" aria-labelledby="area-h">
     <div class="wrap">
-      <div class="head"><h2 id="area-h" class="t-h2" data-on>Based in Chandler, working <span class="hl">Valley wide</span></h2></div>
+      <div class="head"><h2 id="area-h" class="t-h2" data-on>Based in Chandler, working Valley wide</h2></div>
       <Office />
+      <div class="more"><SlideLink href="/service-areas/" text="All the cities we cover" /></div>
     </div>
   </section>
 
@@ -52,16 +54,17 @@ import Photo from '../components/Photo.astro';
     <div class="wrap split-7-5">
       <div data-on><QuoteForm /></div>
       <div class="book-side">
-        <h2 id="book-h" class="t-h2" data-on>Tell us what is <span class="hl">going on</span></h2>
-        <p class="lead" data-on>Send the details and a photo if you have one. We reply within one business day with next steps and a price range.</p>
-        <div data-on><Photo k="copper" ratio="16 / 10" sizes="(max-width: 900px) 100vw, 35vw" /></div>
+        <h2 id="book-h" class="t-h2" data-on>Tell us what is going on</h2>
+        <p class="lead" data-on>Send the details and a photo if you have one. We reply within one business day.</p>
+        <JobTracker />
       </div>
     </div>
   </section>
 
-  <CtaPanel title='Need power where you <span class="hl">do not</span> have it?' text="Outlets, circuits, chargers or a whole new service. One call gets it planned." />
+  <CtaPanel title='Need power where you do not have it?' text="Outlets, circuits, chargers or a whole new service. One call gets it planned." />
 </Base>
 <style is:global>
+.more{margin-top:24px}
 .proc-wrap{grid-template-columns:minmax(0,1fr);gap:clamp(40px,6vw,72px)}
 .proc-photo{max-height:420px;overflow:hidden;border-radius:20px}
 

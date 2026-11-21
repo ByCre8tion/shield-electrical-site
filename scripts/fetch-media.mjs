@@ -5,7 +5,7 @@ import path from 'node:path';
 import sharp from 'sharp';
 
 const src = await fs.readFile('src/data/site.ts', 'utf8');
-const HF = (src.match(/const HF = '([^']+)'/) || [])[1] || '';
+const HF = '';
 const entries = [...src.matchAll(/^\s{2}(\w+): \{ src: (HF \+ )?'([^']*)'/gm)].map(([, k, hf, f]) => [k, f ? (hf ? HF + f : f) : '']);
 const out = 'public/media'; await fs.mkdir(out, { recursive: true });
 for (const [k, url] of entries) {
