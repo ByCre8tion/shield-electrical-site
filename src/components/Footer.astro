@@ -2,67 +2,43 @@
 import { company, nav, services } from '../data/site';
 import Socials from './Socials.astro';
 import BbbSeal from './BbbSeal.astro';
-import Circuit from './Circuit.astro';
 const year = new Date().getFullYear();
 ---
-<footer class="foot">
-  <div class="foot-cta">
-    <Circuit density={0.7} />
-    <div class="wrap foot-cta-in">
-      <p class="readout"><span class="led" aria-hidden="true"></span>Licensed electricians · Chandler, AZ</p>
-      <h2 class="t-h1">Need power where you <span class="hl">don't</span> have it?</h2>
-      <div class="foot-cta-row">
-        <a class="btn btn-brass" href="/contact/">Schedule service <span class="arr" aria-hidden="true">→</span></a>
-        <a class="btn btn-line" href={`tel:${company.tel}`}>Call {company.phone}</a>
-      </div>
-    </div>
-  </div>
-  <div class="wrap foot-grid">
+<footer class="wrap foot">
+  <div class="panel foot-panel">
     <div class="foot-brand">
-      <img src="/brand/shield-logo.svg" alt="Shield Electrical" width="220" height="50" />
-      <p>Licensed commercial and residential electrical contractor serving the Phoenix Valley.</p>
+      <img src="/brand/shield-logo.svg" alt="Shield Electrical" width="210" height="48" />
+      <p class="small">Licensed commercial and residential electrical contractor in Chandler, Arizona.</p>
       <Socials />
-      <div class="foot-trust"><BbbSeal /><span class="readout">{company.roc}</span></div>
+      <div class="foot-trust"><BbbSeal /><span class="val foot-roc">{company.roc}</span></div>
     </div>
-    <nav aria-label="Services" class="foot-col">
-      <h3 class="foot-h">Services</h3>
-      <ul>{services.map((s) => <li><a href={`/services/${s.slug}/`}>{s.title}</a></li>)}</ul>
-    </nav>
-    <nav aria-label="Company" class="foot-col">
-      <h3 class="foot-h">Company</h3>
-      <ul>{nav.filter((l) => l.href !== '/services/').map((l) => <li><a href={l.href}>{l.label}</a></li>)}<li><a href="/contact/">Contact</a></li></ul>
-    </nav>
-    <div class="foot-col">
-      <h3 class="foot-h">Visit or call</h3>
-      <ul class="foot-contact">
-        <li><a class="tel" href={`tel:${company.tel}`}>{company.phone}</a></li>
+    <nav aria-label="Services" class="foot-col"><h2 class="foot-h">Services</h2><ul>{services.map((s) => <li><a href={`/services/${s.slug}/`}>{s.title}</a></li>)}</ul></nav>
+    <nav aria-label="Company" class="foot-col"><h2 class="foot-h">Company</h2><ul>{nav.filter((l) => l.href !== '/services/').map((l) => <li><a href={l.href}>{l.label}</a></li>)}<li><a href="/contact/">Book service</a></li></ul></nav>
+    <div class="foot-col"><h2 class="foot-h">Reach us</h2>
+      <ul>
+        <li><a class="val foot-tel" href={`tel:${company.tel}`}>{company.phone}</a></li>
         <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
         <li>{company.address}<br />{company.city}</li>
-        <li><span class="readout" data-open-status><span class="led off" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span></li>
+        <li><span class="status" data-open-status><span class="led" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span></li>
       </ul>
     </div>
   </div>
-  <div class="wrap foot-base">
-    <span>© {year} {company.legal}. All rights reserved.</span>
-    <span class="readout">{company.roc} · Bonded and insured</span>
-  </div>
+  <div class="foot-base small"><span>© {year} {company.legal}</span><span>Bonded and insured in Arizona</span></div>
 </footer>
 <style is:global>
-.foot{background:var(--switch);border-top:1px solid var(--rule-d);--fg:var(--volt);--fg-2:var(--steel);--rule-strong:var(--rule-d-strong)}
-.foot-cta{position:relative;overflow:hidden;border-bottom:1px solid var(--rule-d)}
-.foot-cta-in{position:relative;padding-block:clamp(88px,11vw,152px);display:flex;flex-direction:column;gap:28px;align-items:flex-start}
-.foot-cta h2{max-width:14ch}
-.foot-cta-row{display:flex;flex-wrap:wrap;gap:12px}
-.foot-grid{display:grid;grid-template-columns:minmax(0,5fr) repeat(3,minmax(0,2.4fr));gap:40px;padding-block:72px 56px}
-.foot-brand{display:flex;flex-direction:column;gap:24px;align-items:flex-start}
-.foot-brand img{height:46px;width:auto}
-.foot-brand p{color:var(--steel);max-width:36ch}
-.foot-trust{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
-.foot-h{font-family:var(--body);font-size:.875rem;font-weight:600;letter-spacing:0;color:var(--volt);margin-bottom:16px}
-.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-.foot-col a,.foot-contact li{color:var(--steel);font-size:.9375rem;transition:color .15s ease-out}
-@media (hover:hover){.foot-col a:hover{color:var(--volt)}}
-.foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:24px 40px;border-top:1px solid var(--rule-d);font-size:.8125rem;color:var(--steel)}
-@media (max-width:1000px){.foot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.foot-brand{grid-column:1/-1}}
-@media (max-width:560px){.foot-grid{grid-template-columns:minmax(0,1fr)}}
+.foot{padding-block:clamp(40px,6vw,80px) 32px}
+.foot-panel{display:grid;grid-template-columns:minmax(0,5fr) repeat(3,minmax(0,2.4fr));gap:40px;padding:clamp(24px,4vw,48px)}
+.foot-brand{display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+.foot-brand img{height:44px;width:auto}
+.foot-brand p{max-width:34ch}
+.foot-trust{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.foot-roc{color:var(--ink-3)}
+.foot-h{font-size:.875rem;font-weight:500;letter-spacing:0;color:var(--ink);margin-bottom:14px}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:.9375rem;color:var(--ink-2)}
+.foot-col a{color:var(--ink-2);transition:color .15s ease-out}
+.foot-tel{font-size:.9375rem}
+@media (hover:hover){.foot-col a:hover{color:var(--ink)}}
+.foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding:20px 8px 0;color:var(--ink-3)}
+@media (max-width:1000px){.foot-panel{grid-template-columns:repeat(2,minmax(0,1fr))}.foot-brand{grid-column:1/-1}}
+@media (max-width:560px){.foot-panel{grid-template-columns:minmax(0,1fr)}}
 </style>

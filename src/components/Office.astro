@@ -1,0 +1,22 @@
+---
+import { company, areas } from '../data/site';
+import Icon from './Icon.astro';
+---
+<div class="office">
+  <div class="panel office-card" data-on>
+    <Icon name="map-pin" size={26} class="tb-ico" />
+    <h3 class="t-h3">Chandler office</h3>
+    <p class="small">{company.address}<br />{company.city}</p>
+    <span class="status" data-open-status><span class="led" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span>
+    <a class="link small" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(company.address + ' ' + company.city)}`} target="_blank" rel="noopener">Get directions<span class="sr-only"> (opens in a new tab)</span></a>
+  </div>
+  <div data-on>
+    <ul class="chips">{areas.map((a) => <li>{a}</li>)}</ul>
+    <p class="small" style="margin-top:20px">Not listed? Ask. We travel for commercial work and larger projects.</p>
+  </div>
+</div>
+<style is:global>
+.office{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(20px,4vw,56px);align-items:start}
+.office-card{padding:26px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+@media (max-width:860px){.office{grid-template-columns:minmax(0,1fr)}}
+</style>

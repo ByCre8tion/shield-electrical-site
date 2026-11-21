@@ -1,26 +1,26 @@
 ---
 import Circuit from './Circuit.astro';
-interface Props { n?: string; label: string; title: string; lead?: string; crumbs?: { label: string; href: string }[] }
-const { n = '00', label, title, lead, crumbs = [] } = Astro.props;
+interface Props { title: string; lead?: string; crumbs?: { label: string; href: string }[]; current?: string }
+const { title, lead, crumbs = [], current } = Astro.props;
 ---
-<section class="ph-head">
-  <Circuit density={0.6} />
-  <div class="wrap ph-in">
-    {crumbs.length > 0 && <nav aria-label="Breadcrumb" class="crumbs"><ol>{[{ label: 'Home', href: '/' }, ...crumbs].map((c) => <li><a href={c.href}>{c.label}</a></li>)}<li aria-current="page">{label}</li></ol></nav>}
-    <p class="readout" data-reveal>{n} / <b>{label}</b></p>
-    <h1 class="t-h1" data-reveal set:html={title} />
-    {lead && <p class="lead" data-reveal>{lead}</p>}
+<section class="phd">
+  <Circuit density={0.55} />
+  <div class="wrap phd-in">
+    {current && <nav aria-label="Breadcrumb" class="crumbs"><ol>{[{ label: 'Home', href: '/' }, ...crumbs].map((c) => <li><a href={c.href}>{c.label}</a></li>)}<li aria-current="page">{current}</li></ol></nav>}
+    <h1 class="t-h1" data-on set:html={title} />
+    {lead && <p class="lead" data-on>{lead}</p>}
     <slot />
   </div>
 </section>
 <style is:global>
-.ph-head{position:relative;overflow:hidden;background:var(--switch);border-bottom:1px solid var(--rule-d)}
-.ph-in{position:relative;display:flex;flex-direction:column;gap:24px;padding-block:clamp(64px,9vw,136px) clamp(48px,6vw,88px);pointer-events:none}
-.ph-in>*{pointer-events:auto}
-.ph-in h1{max-width:18ch}
-.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:8px;font-size:.875rem;color:var(--steel)}
-.crumbs li+li::before{content:"/";margin-right:8px;opacity:.5}
-.crumbs a{color:var(--steel)}
-.crumbs [aria-current]{color:var(--volt)}
-@media (hover:hover){.crumbs a:hover{color:var(--volt)}}
+.phd{position:relative;overflow:hidden;margin-top:-76px;padding-top:76px}
+.phd::before{content:"";position:absolute;left:-10%;top:0;width:60%;height:100%;background:radial-gradient(closest-side,rgba(216,183,118,.1),transparent);pointer-events:none}
+.phd-in{position:relative;display:flex;flex-direction:column;gap:22px;padding-block:clamp(56px,8vw,112px) clamp(40px,5vw,72px);pointer-events:none}
+.phd-in>*{pointer-events:auto}
+.phd-in h1{max-width:17ch}
+.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:8px;font-size:.875rem;color:var(--ink-3)}
+.crumbs li+li::before{content:"/";margin-right:8px}
+.crumbs a{color:var(--ink-2)}
+.crumbs [aria-current]{color:var(--ink)}
+@media (hover:hover){.crumbs a:hover{color:var(--ink)}}
 </style>

@@ -1,43 +1,42 @@
 ---
 import Circuit from './Circuit.astro';
 import Photo from './Photo.astro';
+import Icon from './Icon.astro';
 import { company } from '../data/site';
 ---
 <section class="hero" aria-labelledby="hero-h">
   <Circuit />
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="readout" data-reveal><span data-open-status class="readout"><span class="led off" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span></p>
-      <h1 id="hero-h" class="t-hero" data-reveal>Powering what matters. <span class="hl">Protecting</span> what counts.</h1>
-      <p class="lead" data-reveal>Licensed commercial and residential electricians in Chandler and across the Valley. Panels, EV chargers, lighting and repairs, with a written price before any work starts.</p>
-      <div class="hero-cta" data-reveal>
-        <a class="btn btn-brass" href="/contact/">Schedule service <span class="arr" aria-hidden="true">→</span></a>
-        <a class="btn btn-line" href="/services/">See services</a>
+      <h1 id="hero-h" class="t-display" data-on>Power you can trust, <span class="hl">wired right.</span></h1>
+      <p class="lead" data-on>Licensed electricians for homes and businesses across the Valley. Written price before any work starts.</p>
+      <div class="btn-row" data-on>
+        <a class="btn btn-gold" href="/contact/">Book service <Icon name="arrow-right" size={18} class="ico-go" /></a>
+        <a class="btn btn-line" href={`tel:${company.tel}`}><Icon name="phone" size={18} />Call <span class="val">{company.phone}</span></a>
       </div>
     </div>
-    <div class="hero-media" data-reveal>
-      <Photo k="hero" ratio="4 / 5" eager sizes="(max-width: 860px) 100vw, 40vw" />
-      <dl class="hero-spec">
-        <div><dt class="readout">Panels</dt><dd class="num">100A → 200A</dd></div>
-        <div><dt class="readout">EV</dt><dd class="num">Level 2 · 240V</dd></div>
-        <div><dt class="readout">Permits</dt><dd>Pulled by us</dd></div>
-      </dl>
+    <div class="hero-visual" data-on>
+      <Photo k="hero" ratio="5 / 6" eager sizes="(max-width: 900px) 100vw, 42vw" />
+      <div class="hero-meter panel">
+        <span class="hm-k">Typical panel upgrade</span>
+        <span class="hm-v"><span class="val">100A</span><Icon name="arrow-right" size={14} /><span class="val hm-gold">200A</span></span>
+        <span class="hm-k">Power back the same afternoon</span>
+      </div>
     </div>
   </div>
 </section>
 <style is:global>
-.hero{position:relative;overflow:hidden;background:var(--switch);border-bottom:1px solid var(--rule-d)}
-.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(32px,5vw,80px);align-items:end;padding-block:clamp(56px,8vw,120px) clamp(56px,7vw,96px)}
+.hero{position:relative;overflow:hidden;margin-top:-76px;padding-top:76px}
+.hero::before{content:"";position:absolute;right:-10%;top:10%;width:60%;height:80%;background:radial-gradient(closest-side,rgba(216,183,118,.14),transparent);pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(32px,5vw,80px);align-items:center;padding-block:clamp(48px,7vw,96px) clamp(56px,7vw,104px)}
 .hero-copy{display:flex;flex-direction:column;gap:28px;pointer-events:none}
 .hero-copy>*{pointer-events:auto}
 .hero-copy h1{max-width:13ch}
-.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
-.hero-media{display:flex;flex-direction:column;gap:0}
-.hero-media .photo{border-radius:4px 4px 0 0}
-.hero-spec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;border:1px solid var(--rule-d);border-top:0;background:rgba(14,15,16,.7)}
-.hero-spec div{padding:14px 16px;display:flex;flex-direction:column;gap:6px}
-.hero-spec div+div{border-left:1px solid var(--rule-d)}
-.hero-spec dd{margin:0;font-family:var(--display);font-weight:600;font-stretch:112%;font-size:1.0625rem;color:var(--volt)}
-@media (max-width:860px){.hero-grid{grid-template-columns:minmax(0,1fr)}.hero-media .photo{aspect-ratio:4/3!important}}
-@media (max-width:480px){.hero-spec{grid-template-columns:minmax(0,1fr)}.hero-spec div+div{border-left:0;border-top:1px solid var(--rule-d)}.hero-spec div{flex-direction:row;justify-content:space-between;align-items:center}}
+.hero-visual{position:relative}
+.hero-meter{position:absolute;left:-28px;bottom:28px;display:flex;flex-direction:column;gap:6px;padding:16px 20px;background:rgba(17,20,25,.86);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.hm-k{font-size:.8125rem;color:var(--ink-2)}
+.hm-v{display:flex;align-items:center;gap:10px;font-size:1.5rem;color:var(--ink-3)}
+.hm-v .val{font-size:1.5rem;color:var(--ink)}
+.hm-v .hm-gold{color:var(--gold-hi)}
+@media (max-width:900px){.hero-grid{grid-template-columns:minmax(0,1fr)}.hero-visual .photo{aspect-ratio:4/3!important}.hero-meter{left:16px;bottom:16px}}
 </style>

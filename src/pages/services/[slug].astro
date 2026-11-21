@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
 import Photo from '../../components/Photo.astro';
 import QuoteForm from '../../components/QuoteForm.astro';
+import Icon from '../../components/Icon.astro';
 import { services, company, type Service } from '../../data/site';
 export function getStaticPaths() { return services.map((s) => ({ params: { slug: s.slug }, props: { s } })); }
 const { s } = Astro.props as { s: Service };
@@ -12,51 +13,61 @@ const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEn
 ---
 <Base title={s.title} description={`${s.short} Shield Electrical, licensed electricians in Chandler and the Phoenix Valley.`}>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-  <PageHead n={s.n} label={s.title} title={s.title} lead={s.lead} crumbs={[{ label: 'Services', href: '/services/' }]}>
+  <PageHead title={s.title} lead={s.lead} crumbs={[{ label: 'Services', href: '/services/' }]} current={s.title}>
     {s.emergency ? (
-      <div class="em-alert" data-reveal>
+      <div class="panel em-alert" data-on>
         <span class="led fault" aria-hidden="true"></span>
-        <p><b>Smoke, fire or sparking?</b> Leave the building and call 911 first. Then call us at <a class="tel" href={`tel:${company.tel}`}>{company.phone}</a>.</p>
+        <p><b>Smoke, fire or sparking?</b> Leave the building and call 911 first. Then call us at <a class="val link" href={`tel:${company.tel}`}>{company.phone}</a>.</p>
       </div>
     ) : (
-      <div class="hero-cta" data-reveal><a class="btn btn-brass" href="#quote">Get a price <span class="arr" aria-hidden="true">→</span></a><a class="btn btn-line" href={`tel:${company.tel}`}>Call {company.phone}</a></div>
+      <div class="btn-row" data-on><a class="btn btn-gold" href="#book">Book service <Icon name="arrow-right" size={18} class="ico-go" /></a><a class="btn btn-line" href={`tel:${company.tel}`}><Icon name="phone" size={18} />Call <span class="val">{company.phone}</span></a></div>
     )}
   </PageHead>
 
-  <section class="sec light" aria-labelledby="inc-h">
-    <div class="wrap sd-grid">
-      <div data-reveal><Photo k={s.img} ratio="4 / 3" sizes="(max-width: 860px) 100vw, 50vw" /></div>
-      <div class="sd-copy">
-        <p class="readout">01 / <b>What we do</b></p>
-        <h2 id="inc-h" class="t-h2" data-reveal>What is included</h2>
-        <ul class="inc" data-reveal>{s.includes.map((x) => <li>{x}</li>)}</ul>
+  <section class="sec tight" aria-labelledby="inc-h">
+    <div class="wrap split">
+      <div data-on><Photo k={s.img} ratio="4 / 3" sizes="(max-width: 900px) 100vw, 50vw" /></div>
+      <div class="svc-inc">
+        <h2 id="inc-h" class="t-h2" data-on>What is <span class="hl">included</span></h2>
+        <ul class="chips" data-on>{s.includes.map((x) => <li><Icon name="check" size={16} />{x}</li>)}</ul>
       </div>
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="spec-h">
+  <section class="sec tight" aria-labelledby="spec-h">
     <div class="wrap">
-      <div class="sec-head"><p class="readout">02 / <b>Spec sheet</b></p><div><h2 id="spec-h" class="t-h2">The details</h2></div></div>
-      <table class="spec" data-reveal>
-        <caption class="sr-only">{s.title} details</caption>
-        <tbody>{s.specs.map(([k, v]) => <tr><th scope="row" class="readout">{k}</th><td>{v}</td></tr>)}</tbody>
-      </table>
+      <div class="head"><h2 id="spec-h" class="t-h2" data-on>The details</h2></div>
+      <div class="specs">{s.specs.map(([k, v]) => <div class="panel spec-c" data-on><span class="k">{k}</span><span class="v">{v}</span></div>)}</div>
     </div>
   </section>
 
-  <section class="sec panel-mode" aria-labelledby="sfaq-h">
-    <div class="wrap faq-grid">
-      <div><p class="readout">03 / <b>Questions</b></p><h2 id="sfaq-h" class="t-h2" style="margin-top:20px">Common questions</h2></div>
-      <div class="qa">{s.faq.map((f) => <details><summary>{f.q}</summary><p class="ans">{f.a}</p></details>)}</div>
+  <section class="sec tight" aria-labelledby="sfaq-h">
+    <div class="wrap split-7-5">
+      <div class="qa" data-on>{s.faq.map((f) => <details><summary>{f.q}<Icon name="caret-down" size={18} /></summary><p class="ans">{f.a}</p></details>)}</div>
+      <div class="head"><h2 id="sfaq-h" class="t-h2" data-on>Common <span class="hl">questions</span></h2><a class="link small" href="/faq/">See every answer</a></div>
     </div>
   </section>
 
-  <section class="sec" id="quote" aria-labelledby="sq-h">
-    <div class="wrap q-grid">
-      <div class="q-copy"><p class="readout">04 / <b>Get a price</b></p><h2 id="sq-h" class="t-h2">Request {s.title.toLowerCase()}</h2><p class="lead">We reply within one business day.</p>
-        <a class="next-svc" href={`/services/${next.slug}/`}><span class="readout">Next service</span><span class="t-h3">{next.title} <span aria-hidden="true">→</span></span></a>
-      </div>
+  <section class="sec" id="book" aria-labelledby="sq-h">
+    <div class="wrap split-7-5">
       <QuoteForm preset={s.slug} />
+      <div class="book-side">
+        <h2 id="sq-h" class="t-h2">Book {s.title.toLowerCase()}</h2>
+        <p class="lead">We reply within one business day.</p>
+        <a class="panel next-svc" href={`/services/${next.slug}/`}><span class="small">Next service</span><span class="t-h3">{next.title}</span><Icon name="arrow-right" size={20} /></a>
+      </div>
     </div>
   </section>
 </Base>
+<style is:global>
+.em-alert{display:flex;gap:14px;align-items:flex-start;max-width:58ch;padding:18px 22px;border-color:rgba(255,107,94,.4)}
+.em-alert .led{margin-top:9px}
+.em-alert b{font-weight:500}
+.em-alert p{color:var(--ink-2)}
+.svc-inc{display:flex;flex-direction:column;gap:24px}
+.book-side{display:flex;flex-direction:column;gap:22px;position:sticky;top:104px}
+.next-svc{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 16px;padding:20px 22px;transition:border-color .2s ease-out,box-shadow .25s ease-out}
+.next-svc .small{grid-column:1}.next-svc .t-h3{grid-column:1}.next-svc .ico{grid-column:2;grid-row:1/3;color:var(--gold)}
+@media (hover:hover){.next-svc:hover{border-color:rgba(216,183,118,.4);box-shadow:var(--glow)}}
+@media (max-width:900px){.book-side{position:static;order:-1}}
+</style>

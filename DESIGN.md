@@ -1,164 +1,125 @@
-# Shield Electrical: DESIGN.md
+# Shield Electrical: DESIGN.md (v2)
 
-**Live wire in a dark switchgear room.** A graphite canvas, brushed brass taken from the shield in the logo, hairline rules like a panel schedule, and one signature behavior: current that travels the page.
+**The control room after dark.** A single dark world, cool graphite instead of black, soft instrument panels, light type that reads like an engineer's display, and champagne gold used only where power is flowing.
 
-Shield is a licensed commercial and residential electrical contractor in Chandler, Arizona. The site has to feel like the work: precise, safe, quietly powerful. It should read as engineered, never decorated. Every visual choice below is a rule, not a suggestion.
+Shield shares an owner with Apex Builders, so this file exists to keep the two brands apart. If a choice below would make Shield look like Apex, it is wrong.
 
-Built from the Refero electrical set. What we took from each:
+## 0. Shield is not Apex
 
-| Reference | Rule we kept |
+| Decision | Apex Builders | Shield Electrical |
+| --- | --- | --- |
+| World | Light, warm white and chalk | Dark only, cool graphite |
+| Display type | Barlow Condensed, bold, UPPERCASE | Sora Light 300, mixed case, tight tracking |
+| Accent | Safety orange | Champagne gold from the shield, used only for power and the one primary action |
+| Shape | Square, 2px buttons, 4px photos | Soft: pill controls, 20px panels, 14px inputs |
+| Section headers | Numbered labels (01 SERVICES) | No numbers, no eyebrows. The headline is enough |
+| Services | Hairline list | Breaker panel: tiles you switch on |
+| Signature | House line drawings on paper | Live circuit traces and current |
+| Motion | Rise and fade | Power on: a short flicker, switches throwing, current running |
+| Voice | Warm craftsman | Calm technician. Short, exact, measured |
+
+## 1. Design read and dials
+
+Local service site for homeowners and facility managers in the Phoenix Valley, in a premium dark instrument language. **Variance 7, motion 6, density 4.**
+
+## 2. Color
+
+One theme, dark, locked. No section ever flips to a light background. Neutrals carry a slight cool bias toward the gold's complement, so the gold reads warmer.
+
+| Token | Hex | Role | Contrast |
+| --- | --- | --- | --- |
+| `--night` | `#0B0D10` | Page canvas | |
+| `--deck` | `#111419` | Panels, nav, cards | |
+| `--deck-2` | `#171B21` | Raised panel, inputs | |
+| `--seam` | `rgba(200,214,230,.09)` | Panel edges, dividers | |
+| `--seam-2` | `rgba(200,214,230,.22)` | Input borders, outline buttons | 3:1 non text |
+| `--ink` | `#E9EDF2` | Primary text | 16.6:1 on night |
+| `--ink-2` | `#9AA4AF` | Secondary text | 7.7:1 on night |
+| `--ink-3` | `#808A95` | Captions and meta only | 5.5:1 on night, 4.9:1 on deck-2 |
+| `--gold` | `#D8B776` | Primary button fill, active switch, current | 10.2:1 on night |
+| `--gold-hi` | `#F3DDA8` | Current core, highlighted words | |
+| `--on-gold` | `#15130E` | Text on gold | 9.7:1 |
+| `--live` | `#57D9A3` | Open now only | |
+| `--fault` | `#FF6B5E` | Emergency only, always with words | |
+
+**Rules**
+- Gold appears on one action per view, on switched on states, and on current. Never as body text, never as a section background.
+- Gradients only as light: a soft radial glow behind the hero panel and under active switches. No gradient fills on buttons or text.
+- No pure black, no pure white.
+
+## 3. Type
+
+| Family | Role |
 | --- | --- |
-| ON.energy | Full bleed sections that switch mode (dark, light, one brass block). Flat. No shadows. Tight radii. |
-| Oxide Computer | 1px hairlines instead of cards. Mono labels that read like a system readout. One status color used like an LED. |
-| Electronic Materials Office | Charcoal canvas, never pure black. One glowing accent, rationed to the primary action. |
-| Rivian | Type at architectural scale. Photography edge to edge, never boxed on landing pages. |
-| T1 Energy | The page as a technical spec sheet. Restraint is the brand. |
+| **Sora** variable | Display at 300, UI and body at 400 to 600 |
+| **JetBrains Mono** | Measured values only: amps, volts, ratings, license, phone in tables |
 
-## 1. Color
-
-The palette is the logo: black and the brass gradient (`#FBDB9B` to `#AB7D3B`). Everything else is neutral. Color is rationed.
-
-### Dark mode (default surface)
-
-| Token | Hex | Role |
-| --- | --- | --- |
-| `--switch` | `#0E0F10` | Page canvas, hero, nav, footer. Never `#000`. |
-| `--panel` | `#16181A` | Alternate dark section, form fields on dark |
-| `--raised` | `#1F2225` | Hover fill, the one raised surface (widget, menus) |
-| `--rule-d` | `rgba(242,238,230,.12)` | Hairlines on dark |
-| `--rule-d-strong` | `rgba(242,238,230,.24)` | Input borders on dark (3:1 non text) |
-| `--volt` | `#F2EEE6` | Primary text on dark (16.6:1) |
-| `--steel` | `#9BA0A5` | Secondary text on dark (7.3:1) |
-
-### Light mode (reading surface)
-
-| Token | Hex | Role |
-| --- | --- | --- |
-| `--bone` | `#F3F0E8` | Light section canvas, the "printed panel schedule" |
-| `--paper` | `#FBFAF6` | Cards and inputs on bone |
-| `--ink` | `#121315` | Text on light (16.3:1) |
-| `--graphite` | `#4A4E53` | Body copy on light (7.4:1) |
-| `--muted` | `#5E6368` | Captions on light (5.3:1) |
-| `--rule-l` | `rgba(18,19,21,.12)` | Hairlines on light |
-
-### Brass (brand)
-
-| Token | Hex | Role |
-| --- | --- | --- |
-| `--brass` | `#CFAA66` | Accent text and lines on dark (8.8:1), primary button fill |
-| `--brass-lt` | `#FBDB9B` | Highlight words in display type, current glow core |
-| `--brass-deep` | `#7A5620` | Brass text on light surfaces only (5.8:1) |
-| `--brass-grad` | `linear-gradient(135deg,#FBDB9B,#AB7D3B 80%)` | The logo, the one brass statement block per page. Never on text smaller than 48px. |
-
-### Signals (used like LEDs, never decoratively)
-
-| Token | Hex | Role |
-| --- | --- | --- |
-| `--live` | `#3FD68A` | A 6px dot meaning available or open now |
-| `--fault` | `#E5483B` | Emergency service only: one dot plus the word. Never a fill. |
+| Step | Size | Weight | Line | Tracking |
+| --- | --- | --- | --- | --- |
+| Display | `clamp(2.6rem, 5.4vw, 5rem)` | 300 | 1.02 | -0.04em |
+| H1 page | `clamp(2.4rem, 4.6vw, 4rem)` | 300 | 1.05 | -0.035em |
+| H2 | `clamp(1.9rem, 3.4vw, 3rem)` | 300 | 1.08 | -0.03em |
+| H3 | `1.375rem` | 500 | 1.25 | -0.01em |
+| Body | `1.0625rem` | 400 | 1.65 | 0 |
+| Small | `0.875rem` | 400 | 1.5 | 0 |
+| Value | `0.8125rem` mono | 500 | 1.3 | 0 |
 
 **Rules**
-- One brass filled button per view. Everything else is outline or text.
-- Text on the brass fill is always `--ink` (8.5:1). Never white on brass.
-- Brass never appears as body text on light surfaces; use `--brass-deep`.
-- No gradients anywhere except the logo and the single brass statement block.
-- Never pure black, never pure white for large surfaces.
+- Mixed case everywhere. No uppercase headlines, no tracked uppercase labels above sections.
+- Emphasis inside a headline is the same family at 500 in `--gold-hi`. One phrase max.
+- Headlines max 2 lines in the hero, `text-wrap: balance`. Body max 62ch, `text-wrap: pretty`.
+- Mono is for numbers that were measured, never for labels.
 
-## 2. Typography
+## 4. Shape and surface
 
-Three families, one job each. All free, self hosted with Fontsource, so nothing loads from a third party.
+- **Radius rule:** interactive controls are pills (999px). Surfaces and photos are 20px. Inputs are 14px. Nothing else.
+- **Panels, not lines.** Content groups sit on `--deck` panels with a 1px `--seam` edge and a 1px inner top highlight `rgba(255,255,255,.04)`. No hairline lists with rules under every row.
+- **Depth** comes from surface steps and light: a panel that is "on" gets a soft gold glow `0 0 0 1px rgba(216,183,118,.35), 0 20px 60px -30px rgba(216,183,118,.45)`. No drop shadows otherwise.
+- **Photography:** cool graded, dark, warm practical light. Always inside a 20px frame with a subtle top to bottom scrim when text sits near it. Never full bleed behind text.
 
-| Family | Use | Why |
-| --- | --- | --- |
-| **Archivo** (variable, width 112 to 125) | Display and headings | The expanded, squared cut echoes the chamfered SHIELD wordmark. Feels engineered, not decorative. |
-| **IBM Plex Sans** | Body and UI | Built by an engineering company for technical reading. Calm, legible, credible. |
-| **IBM Plex Mono** | Readouts: section numbers, specs, labels, phone numbers in tables, status | The "system readout" voice from Oxide. Makes specs feel measured. |
+## 5. Signature: power
 
-### Scale (1.25, 16px base)
-
-| Step | Size | Weight | Line | Tracking | Use |
-| --- | --- | --- | --- | --- | --- |
-| Hero | `clamp(3.5rem, 9vw, 8.5rem)` | 600, width 125 | 0.92 | -0.035em | One per page |
-| H1 | `clamp(2.75rem, 6vw, 5rem)` | 600, width 118 | 0.95 | -0.03em | Page titles |
-| H2 | `clamp(2rem, 4vw, 3.25rem)` | 600, width 115 | 1.0 | -0.025em | Section titles |
-| H3 | `1.5rem` | 600, width 112 | 1.15 | -0.01em | Cards, list items |
-| Lead | `1.25rem` | Plex 400 | 1.5 | 0 | Intro paragraphs |
-| Body | `1.0625rem` | Plex 400 | 1.6 | 0 | Reading text, max 64ch |
-| Small | `0.875rem` | Plex 400 | 1.5 | 0 | Captions, help text |
-| Readout | `0.75rem` | Plex Mono 500 | 1.3 | 0.08em, uppercase | Section numbers and spec labels ONLY |
-
-**Rules**
-- Display type is uppercase only in the hero. Section headings are sentence case.
-- Uppercase tracked mono appears only as readouts (`01 / SERVICES`, `240V · 200A`). Never for buttons, nav or paragraphs.
-- `text-wrap: balance` on headings, `pretty` on body. `tabular-nums` on every number that updates.
-- One highlighted phrase per heading max, in `--brass-lt` on dark or `--brass-deep` on light.
-
-## 3. Layout and surfaces
-
-- **Grid:** 12 columns, max 1440px, gutters `clamp(16px, 4vw, 48px)`.
-- **Section rhythm:** `clamp(96px, 12vw, 160px)` vertical. Sections alternate mode: dark hero, bone content, dark proof, and once per page the brass block.
-- **Hairlines, not cards.** Group with 1px rules and space. A card exists only when it is clickable.
-- **Radius:** `2px` buttons and inputs, `4px` photos, `999px` only for status pills and the chat launcher. Nothing in between.
-- **Elevation:** none. No box shadows. Depth comes from surface steps (switch, panel, raised). The chat widget is the single exception: a 1px ring plus a soft ambient shadow, because it floats over content.
-- **Photography:** full bleed on landing sections, `4px` radius inside content, never framed by a border. Warm, real job site photos, slightly desaturated, high contrast. Hands, tools, panels, finished lighting. No stock smiling electricians.
-- **Panel schedule pattern:** specs and service details render as ruled tables with a mono left column, like a breaker panel directory.
-
-## 4. Signature: the live circuit
-
-This is the unique touch. It must feel like electricity, read as premium, and never as a gimmick.
-
-1. **Hero field.** A canvas of thin orthogonal traces in brass at 10% opacity, routed like conduit. Pulses of warm light (core `--brass-lt`, 1px trail fading over 120px) travel the traces at random intervals. Near the cursor, traces within 140px brighten to 35%. About every 6 to 9 seconds, one short arc (a jagged 3 to 5 segment bolt, 90ms on, 40ms off, 60ms on) jumps between two nodes. Runs at 30fps max, pauses offscreen and in background tabs.
-2. **Energized rules.** Section divider hairlines draw on as you scroll, and a single pulse runs their length once.
-3. **Buttons.** The brass button has a 1px top highlight. On hover a spark runs along its bottom edge in 400ms.
-4. **Meter counters.** Stats count up like a meter (tabular mono), with a tiny needle tick.
-5. **Page change.** A single horizontal current line sweeps across, then the new page fades up 12px. Uses the View Transitions API.
-
-**Reduced motion:** traces render static, no pulses, no arcs, no counting. Content never depends on any of it.
-
-## 5. Motion values
-
-| Thing | Duration | Easing |
-| --- | --- | --- |
-| Hover, color, underline | 150ms | ease-out |
-| Reveal on scroll | 700ms, stagger 80ms, 16px rise | `cubic-bezier(.16,1,.3,1)` |
-| Menus and widget open | 350ms enter, 180ms exit | same |
-| Press | scale .97, 120ms | ease-out |
-| Page transition | 450ms | same |
-
-Interactive state uses transitions, never keyframes. Nothing scales from 0.
+1. **Live circuit.** Gold traces behind the hero and the final call to action. Current pulses travel the traces, traces brighten near the cursor, a rare short arc. Static under reduced motion.
+2. **Breaker panel.** Each service is a tile with a real switch. Hovering or focusing a tile throws the switch on: the toggle slides, the tile edge lights, the photo brightens. 220ms, `cubic-bezier(.2,0,0,1)`.
+3. **Power on reveal.** Headlines and panels enter with a 3 step flicker, opacity 0 to .7 to .25 to 1 over 260ms, then settle. Used once per section, never on repeat interactions.
+4. **Current line.** The process is a horizontal conductor. As it scrolls into view, current fills the line from node to node and each node lights.
+5. **Page change.** The old page dims out in 180ms, the new one powers on.
 
 ## 6. Components
 
-- **Nav:** dark bar, logo left, 5 links, phone in mono, one brass "Schedule service" button. A live LED with "Open now" or "Closed, opens 7am" from real hours (Mon to Fri, 7am to 5pm).
-- **Buttons:** primary brass fill, ink text. Secondary 1px outline in current text color. Text links underline on hover.
-- **Service rows:** big hairline list, not a card grid. Number readout, name, one line, arrow. Row energizes on hover.
-- **Forms:** labels above, 1px inputs, 2px radius, errors in words under the field, never color alone. Big tap targets.
-- **Google reviews:** two rows drifting opposite ways at a constant pace, G mark on every card, stars, verified tick. Pause button only.
-- **Trust band:** license, years, Google rating with the real G, BBB slot, insured.
-- **Chat and text widget:** the Apex concierge pattern restyled in Shield's dark brass: face of the owner, one conversation, quote capture in the thread.
-- **Footer:** big shield mark, socials row (Google, Instagram, Facebook, YouTube, TikTok, X, Houzz, Nextdoor), BBB seal slot, ROC number, hours.
+- **Nav:** floating pill bar inset 12px from the top, deck surface with blur. Logo left, five links center, open now status and one gold "Book service" pill right.
+- **Buttons:** primary gold pill, ink text. Secondary pill with `--seam-2` edge. Press scales to 0.97. One label per intent: "Book service" everywhere for booking, "Call" plus number for calls.
+- **Trust bar:** one rounded panel under the hero with four values inline: Google rating with the real G, years, ROC license, BBB seal slot.
+- **Panel check:** an honest quick tool. Panel size, central AC, what they want to add. It gives a plain recommendation and says it is a rough guide until a load calculation.
+- **Reviews:** one row of panels drifting at a constant pace, the only marquee on the page. G mark, stars, verified tick, Pause control.
+- **Forms:** dark panel, 14px inputs on `--deck-2`, labels above, errors in words below, photo drop zone.
+- **Text widget:** gold ringed round launcher with Jason's photo, deck panel, gold bubbles for the visitor.
+- **Footer:** quiet deck panel, large shield mark, socials, BBB slot, license, hours.
 
-## 7. Voice
+## 7. Motion values
 
-Plain, confident, specific. Electricians who show up and explain things.
-- Say what happens next: "We call you back within one business hour."
-- Use numbers: "200 amp panel upgrade", "Level 2 charger, installed in a day".
-- No hype words: no "cutting edge", no "solutions", no exclamation marks.
-- No em dashes. Sentence case everywhere except the hero line.
+| Thing | Duration | Easing |
+| --- | --- | --- |
+| Hover and color | 150ms | ease-out |
+| Switch throw | 220ms | `cubic-bezier(.2,0,0,1)` |
+| Power on reveal | 260ms flicker then 500ms settle | steps then ease-out |
+| Panels open | 350ms in, 180ms out | `cubic-bezier(.16,1,.3,1)` |
+| Press | 0.97, 120ms | ease-out |
 
-## 8. Pages
+Everything collapses to instant under `prefers-reduced-motion`.
 
-Home, Services, six service pages (Commercial, Residential, Panel and AC upgrades, EV charging, Custom lighting, Emergency repairs), Projects, About, Service areas, Reviews, FAQ, Careers (with application), Contact (custom form with photo upload of the panel or problem), 404.
+## 8. Voice
 
-## 9. Do and don't
+Calm technician. Say the measured thing: "200 amp panel, power back the same afternoon." Short sentences. No hype, no exclamation marks, no em dashes.
 
-**Do**
-- Let the live circuit be the only decoration.
-- Keep one brass action per view.
-- Use mono readouts for specs and numbers so they feel measured.
-- Show real work, real people, real numbers.
+## 9. Pages
 
-**Don't**
-- Lightning bolt icons, stock electricity photos, neon blue glows, or yellow caution tape. The circuit is the metaphor.
-- Cards in cards, drop shadows, pill buttons, gradients on text.
-- Template filler like "Welcome to our website" or "Why choose us".
+Home, Services, six service pages, Projects, About, Service areas, Reviews, FAQ, Careers, Book service (contact), 404.
+
+## 10. Never
+
+- Uppercase display type, numbered section labels, tracked eyebrows over every section.
+- Light sections, paper textures, orange.
+- Square buttons, hairline lists, spec tables with a rule under every row.
+- Lightning bolt clip art, neon blue glows, stock sparks.
+- Two marquees on one page.

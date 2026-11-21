@@ -1,0 +1,59 @@
+---
+/* An honest quick guide: is your panel ready for what you want to add? */
+import Icon from './Icon.astro';
+---
+<div class="pc panel" data-panel-check>
+  <form class="pc-form" onsubmit="return false">
+    <fieldset>
+      <legend>What size is your main panel?</legend>
+      <div class="seg">
+        <label><input type="radio" name="amps" value="100" checked /><span class="val">100A</span></label>
+        <label><input type="radio" name="amps" value="150" /><span class="val">150A</span></label>
+        <label><input type="radio" name="amps" value="200" /><span class="val">200A</span></label>
+        <label><input type="radio" name="amps" value="0" /><span>Not sure</span></label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Does the home have central AC?</legend>
+      <div class="seg">
+        <label><input type="radio" name="ac" value="1" checked /><span>Yes</span></label>
+        <label><input type="radio" name="ac" value="0" /><span>No</span></label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>What do you want to add?</legend>
+      <div class="seg seg-wrap">
+        <label><input type="checkbox" name="add" value="ev" checked /><span>EV charger</span></label>
+        <label><input type="checkbox" name="add" value="spa" /><span>Pool or spa</span></label>
+        <label><input type="checkbox" name="add" value="casita" /><span>Casita or shop</span></label>
+        <label><input type="checkbox" name="add" value="kitchen" /><span>Electric kitchen</span></label>
+      </div>
+    </fieldset>
+  </form>
+  <div class="pc-out" aria-live="polite">
+    <div class="pc-meter" aria-hidden="true"><span class="pc-fill"></span></div>
+    <p class="pc-verdict t-h3" data-pc-verdict>Plan on a panel upgrade</p>
+    <p class="pc-why small" data-pc-why>A 100A panel with central AC rarely has room for a Level 2 charger.</p>
+    <a class="btn btn-gold" href="/contact/">Book service <Icon name="arrow-right" size={18} class="ico-go" /></a>
+    <p class="hint">A rough guide only. We confirm with a load calculation before any work.</p>
+  </div>
+</div>
+<style is:global>
+.pc{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);overflow:hidden}
+.pc-form{padding:clamp(20px,3vw,36px);display:flex;flex-direction:column;gap:26px}
+.pc fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.pc legend{font-weight:500;font-size:1rem;margin-bottom:12px;padding:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label{position:relative;cursor:pointer}
+.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.seg span{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:var(--r-pill);border:1px solid var(--seam-2);font-size:.9375rem;color:var(--ink-2);transition:background-color .15s ease-out,border-color .15s ease-out,color .15s ease-out}
+.seg input:checked+span{background:rgba(216,183,118,.14);border-color:var(--gold);color:var(--ink)}
+.seg input:focus-visible+span{outline:2px solid var(--gold-hi);outline-offset:2px}
+@media (hover:hover){.seg label:hover span{border-color:var(--ink-3)}}
+.pc-out{display:flex;flex-direction:column;gap:14px;align-items:flex-start;justify-content:center;padding:clamp(20px,3vw,36px);background:var(--deck-2);border-left:1px solid var(--seam)}
+.pc-meter{width:100%;height:6px;border-radius:var(--r-pill);background:rgba(200,214,230,.08);overflow:hidden;margin-bottom:8px}
+.pc-fill{display:block;height:100%;width:var(--load,80%);background:linear-gradient(90deg,var(--gold),var(--gold-hi));border-radius:inherit;transition:width .45s var(--snap),background .3s ease-out}
+.pc[data-state=warn] .pc-fill{background:linear-gradient(90deg,#E8A25F,#FF8A6E)}
+.pc-why{max-width:40ch}
+@media (max-width:900px){.pc{grid-template-columns:minmax(0,1fr)}.pc-out{border-left:0;border-top:1px solid var(--seam)}}
+</style>

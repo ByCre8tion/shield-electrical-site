@@ -12,7 +12,7 @@ const { label = 'Shield Electrical on social media' } = Astro.props as { label?:
 </ul>
 <style is:global>
 .socials{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
-.socials a{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--rule-strong);color:var(--fg);transition:background-color .15s ease-out,border-color .15s ease-out,color .15s ease-out}
+.socials a{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--deck-2);border:1px solid var(--seam);color:var(--ink-2);transition:color .15s ease-out,border-color .15s ease-out,background-color .15s ease-out}
 .socials svg{width:17px;height:17px}
-@media (hover:hover){.socials a:hover{background:var(--brass);border-color:var(--brass);color:var(--ink)}}
+@media (hover:hover){.socials a:hover{color:var(--on-gold);background:var(--gold);border-color:var(--gold)}}
 </style>

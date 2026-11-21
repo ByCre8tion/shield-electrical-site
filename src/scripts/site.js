@@ -5,7 +5,7 @@ export const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export function initSite(company) {
   document.documentElement.classList.add('js');
-  menu(); openStatus(company); reveals(); meters(); forms(); reviews();
+  menu(); openStatus(company); reveals(); meters(); forms(); reviews(); conductor(); panelCheck();
 }
 
 function menu() {
@@ -38,21 +38,62 @@ function openStatus(c) {
     const when = today ? 'today' : n === 1 ? 'tomorrow' : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][(day + n) % 7];
     text = `Closed · opens ${when} ${c.open.from}am`;
   }
-  els.forEach((el) => { $('.led', el)?.classList.toggle('off', !open); const t = $('[data-open-text]', el); if (t) t.textContent = text; });
+  els.forEach((el) => { $('.led', el)?.classList.toggle('on', open); const t = $('[data-open-text]', el); if (t) t.textContent = text; });
 }
 
 function reveals() {
-  const items = $$('[data-reveal]'), rules = $$('.rule-live');
-  if (reduce || !('IntersectionObserver' in window)) { items.forEach((e) => e.classList.add('in')); rules.forEach((r) => r.classList.add('on')); return; }
+  const items = $$('[data-on]');
+  if (reduce || !('IntersectionObserver' in window)) { items.forEach((e) => e.classList.add('lit')); return; }
   const io = new IntersectionObserver((ents) => ents.forEach((e) => {
     if (!e.isIntersecting) return;
-    const el = e.target, sib = el.parentElement ? [...el.parentElement.children].filter((c) => c.hasAttribute('data-reveal')) : [];
-    el.style.transitionDelay = Math.min(sib.indexOf(el), 5) * 80 + 'ms';
-    el.classList.add('in', 'on'); io.unobserve(el);
-  }), { rootMargin: '0px 0px -8% 0px' });
-  items.forEach((e) => io.observe(e)); rules.forEach((r) => io.observe(r));
-  /* Anything already on screen at load shows immediately */
-  requestAnimationFrame(() => items.forEach((e) => { const r = e.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) e.classList.add('in'); }));
+    const el = e.target, sib = el.parentElement ? [...el.parentElement.children].filter((c) => c.hasAttribute('data-on')) : [];
+    el.style.animationDelay = Math.min(Math.max(sib.indexOf(el), 0), 5) * 90 + 'ms';
+    el.classList.add('lit'); io.unobserve(el);
+  }), { rootMargin: '0px 0px -6% 0px' });
+  items.forEach((e) => io.observe(e));
+}
+
+/* Process conductor: current fills the line as the section crosses the viewport, nodes light as it reaches them */
+function conductor() {
+  const c = $('[data-conductor]'); if (!c) return;
+  const steps = $$('.cond-step', c);
+  const set = (p) => { c.style.setProperty('--p', p); steps.forEach((s, i) => s.classList.toggle('on', p >= i / Math.max(1, steps.length - 1) - .001)); };
+  if (reduce) { set(1); return; }
+  /* Fine grained thresholds stand in for a scroll listener; progress only ever moves forward */
+  let best = 0;
+  const io = new IntersectionObserver(([e]) => {
+    const r = c.getBoundingClientRect(), vh = innerHeight;
+    const p = Math.min(1, Math.max(0, (vh * .85 - r.top) / (vh * .5)));
+    if (p > best) { best = p; set(p); }
+    if (best >= 1) io.disconnect();
+  }, { threshold: Array.from({ length: 41 }, (_, i) => i / 40) });
+  io.observe(c.closest('section') || c);
+}
+
+/* Panel check: a rough, honest guide to whether a panel has room for what someone wants to add */
+function panelCheck() {
+  const root = $('[data-panel-check]'); if (!root) return;
+  const form = $('form', root), verdict = $('[data-pc-verdict]', root), why = $('[data-pc-why]', root);
+  const load = { ev: 40, spa: 50, casita: 50, kitchen: 40 };
+  const run = () => {
+    const amps = +form.amps.value, ac = form.ac.value === '1';
+    const adds = $$('input[name=add]:checked', form).map((i) => i.value);
+    const want = adds.reduce((t, a) => t + load[a], 0);
+    const base = (ac ? 45 : 15) + 40;
+    let state, v, w, pct;
+    if (!amps) { state = 'warn'; v = 'Send us a photo of your panel'; w = 'The label on the main breaker tells us the size. We will check it before quoting.'; pct = 55; }
+    else {
+      const room = amps * .8 - base;
+      pct = Math.min(100, Math.round(((base + want) / (amps * .8)) * 100));
+      if (!adds.length) { state = 'ok'; v = 'Your panel is likely fine as is'; w = 'Add what you are planning to see if there is room.'; }
+      else if (want <= room * .6) { state = 'ok'; v = 'Likely room to add this'; w = `A ${amps}A panel usually carries this with a load check first.`; }
+      else if (want <= room) { state = 'warn'; v = 'Possible with load management'; w = 'It may fit with a load management device instead of a full upgrade.'; }
+      else { state = 'warn'; v = 'Plan on a panel upgrade'; w = `A ${amps}A panel${ac ? ' with central AC' : ''} rarely has room for ${adds.length > 1 ? 'all of this' : 'this'}.`; }
+    }
+    root.dataset.state = state; root.style.setProperty('--load', pct + '%');
+    verdict.textContent = v; why.textContent = w;
+  };
+  form.addEventListener('change', run); run();
 }
 
 function meters() {

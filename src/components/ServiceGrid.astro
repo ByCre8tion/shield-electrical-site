@@ -1,0 +1,48 @@
+---
+/* Breaker panel: each service is a tile with a switch that throws on hover or focus */
+import { services } from '../data/site';
+import Photo from './Photo.astro';
+import Icon from './Icon.astro';
+const icon: Record<string, string> = { commercial: 'buildings', residential: 'house-line', 'panel-upgrades': 'gauge', 'ev-charging': 'plug-charging', 'custom-lighting': 'lightbulb-filament', 'emergency-repairs': 'warning' };
+---
+<ul class="breakers">
+  {services.map((s, i) => (
+    <li class:list={['brk', { 'brk-big': i < 2 }]} data-on>
+      <a href={`/services/${s.slug}/`} class="panel">
+        {i < 2 && <Photo k={s.img} ratio="16 / 10" sizes="(max-width: 900px) 100vw, 50vw" />}
+        <span class="brk-top">
+          <span class="brk-ico"><Icon name={icon[s.slug]} size={22} /></span>
+          <span class="switch" aria-hidden="true"><span></span></span>
+        </span>
+        <h3 class="t-h3">{s.title}</h3>
+        <p>{s.short}</p>
+        {s.emergency ? <span class="status"><span class="led fault" aria-hidden="true"></span>Call first</span> : <span class="brk-go">View service <Icon name="arrow-right" size={16} /></span>}
+      </a>
+    </li>
+  ))}
+</ul>
+<style is:global>
+.breakers{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.brk-big{grid-column:span 2}
+.brk a{height:100%;display:flex;flex-direction:column;gap:12px;padding:16px 16px 22px;transition:border-color .22s var(--snap),box-shadow .3s var(--snap),background-color .22s var(--snap)}
+.brk-big a{padding:12px 12px 24px}
+.brk-big a>:not(.photo){margin-inline:10px}
+.brk .photo{border-radius:14px;margin-bottom:6px}
+.brk .photo img{filter:brightness(.72) saturate(.85);transition:filter .3s var(--snap)}
+.brk-top{display:flex;justify-content:space-between;align-items:center}
+.brk-ico{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--deck-2);border:1px solid var(--seam);color:var(--ink-2);transition:color .22s var(--snap),border-color .22s var(--snap)}
+.switch{position:relative;width:44px;height:24px;border-radius:var(--r-pill);background:var(--deck-2);border:1px solid var(--seam-2);transition:background-color .22s var(--snap),border-color .22s var(--snap)}
+.switch span{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--ink-3);transition:transform .22s var(--snap),background-color .22s var(--snap)}
+.brk p{color:var(--ink-2);font-size:.9375rem;line-height:1.55}
+.brk-go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font-size:.875rem;color:var(--ink-2);transition:color .2s ease-out}
+.brk .status{margin-top:auto}
+.brk a:is(:hover,:focus-visible){border-color:rgba(216,183,118,.4);box-shadow:var(--glow)}
+.brk a:is(:hover,:focus-visible) .switch{background:rgba(216,183,118,.18);border-color:var(--gold)}
+.brk a:is(:hover,:focus-visible) .switch span{transform:translateX(20px);background:var(--gold)}
+.brk a:is(:hover,:focus-visible) .brk-ico{color:var(--gold);border-color:rgba(216,183,118,.4)}
+.brk a:is(:hover,:focus-visible) .photo img{filter:brightness(.95) saturate(1)}
+.brk a:is(:hover,:focus-visible) .brk-go{color:var(--gold-hi)}
+.brk a:focus-visible{outline:none}
+@media (max-width:1000px){.breakers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.breakers{grid-template-columns:minmax(0,1fr)}.brk-big{grid-column:auto}}
+</style>

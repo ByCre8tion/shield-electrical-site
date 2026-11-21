@@ -4,25 +4,35 @@ import PageHead from '../components/PageHead.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import Socials from '../components/Socials.astro';
 import BbbSeal from '../components/BbbSeal.astro';
+import Icon from '../components/Icon.astro';
 import { company } from '../data/site';
 ---
-<Base title="Schedule service" description="Schedule an electrician in Chandler and the Phoenix Valley. Call, text or send the form with a photo." noChat>
-  <PageHead n="08" label="Contact" title='Schedule <span class="hl">service</span>' lead="Send the details and a photo if you have one. We reply within one business day." crumbs={[]} />
-  <section class="sec light">
-    <div class="wrap q-grid">
-      <div class="q-copy">
-        <ul class="q-facts">
-          <li><span class="readout">Call</span><a class="tel" href={`tel:${company.tel}`}>{company.phone}</a></li>
-          <li><span class="readout">Email</span><a class="link" href={`mailto:${company.email}`}>{company.email}</a></li>
-          <li><span class="readout">Office</span><span>{company.address}<br />{company.city}</span></li>
-          <li><span class="readout">Hours</span><span data-open-status class="readout" style="text-transform:none;letter-spacing:0;font-family:var(--body);font-size:1rem"><span class="led off" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span></li>
-        </ul>
-        <div class="em-alert light-alert"><span class="led fault" aria-hidden="true"></span><p><b>Emergency?</b> Do not use the form. Call us. If anything is smoking or sparking, call 911 first.</p></div>
-        <Socials />
-        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><BbbSeal /><span class="readout">{company.roc}</span></div>
-      </div>
+<Base title="Book service" description="Book an electrician in Chandler and the Phoenix Valley. Call, text or send the form with a photo." noChat>
+  <PageHead title='Book <span class="hl">service</span>' lead="Send the details and a photo if you have one. We reply within one business day." current="Book service" />
+  <section class="sec tight">
+    <div class="wrap split-7-5">
       <QuoteForm />
+      <div class="contact-side">
+        <div class="panel em-alert"><span class="led fault" aria-hidden="true"></span><p><b>Emergency?</b> Do not use the form. Call us. If anything is smoking or sparking, call 911 first.</p></div>
+        <ul class="panel contact-list">
+          <li><Icon name="phone" size={20} class="tb-ico" /><span><span class="small">Call</span><a class="val link" href={`tel:${company.tel}`}>{company.phone}</a></span></li>
+          <li><Icon name="envelope-simple" size={20} class="tb-ico" /><span><span class="small">Email</span><a class="link" href={`mailto:${company.email}`}>{company.email}</a></span></li>
+          <li><Icon name="map-pin" size={20} class="tb-ico" /><span><span class="small">Office</span><span>{company.address}, {company.city}</span></span></li>
+          <li><Icon name="clock" size={20} class="tb-ico" /><span><span class="small">Hours</span><span class="status" data-open-status><span class="led" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span></span></li>
+        </ul>
+        <Socials />
+        <BbbSeal />
+      </div>
     </div>
   </section>
 </Base>
-<style is:global>.light-alert{background:rgba(229,72,59,.06)}.light-alert b{color:var(--ink)}.light-alert p{color:var(--graphite)}</style>
+<style is:global>
+.contact-side{display:flex;flex-direction:column;gap:16px;align-items:flex-start;position:sticky;top:104px}
+.em-alert{display:flex;gap:14px;align-items:flex-start;padding:18px 22px;border-color:rgba(255,107,94,.4)}
+.em-alert .led{margin-top:9px}.em-alert b{font-weight:500}.em-alert p{color:var(--ink-2)}
+.contact-list{list-style:none;width:100%;padding:8px 20px}
+.contact-list li{display:flex;gap:14px;align-items:flex-start;padding:14px 0}
+.contact-list li+li{border-top:1px solid var(--seam)}
+.contact-list li>span{display:flex;flex-direction:column;gap:2px}
+@media (max-width:900px){.contact-side{position:static}}
+</style>

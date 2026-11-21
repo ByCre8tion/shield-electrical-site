@@ -1,0 +1,8 @@
+---
+/* Phosphor icon, one family across the site. name: 'lightning' or 'fill:star' */
+import icons from '../data/phosphor.json';
+interface Props { name: string; size?: number; class?: string; label?: string }
+const { name, size = 20, class: cls = '', label } = Astro.props;
+const body = (icons as Record<string, string>)[name] || '';
+---
+<svg class:list={['ico', cls]} viewBox="0 0 256 256" width={size} height={size} fill="currentColor" aria-hidden={label ? undefined : 'true'} role={label ? 'img' : undefined} aria-label={label} set:html={body} />

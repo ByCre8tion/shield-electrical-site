@@ -1,9 +1,10 @@
 ---
 import { services, company } from '../data/site';
+import Icon from './Icon.astro';
 interface Props { preset?: string; compact?: boolean }
 const { preset = '', compact = false } = Astro.props;
 ---
-<div class="qf">
+<div class="qf panel">
   <form class="qf-form" data-form data-endpoint="" novalidate enctype="multipart/form-data">
     <p class="hint">All fields are required unless marked optional.</p>
     <div class="qf-row">
@@ -26,7 +27,7 @@ const { preset = '', compact = false } = Astro.props;
       <div class="field">
         <span class="fl">Photos <span class="opt">(optional)</span></span>
         <label class="drop" for="qf-photos">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h3l1.5-2h7l1.5 2h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.25" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <Icon name="camera" size={26} />
           <span><b>Add a photo of your panel or the problem</b><br />JPG, PNG or HEIC, up to 10 MB each. It helps us quote faster.</span>
         </label>
         <input class="sr-only" id="qf-photos" name="photos" type="file" accept="image/*" multiple aria-describedby="qf-photos-list" />
@@ -35,34 +36,29 @@ const { preset = '', compact = false } = Astro.props;
     )}
     <p class="err" data-form-err role="alert"></p>
     <div class="qf-submit">
-      <button class="btn btn-brass" type="submit">Send request</button>
+      <button class="btn btn-gold" type="submit">Send request <Icon name="paper-plane-tilt" size={18} /></button>
       <p class="hint">We reply within one business day. By sending, you agree we may call or text you about this request.</p>
     </div>
   </form>
   <div class="qf-done" data-done hidden tabindex="-1">
-    <span class="qf-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="qf-tick" aria-hidden="true"><Icon name="check" size={26} /></span>
     <h3 class="t-h3">Request sent</h3>
     <p>We will call or text you within one business day. If it is urgent, call <a class="tel" href={`tel:${company.tel}`}>{company.phone}</a>.</p>
   </div>
 </div>
 <style is:global>
-.qf{background:var(--paper);border:1px solid var(--rule-l);border-radius:2px;padding:clamp(20px,3vw,36px);color:var(--ink);--bg:var(--paper);--fg:var(--ink);--fg-2:var(--graphite);--rule:var(--rule-l);--rule-strong:var(--rule-l-strong);--accent:var(--brass-deep);color-scheme:light}
-.qf .input{background-color:#fff}
-.qf :focus-visible{outline-color:var(--brass-deep)}
-.qf .err{color:#B3261E}
+.qf{padding:clamp(20px,3vw,36px)}
 .qf-form{display:flex;flex-direction:column;gap:20px}
-.qf-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
-.fl{font-size:.875rem;font-weight:600}
-.drop{display:flex;align-items:center;gap:14px;padding:16px;font-weight:400!important;border:1px dashed var(--rule-l-strong);border-radius:2px;cursor:pointer;font-size:.875rem;color:var(--graphite);transition:border-color .15s ease-out,background-color .15s ease-out}
-.drop svg{flex:none;width:28px;height:28px;color:var(--brass-deep)}
-.drop b{color:var(--ink)}
-@media (hover:hover){.drop:hover{border-color:var(--ink);background:#fff}}
-.field:has(#qf-photos:focus-visible) .drop{outline:2px solid var(--brass-deep);outline-offset:2px}
+.qf-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.drop{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px dashed var(--seam-2);border-radius:var(--r-input);cursor:pointer;font-size:.875rem;font-weight:400;color:var(--ink-2);transition:border-color .15s ease-out,background-color .15s ease-out}
+.drop .ico{color:var(--gold)}
+.drop b{font-weight:500;color:var(--ink)}
+@media (hover:hover){.drop:hover{border-color:var(--gold);background:rgba(216,183,118,.05)}}
+.field:has(input[type=file]:focus-visible) .drop{outline:2px solid var(--gold-hi);outline-offset:2px}
 .qf-submit{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
-.qf-done{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:12px 0}
+.qf-done{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:8px 0}
 .qf-done:focus{outline:none}
-.qf-done p{color:var(--graphite);max-width:44ch}
-.qf-tick{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--brass);color:var(--ink)}
-.qf-tick svg{width:26px;height:26px}
+.qf-done p{color:var(--ink-2);max-width:44ch}
+.qf-tick{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:var(--on-gold);box-shadow:var(--glow)}
 @media (max-width:560px){.qf-row{grid-template-columns:minmax(0,1fr)}}
 </style>
