@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import ServiceList from '../../components/ServiceList.astro';
+import Process from '../../components/Process.astro';
+import BrassBlock from '../../components/BrassBlock.astro';
+---
+<Base title="Electrical services" description="Commercial and residential electrical, panel and AC upgrades, EV chargers, custom lighting and emergency repairs in the Phoenix Valley.">
+  <PageHead n="01" label="Services" title='Six services, one <span class="hl">licensed</span> crew' lead="Homes and businesses across the Valley. Every job gets a written price, a permit when it needs one, and a clean finish." crumbs={[]} />
+  <section class="sec light"><div class="wrap"><ServiceList /></div></section>
+  <section class="sec panel-mode" aria-labelledby="p-h"><div class="wrap">
+    <div class="sec-head"><p class="readout">02 / <b>Process</b></p><div><h2 id="p-h" class="t-h2">How every job runs</h2></div></div>
+    <Process />
+  </div></section>
+  <BrassBlock title="Not sure which service you need?" text="Describe the problem or send a photo. We will tell you what it is and what it costs." cta="Describe the problem" />
+</Base>

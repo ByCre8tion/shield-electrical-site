@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import BrassBlock from '../components/BrassBlock.astro';
+import { faqGroups } from '../data/site';
+const schema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqGroups.flatMap((g) => g.items).map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
+---
+<Base title="FAQ" description="Answers about pricing, permits, panel upgrades, EV chargers and licensing from Shield Electrical.">
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <PageHead n="06" label="FAQ" title='Straight <span class="hl">answers</span>' lead="The questions we hear most. Ask the assistant in the corner or call if yours is not here." crumbs={[]} />
+  <section class="sec light">
+    <div class="wrap">
+      {faqGroups.map((g, i) => (
+        <div class="faq-grid faq-group">
+          <div><p class="readout">{String(i + 1).padStart(2, '0')} / <b>{g.g}</b></p></div>
+          <div class="qa">{g.items.map((f) => <details><summary>{f.q}</summary><p class="ans">{f.a}</p></details>)}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+  <BrassBlock title="Still have a question?" cta="Ask us directly" />
+</Base>
+<style is:global>.faq-group+.faq-group{margin-top:clamp(48px,6vw,80px)}</style>

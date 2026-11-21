@@ -1,0 +1,11 @@
+---
+import { areas } from '../data/site';
+---
+<ul class="areas-grid">
+  {areas.map((a, i) => <li data-reveal><span class="readout">{String(i + 1).padStart(2, '0')}</span>{a}</li>)}
+</ul>
+<style is:global>
+.areas-grid{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--rule)}
+.areas-grid li{display:flex;align-items:baseline;gap:14px;padding:20px 0;border-bottom:1px solid var(--rule);font-family:var(--display);font-weight:600;font-stretch:115%;font-size:clamp(1.125rem,1.6vw,1.375rem);letter-spacing:-.01em}
+@media (max-width:900px){.areas-grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px}}
+</style>

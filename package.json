@@ -1,0 +1,12 @@
+{
+  "name": "shield-electrical-site",
+  "private": true,
+  "type": "module",
+  "scripts": { "dev": "astro dev", "build": "astro build", "preview": "astro preview" },
+  "dependencies": {
+    "astro": "5.18.2",
+    "@fontsource-variable/archivo": "5.2.8",
+    "@fontsource/ibm-plex-sans": "5.2.8",
+    "@fontsource/ibm-plex-mono": "5.2.7"
+  }
+}

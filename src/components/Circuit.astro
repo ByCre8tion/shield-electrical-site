@@ -1,0 +1,9 @@
+---
+/* The live circuit field. Place inside a positioned parent; it fills it. density: traces per 9 grid cells. */
+interface Props { density?: number; class?: string }
+const { density = 1, class: cls = '' } = Astro.props;
+---
+<canvas class:list={['circuit', cls]} data-circuit data-density={density} aria-hidden="true"></canvas>
+<style is:global>
+.circuit{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+</style>

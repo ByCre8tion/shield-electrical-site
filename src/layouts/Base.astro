@@ -1,0 +1,71 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-sans/600.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Concierge from '../components/Concierge.astro';
+import { company, services } from '../data/site';
+interface Props { title?: string; description?: string; noChat?: boolean }
+const { title, description = 'Licensed commercial and residential electricians in Chandler and the Phoenix Valley. Panel upgrades, EV chargers, lighting and repairs, with a written price before work starts.', noChat = false } = Astro.props;
+const full = title ? `${title} | Shield Electrical` : 'Shield Electrical | Electricians in Chandler and the Phoenix Valley';
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const schema = {
+  '@context': 'https://schema.org', '@type': 'Electrician', name: company.name, url: Astro.site?.href, telephone: company.tel, email: company.email,
+  image: new URL('/brand/og.jpg', Astro.site).href,
+  address: { '@type': 'PostalAddress', streetAddress: company.address, addressLocality: 'Chandler', addressRegion: 'AZ', postalCode: '85224', addressCountry: 'US' },
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '07:00', closes: '17:00' }],
+  areaServed: 'Phoenix metropolitan area, Arizona',
+  hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Electrical services', itemListElement: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title } })) },
+};
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{full}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="theme-color" content="#0E0F10" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={full} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL('/brand/og.jpg', Astro.site).href} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <script is:inline>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <Nav />
+  <main id="main">
+    <slot />
+  </main>
+  <Footer />
+  {!noChat && <Concierge />}
+  <a class="call-bar" href={`tel:${company.tel}`}><span class="led" aria-hidden="true"></span>Call {company.phone}</a>
+  <script>
+    import { initSite } from '../scripts/site.js';
+    import { initCircuits } from '../scripts/circuit.js';
+    import { initChat } from '../scripts/chat.js';
+    import { company } from '../data/site';
+    initSite(company); initCircuits(); initChat();
+  </script>
+  <style is:global>
+    /* Phones: a tap to call bar, kept clear of the chat button */
+    .call-bar{display:none}
+    @media (max-width:640px){
+      .call-bar{position:fixed;left:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:55;display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 20px;border-radius:2px;background:var(--brass);color:var(--ink);font-weight:600;box-shadow:0 14px 30px -12px rgba(0,0,0,.7)}
+      .call-bar .led{box-shadow:0 0 0 3px rgba(18,19,21,.15)}
+      .menu-open .call-bar{display:none}
+      body{padding-bottom:84px}
+    }
+  </style>
+</body>
+</html>

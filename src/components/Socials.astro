@@ -1,0 +1,18 @@
+---
+import { socials } from '../data/site';
+import icons from '../data/icons.json';
+const { label = 'Shield Electrical on social media' } = Astro.props as { label?: string };
+---
+<ul class="socials" aria-label={label}>
+  {socials.map((s) => (
+    <li><a href={s.href || '#'} target={s.href ? '_blank' : undefined} rel={s.href ? 'noopener' : undefined} aria-label={s.label + (s.href ? ' (opens in a new tab)' : '')}>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d={(icons as Record<string, string>)[s.key]} fill="currentColor" /></svg>
+    </a></li>
+  ))}
+</ul>
+<style is:global>
+.socials{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.socials a{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--rule-strong);color:var(--fg);transition:background-color .15s ease-out,border-color .15s ease-out,color .15s ease-out}
+.socials svg{width:17px;height:17px}
+@media (hover:hover){.socials a:hover{background:var(--brass);border-color:var(--brass);color:var(--ink)}}
+</style>

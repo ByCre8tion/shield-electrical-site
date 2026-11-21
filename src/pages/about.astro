@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Photo from '../components/Photo.astro';
+import TrustBand from '../components/TrustBand.astro';
+import BrassBlock from '../components/BrassBlock.astro';
+import Socials from '../components/Socials.astro';
+import { values, company } from '../data/site';
+---
+<Base title="About" description="Shield Electrical is a licensed commercial and residential electrical contractor based in Chandler, Arizona.">
+  <PageHead n="03" label="About" title='Built on precision. <span class="hl">Backed by power.</span>' lead="A Chandler electrical contractor for homes and businesses that need it done right." crumbs={[]} />
+  <TrustBand />
+  <section class="sec light" aria-labelledby="story-h">
+    <div class="wrap why">
+      <div data-reveal><Photo k="crew" ratio="4 / 3" /></div>
+      <div class="why-copy">
+        <p class="readout">01 / <b>Our story</b></p>
+        <h2 id="story-h" class="t-h2" data-reveal>Started by an electrician who <span class="hl">answers the phone</span></h2>
+        <p class="body" data-reveal>[Jason's story: how Shield started, the year, the kind of work that built the company and what he wants every customer to feel when the job is done. To be written with Jason.]</p>
+        <figure class="sig" data-reveal>
+          <img src="/brand/jason.webp" alt="" width="56" height="56" />
+          <figcaption><b>Jason</b><span>Owner, Shield Electrical</span></figcaption>
+        </figure>
+        <div class="story-social" data-reveal><span>Follow the work</span><Socials /></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec" aria-labelledby="val-h">
+    <div class="wrap">
+      <div class="sec-head"><p class="readout">02 / <b>Values</b></p><div><h2 id="val-h" class="t-h2">What you can count on</h2></div></div>
+      <dl class="spec-table">{values.map((v) => <div data-reveal><dt class="readout">{v.t}</dt><dd>{v.d}</dd></div>)}</dl>
+    </div>
+  </section>
+  <BrassBlock title="Work with a crew that shows up." />
+</Base>
+<style is:global>
+.sig{display:flex;align-items:center;gap:14px;margin:0}
+.sig img{width:56px;height:56px;border-radius:50%;object-fit:cover}
+.sig figcaption{display:flex;flex-direction:column;font-size:.875rem;color:var(--fg-2)}
+.sig b{color:var(--fg);font-size:1rem}
+.story-social{display:flex;flex-direction:column;gap:12px;font-size:.875rem;font-weight:600}
+</style>

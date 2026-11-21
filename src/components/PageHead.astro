@@ -1,0 +1,26 @@
+---
+import Circuit from './Circuit.astro';
+interface Props { n?: string; label: string; title: string; lead?: string; crumbs?: { label: string; href: string }[] }
+const { n = '00', label, title, lead, crumbs = [] } = Astro.props;
+---
+<section class="ph-head">
+  <Circuit density={0.6} />
+  <div class="wrap ph-in">
+    {crumbs.length > 0 && <nav aria-label="Breadcrumb" class="crumbs"><ol>{[{ label: 'Home', href: '/' }, ...crumbs].map((c) => <li><a href={c.href}>{c.label}</a></li>)}<li aria-current="page">{label}</li></ol></nav>}
+    <p class="readout" data-reveal>{n} / <b>{label}</b></p>
+    <h1 class="t-h1" data-reveal set:html={title} />
+    {lead && <p class="lead" data-reveal>{lead}</p>}
+    <slot />
+  </div>
+</section>
+<style is:global>
+.ph-head{position:relative;overflow:hidden;background:var(--switch);border-bottom:1px solid var(--rule-d)}
+.ph-in{position:relative;display:flex;flex-direction:column;gap:24px;padding-block:clamp(64px,9vw,136px) clamp(48px,6vw,88px);pointer-events:none}
+.ph-in>*{pointer-events:auto}
+.ph-in h1{max-width:18ch}
+.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:8px;font-size:.875rem;color:var(--steel)}
+.crumbs li+li::before{content:"/";margin-right:8px;opacity:.5}
+.crumbs a{color:var(--steel)}
+.crumbs [aria-current]{color:var(--volt)}
+@media (hover:hover){.crumbs a:hover{color:var(--volt)}}
+</style>

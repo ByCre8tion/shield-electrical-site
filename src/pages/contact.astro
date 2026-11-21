@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Socials from '../components/Socials.astro';
+import BbbSeal from '../components/BbbSeal.astro';
+import { company } from '../data/site';
+---
+<Base title="Schedule service" description="Schedule an electrician in Chandler and the Phoenix Valley. Call, text or send the form with a photo." noChat>
+  <PageHead n="08" label="Contact" title='Schedule <span class="hl">service</span>' lead="Send the details and a photo if you have one. We reply within one business day." crumbs={[]} />
+  <section class="sec light">
+    <div class="wrap q-grid">
+      <div class="q-copy">
+        <ul class="q-facts">
+          <li><span class="readout">Call</span><a class="tel" href={`tel:${company.tel}`}>{company.phone}</a></li>
+          <li><span class="readout">Email</span><a class="link" href={`mailto:${company.email}`}>{company.email}</a></li>
+          <li><span class="readout">Office</span><span>{company.address}<br />{company.city}</span></li>
+          <li><span class="readout">Hours</span><span data-open-status class="readout" style="text-transform:none;letter-spacing:0;font-family:var(--body);font-size:1rem"><span class="led off" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span></li>
+        </ul>
+        <div class="em-alert light-alert"><span class="led fault" aria-hidden="true"></span><p><b>Emergency?</b> Do not use the form. Call us. If anything is smoking or sparking, call 911 first.</p></div>
+        <Socials />
+        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><BbbSeal /><span class="readout">{company.roc}</span></div>
+      </div>
+      <QuoteForm />
+    </div>
+  </section>
+</Base>
+<style is:global>.light-alert{background:rgba(229,72,59,.06)}.light-alert b{color:var(--ink)}.light-alert p{color:var(--graphite)}</style>

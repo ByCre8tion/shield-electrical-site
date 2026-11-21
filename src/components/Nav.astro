@@ -1,0 +1,67 @@
+---
+import { company, nav } from '../data/site';
+const path = Astro.url.pathname;
+const main = nav.filter((l) => ['/services/', '/projects/', '/about/', '/reviews/', '/careers/'].includes(l.href));
+const cur = (h: string) => (path.startsWith(h) ? 'page' : undefined);
+---
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="wrap nav-bar">
+    <a class="nav-logo" href="/" aria-label="Shield Electrical home"><img src="/brand/shield-logo.svg" alt="" width="176" height="40" /></a>
+    <nav class="nav-links" aria-label="Main">
+      {main.map((l) => <a href={l.href} aria-current={cur(l.href)}>{l.label}</a>)}
+    </nav>
+    <div class="nav-end">
+      <span class="readout nav-status" data-open-status><span class="led off" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span>
+      <a class="tel nav-tel" href={`tel:${company.tel}`}>{company.phone}</a>
+      <a class="btn btn-brass nav-cta" href="/contact/">Schedule service</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="sheet" data-menu><span class="mb-t">Menu</span><span class="mb-i" aria-hidden="true"></span></button>
+    </div>
+  </div>
+</header>
+<div class="sheet" id="sheet" hidden>
+  <nav aria-label="Menu" class="wrap sheet-in">
+    <ul>
+      {[{ label: 'Home', href: '/' }, ...nav, { label: 'Contact', href: '/contact/' }].map((l, i) => (
+        <li><a href={l.href} aria-current={l.href === '/' ? (path === '/' ? 'page' : undefined) : cur(l.href)}><span class="readout">{String(i + 1).padStart(2, '0')}</span>{l.label}</a></li>
+      ))}
+    </ul>
+    <div class="sheet-foot">
+      <a class="btn btn-brass" href="/contact/">Schedule service</a>
+      <a class="tel" href={`tel:${company.tel}`}>{company.phone}</a>
+      <span class="readout">{company.hours}</span>
+    </div>
+  </nav>
+</div>
+
+<style is:global>
+.nav{position:sticky;top:0;z-index:50;background:rgba(14,15,16,.86);-webkit-backdrop-filter:saturate(140%) blur(14px);backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid var(--rule-d);color:var(--volt)}
+.nav-bar{height:var(--nav-h);display:flex;align-items:center;gap:32px}
+.nav-logo{flex:none;display:block;padding-block:8px}
+.nav-logo img{height:34px;width:auto}
+.nav-links{display:flex;gap:4px;margin-left:12px}
+.nav-links a{position:relative;padding:10px 12px;font-size:.9375rem;font-weight:500;color:var(--steel);transition:color .15s ease-out}
+.nav-links a::after{content:"";position:absolute;left:12px;right:12px;bottom:4px;height:1px;background:var(--brass);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.nav-links a[aria-current]{color:var(--volt)}
+.nav-links a[aria-current]::after{transform:scaleX(1)}
+@media (hover:hover){.nav-links a:hover{color:var(--volt)}.nav-links a:hover::after{transform:scaleX(1)}}
+.nav-end{margin-left:auto;display:flex;align-items:center;gap:22px}
+.nav-tel{color:var(--volt)}
+.nav-cta{min-height:44px;padding:0 18px;font-size:.9375rem}
+.menu-btn{display:none;align-items:center;gap:12px;min-height:44px;padding:0 4px;font-weight:600;font-size:.9375rem}
+.mb-i{position:relative;width:20px;height:8px}
+.mb-i::before,.mb-i::after{content:"";position:absolute;left:0;right:0;height:1.5px;background:currentColor;transition:transform .3s var(--ease)}
+.mb-i::before{top:0}.mb-i::after{bottom:0}
+.menu-open .mb-i::before{transform:translateY(3.25px) rotate(45deg)}
+.menu-open .mb-i::after{transform:translateY(-3.25px) rotate(-45deg)}
+.sheet{position:fixed;inset:var(--nav-h) 0 0;z-index:49;background:var(--switch);overflow-y:auto;overscroll-behavior:contain}
+.sheet[hidden]{display:none}
+.sheet-in{padding-block:24px 40px;display:flex;flex-direction:column;min-height:100%}
+.sheet ul{list-style:none;border-top:1px solid var(--rule-d)}
+.sheet li a{display:flex;align-items:baseline;gap:18px;padding:16px 0;border-bottom:1px solid var(--rule-d);font-family:var(--display);font-weight:600;font-stretch:118%;font-size:clamp(1.75rem,7vw,2.5rem);letter-spacing:-.02em;line-height:1.05}
+.sheet li a[aria-current]{color:var(--brass-lt)}
+.sheet-foot{display:flex;flex-direction:column;align-items:flex-start;gap:14px;margin-top:32px}
+@media (max-width:1240px){.nav-status{display:none}}
+@media (max-width:1080px){.nav-links,.nav-tel{display:none}.menu-btn{display:inline-flex}}
+@media (max-width:560px){.nav-cta{display:none}.nav-logo img{height:30px}}
+</style>

@@ -1,0 +1,27 @@
+---
+import { services } from '../data/site';
+---
+<ul class="svc-list">
+  {services.map((s) => (
+    <li data-reveal>
+      <a href={`/services/${s.slug}/`}>
+        <span class="readout">{s.n}</span>
+        <h3 class="t-h2 svc-t">{s.title}{s.emergency && <span class="svc-flag"><span class="led fault" aria-hidden="true"></span>Call first</span>}</h3>
+        <p>{s.short}</p>
+        <span class="svc-arr" aria-hidden="true">→</span>
+      </a>
+    </li>
+  ))}
+</ul>
+<style is:global>
+.svc-list{list-style:none;border-top:1px solid var(--rule)}
+.svc-list a{position:relative;display:grid;grid-template-columns:72px minmax(0,1.15fr) minmax(0,1fr) 40px;align-items:center;gap:24px;padding:clamp(22px,2.6vw,34px) 0;border-bottom:1px solid var(--rule)}
+.svc-list a::before{content:"";position:absolute;left:0;bottom:-1px;width:100%;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}
+.svc-t{font-size:clamp(1.5rem,2.8vw,2.375rem);display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.svc-flag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-2)}
+.svc-list p{color:var(--fg-2);font-size:1rem}
+.svc-arr{font-size:1.375rem;justify-self:end;transition:transform .25s var(--ease)}
+@media (hover:hover){.svc-list a:hover::before{transform:scaleX(1)}.svc-list a:hover .svc-arr{transform:translateX(6px)}.svc-list a:hover .svc-t{color:var(--accent-text)}}
+.svc-list a:focus-visible{outline-offset:6px}
+@media (max-width:860px){.svc-list a{grid-template-columns:44px minmax(0,1fr) 28px;gap:12px 16px}.svc-list p{grid-column:2}.svc-arr{grid-column:3;grid-row:1}}
+</style>

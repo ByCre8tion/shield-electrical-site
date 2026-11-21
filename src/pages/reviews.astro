@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Reviews from '../components/Reviews.astro';
+import BrassBlock from '../components/BrassBlock.astro';
+---
+<Base title="Reviews" description="Google reviews for Shield Electrical.">
+  <PageHead n="05" label="Reviews" title='Reviews from <span class="hl">Google</span>' lead="Every review here comes from our Google Business Profile." crumbs={[]} />
+  <Reviews n="01" />
+  <BrassBlock title="Worked with us? Leave a review." text="It takes a minute and helps neighbors find a good electrician." cta="Contact us" />
+</Base>

@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import TrustBand from '../components/TrustBand.astro';
+import ServiceList from '../components/ServiceList.astro';
+import Process from '../components/Process.astro';
+import Reviews from '../components/Reviews.astro';
+import BrassBlock from '../components/BrassBlock.astro';
+import Areas from '../components/Areas.astro';
+import Photo from '../components/Photo.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { company, values } from '../data/site';
+---
+<Base>
+  <Hero />
+  <TrustBand />
+
+  <section class="sec light" aria-labelledby="svc-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="readout">01 / <b>Services</b></p>
+        <div><h2 id="svc-h" class="t-h2">Everything electrical, <span class="hl">done right</span> the first time</h2><p class="lead">Six things we do every day for homes and businesses across the Valley. Pick one, or tell us the problem and we will sort it out.</p></div>
+      </div>
+      <ServiceList />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="why-h">
+    <div class="wrap why">
+      <div class="why-media" data-reveal><Photo k="tools" ratio="4 / 5" sizes="(max-width: 860px) 100vw, 42vw" /></div>
+      <div class="why-copy">
+        <p class="readout">02 / <b>How we work</b></p>
+        <h2 id="why-h" class="t-h2" data-reveal>The electrician who <span class="hl">calls back</span></h2>
+        <p class="lead" data-reveal>Most of our customers found us after someone else never showed. We answer, we show up when we say, and we tell you the price before we start.</p>
+        <dl class="spec-table" data-reveal>
+          {values.map((v) => <div><dt class="readout">{v.t}</dt><dd>{v.d}</dd></div>)}
+        </dl>
+        <a class="btn btn-line" href="/about/" data-reveal>About Shield <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec panel-mode" aria-labelledby="proc-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="readout">03 / <b>Process</b></p>
+        <div><h2 id="proc-h" class="t-h2">Four steps from <span class="hl">call to inspected</span></h2></div>
+      </div>
+      <Process />
+    </div>
+  </section>
+
+  <BrassBlock title="One call, one electrician, one written price." text="No surprise invoices. You approve the price before any work starts, and we stand behind the work after we leave." />
+
+  <Reviews n="04" />
+
+  <section class="sec light" aria-labelledby="area-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="readout">05 / <b>Service areas</b></p>
+        <div><h2 id="area-h" class="t-h2">Based in Chandler, <span class="hl">working across the Valley</span></h2><p class="lead">If your city is not listed, ask. We travel for the right job.</p></div>
+      </div>
+      <Areas />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="q-h" id="quote">
+    <div class="wrap q-grid">
+      <div class="q-copy">
+        <p class="readout">06 / <b>Schedule service</b></p>
+        <h2 id="q-h" class="t-h2" data-reveal>Tell us what is going on</h2>
+        <p class="lead" data-reveal>Send the details and a photo if you have one. We reply within one business day with next steps and a price range.</p>
+        <ul class="q-facts" data-reveal>
+          <li><span class="readout">Call</span><a class="tel" href={`tel:${company.tel}`}>{company.phone}</a></li>
+          <li><span class="readout">Hours</span><span>{company.hours}</span></li>
+          <li><span class="readout">Office</span><span>{company.address}, {company.city}</span></li>
+        </ul>
+      </div>
+      <div data-reveal><QuoteForm /></div>
+    </div>
+  </section>
+</Base>

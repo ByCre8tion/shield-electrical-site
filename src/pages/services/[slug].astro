@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import Photo from '../../components/Photo.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import { services, company, type Service } from '../../data/site';
+export function getStaticPaths() { return services.map((s) => ({ params: { slug: s.slug }, props: { s } })); }
+const { s } = Astro.props as { s: Service };
+const i = services.findIndex((x) => x.slug === s.slug);
+const next = services[(i + 1) % services.length];
+const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: s.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
+---
+<Base title={s.title} description={`${s.short} Shield Electrical, licensed electricians in Chandler and the Phoenix Valley.`}>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <PageHead n={s.n} label={s.title} title={s.title} lead={s.lead} crumbs={[{ label: 'Services', href: '/services/' }]}>
+    {s.emergency ? (
+      <div class="em-alert" data-reveal>
+        <span class="led fault" aria-hidden="true"></span>
+        <p><b>Smoke, fire or sparking?</b> Leave the building and call 911 first. Then call us at <a class="tel" href={`tel:${company.tel}`}>{company.phone}</a>.</p>
+      </div>
+    ) : (
+      <div class="hero-cta" data-reveal><a class="btn btn-brass" href="#quote">Get a price <span class="arr" aria-hidden="true">→</span></a><a class="btn btn-line" href={`tel:${company.tel}`}>Call {company.phone}</a></div>
+    )}
+  </PageHead>
+
+  <section class="sec light" aria-labelledby="inc-h">
+    <div class="wrap sd-grid">
+      <div data-reveal><Photo k={s.img} ratio="4 / 3" sizes="(max-width: 860px) 100vw, 50vw" /></div>
+      <div class="sd-copy">
+        <p class="readout">01 / <b>What we do</b></p>
+        <h2 id="inc-h" class="t-h2" data-reveal>What is included</h2>
+        <ul class="inc" data-reveal>{s.includes.map((x) => <li>{x}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="spec-h">
+    <div class="wrap">
+      <div class="sec-head"><p class="readout">02 / <b>Spec sheet</b></p><div><h2 id="spec-h" class="t-h2">The details</h2></div></div>
+      <table class="spec" data-reveal>
+        <caption class="sr-only">{s.title} details</caption>
+        <tbody>{s.specs.map(([k, v]) => <tr><th scope="row" class="readout">{k}</th><td>{v}</td></tr>)}</tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec panel-mode" aria-labelledby="sfaq-h">
+    <div class="wrap faq-grid">
+      <div><p class="readout">03 / <b>Questions</b></p><h2 id="sfaq-h" class="t-h2" style="margin-top:20px">Common questions</h2></div>
+      <div class="qa">{s.faq.map((f) => <details><summary>{f.q}</summary><p class="ans">{f.a}</p></details>)}</div>
+    </div>
+  </section>
+
+  <section class="sec" id="quote" aria-labelledby="sq-h">
+    <div class="wrap q-grid">
+      <div class="q-copy"><p class="readout">04 / <b>Get a price</b></p><h2 id="sq-h" class="t-h2">Request {s.title.toLowerCase()}</h2><p class="lead">We reply within one business day.</p>
+        <a class="next-svc" href={`/services/${next.slug}/`}><span class="readout">Next service</span><span class="t-h3">{next.title} <span aria-hidden="true">→</span></span></a>
+      </div>
+      <QuoteForm preset={s.slug} />
+    </div>
+  </section>
+</Base>

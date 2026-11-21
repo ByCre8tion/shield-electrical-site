@@ -1,0 +1,43 @@
+---
+import Circuit from './Circuit.astro';
+import Photo from './Photo.astro';
+import { company } from '../data/site';
+---
+<section class="hero" aria-labelledby="hero-h">
+  <Circuit />
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="readout" data-reveal><span data-open-status class="readout"><span class="led off" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span></p>
+      <h1 id="hero-h" class="t-hero" data-reveal>Powering what matters. <span class="hl">Protecting</span> what counts.</h1>
+      <p class="lead" data-reveal>Licensed commercial and residential electricians in Chandler and across the Valley. Panels, EV chargers, lighting and repairs, with a written price before any work starts.</p>
+      <div class="hero-cta" data-reveal>
+        <a class="btn btn-brass" href="/contact/">Schedule service <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn btn-line" href="/services/">See services</a>
+      </div>
+    </div>
+    <div class="hero-media" data-reveal>
+      <Photo k="hero" ratio="4 / 5" eager sizes="(max-width: 860px) 100vw, 40vw" />
+      <dl class="hero-spec">
+        <div><dt class="readout">Panels</dt><dd class="num">100A → 200A</dd></div>
+        <div><dt class="readout">EV</dt><dd class="num">Level 2 · 240V</dd></div>
+        <div><dt class="readout">Permits</dt><dd>Pulled by us</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+<style is:global>
+.hero{position:relative;overflow:hidden;background:var(--switch);border-bottom:1px solid var(--rule-d)}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(32px,5vw,80px);align-items:end;padding-block:clamp(56px,8vw,120px) clamp(56px,7vw,96px)}
+.hero-copy{display:flex;flex-direction:column;gap:28px;pointer-events:none}
+.hero-copy>*{pointer-events:auto}
+.hero-copy h1{max-width:13ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+.hero-media{display:flex;flex-direction:column;gap:0}
+.hero-media .photo{border-radius:4px 4px 0 0}
+.hero-spec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;border:1px solid var(--rule-d);border-top:0;background:rgba(14,15,16,.7)}
+.hero-spec div{padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.hero-spec div+div{border-left:1px solid var(--rule-d)}
+.hero-spec dd{margin:0;font-family:var(--display);font-weight:600;font-stretch:112%;font-size:1.0625rem;color:var(--volt)}
+@media (max-width:860px){.hero-grid{grid-template-columns:minmax(0,1fr)}.hero-media .photo{aspect-ratio:4/3!important}}
+@media (max-width:480px){.hero-spec{grid-template-columns:minmax(0,1fr)}.hero-spec div+div{border-left:0;border-top:1px solid var(--rule-d)}.hero-spec div{flex-direction:row;justify-content:space-between;align-items:center}}
+</style>
