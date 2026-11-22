@@ -29,22 +29,27 @@ export const nav = [
 /* Real job photos only. Drop a URL or a /media path into src when Jason sends them; CI turns them into WebP.
    An empty src renders a labeled placeholder. No generated imagery. */
 export const media: Record<string, { src: string; alt: string; need?: string }> = {
-  hero: { src: '', need: 'Jason at a finished panel', alt: 'An electrician tightening a breaker in an open residential panel' },
   commercial: { src: '', need: 'Commercial electrical room', alt: 'A commercial electrical room with switchgear cabinets and conduit' },
   residential: { src: '', need: 'Finished home lighting', alt: 'A modern Arizona living room lit by warm recessed lighting' },
   panel: { src: '', need: 'Panel upgrade, after', alt: 'A new 200 amp service panel on a stucco wall' },
   ev: { src: '', need: 'EV charger install', alt: 'A Level 2 EV charger mounted in a garage' },
   lighting: { src: '', need: 'Landscape lighting at dusk', alt: 'A desert modern home with landscape lighting at dusk' },
   emergency: { src: '', need: 'Night service call', alt: 'An electrician with a headlamp inspecting a panel at night' },
-  tools: { src: '', need: 'The truck and tools', alt: 'An electrician tool belt and tools on a workbench' },
   crew: { src: '', need: 'Crew on a job', alt: 'Electricians pulling wire through a commercial ceiling' },
+  before1: { src: '', need: 'Old panel, before', alt: 'An old 100 amp panel before the upgrade' },
+  after1: { src: '', need: 'New panel, after', alt: 'A new 200 amp panel after the upgrade' },
+  project1: { src: '', need: 'Office tenant improvement', alt: 'Office tenant improvement lighting and power' },
+  project2: { src: '', need: '200 amp service upgrade', alt: 'A 200 amp service upgrade' },
+  project3: { src: '', need: 'Whole home lighting', alt: 'Whole home recessed lighting' },
+  project4: { src: '', need: 'Garage EV charger', alt: 'A Level 2 EV charger in a garage' },
+  project5: { src: '', need: 'Warehouse power', alt: 'Warehouse equipment circuits and LED lighting' },
+  project6: { src: '', need: 'Desert landscape lighting', alt: 'Low voltage landscape lighting at dusk' },
   field1: { src: '', need: 'Crew on a job site', alt: 'The Shield crew working on a job site' },
   field2: { src: '', need: 'Jason at a panel', alt: 'Jason working inside an electrical panel' },
   field3: { src: '', need: 'Trucks and gear', alt: 'Shield Electrical service trucks loaded with gear' },
   field4: { src: '', need: 'EV charger install', alt: 'An electrician mounting an EV charger in a garage' },
   field5: { src: '', need: 'Commercial wire pull', alt: 'Electricians pulling wire in a commercial ceiling' },
   jason: { src: '', need: 'Portrait of Jason', alt: 'Jason, owner of Shield Electrical' },
-  copper: { src: '', need: 'Clean wiring, close up', alt: 'Close up of stripped copper conductors' },
 };
 
 export type Service = {
@@ -144,12 +149,12 @@ export const roles = [
 export const perks = ['Steady year round work', 'Company vehicle for qualified roles', 'Paid training and licensing support', 'Health benefits (TODO confirm)', 'A team that answers the phone'];
 
 export const projects = [
-  { slug: 'office-ti', title: 'Office tenant improvement', city: 'Chandler', scope: 'Commercial', img: 'commercial', spec: '6,000 sq ft, lighting and power' },
-  { slug: 'panel-200a', title: '200 amp service upgrade', city: 'Gilbert', scope: 'Panel upgrade', img: 'panel', spec: '100A to 200A, same day' },
-  { slug: 'home-lighting', title: 'Whole home lighting', city: 'Scottsdale', scope: 'Lighting', img: 'residential', spec: '48 recessed fixtures, dimming scenes' },
-  { slug: 'garage-ev', title: 'Garage EV charger', city: 'Mesa', scope: 'EV charging', img: 'ev', spec: '60A Level 2, load checked' },
-  { slug: 'warehouse', title: 'Warehouse power', city: 'Tempe', scope: 'Commercial', img: 'crew', spec: 'Equipment circuits and LED retrofit' },
-  { slug: 'landscape', title: 'Desert landscape lighting', city: 'Queen Creek', scope: 'Lighting', img: 'lighting', spec: 'Low voltage uplighting' },
+  { slug: 'office-ti', title: 'Office tenant improvement', city: 'Chandler', scope: 'Commercial', img: 'project1', spec: '6,000 sq ft, lighting and power' },
+  { slug: 'panel-200a', title: '200 amp service upgrade', city: 'Gilbert', scope: 'Panel upgrade', img: 'project2', spec: '100A to 200A, same day' },
+  { slug: 'home-lighting', title: 'Whole home lighting', city: 'Scottsdale', scope: 'Lighting', img: 'project3', spec: '48 recessed fixtures, dimming scenes' },
+  { slug: 'garage-ev', title: 'Garage EV charger', city: 'Mesa', scope: 'EV charging', img: 'project4', spec: '60A Level 2, load checked' },
+  { slug: 'warehouse', title: 'Warehouse power', city: 'Tempe', scope: 'Commercial', img: 'project5', spec: 'Equipment circuits and LED retrofit' },
+  { slug: 'landscape', title: 'Desert landscape lighting', city: 'Queen Creek', scope: 'Lighting', img: 'project6', spec: 'Low voltage uplighting' },
 ];
 /* TODO: replace with real Shield projects and photos. These are layout examples. */
 
