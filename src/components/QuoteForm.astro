@@ -1,60 +1,57 @@
 ---
-/* Booking form as a work order: a ticket in three numbered parts (you, the job, the details).
-   Underlined fields at 16px so phones never zoom, the service as choice keys instead of a dropdown,
-   and pending, sent and error states. Layout and states studied from 21st.dev contact forms. */
+/* Booking form as a guided service call: one question at a time, three short steps.
+   Step 1 is a tap on a service (it moves on by itself), step 2 is what is going on, step 3 is how
+   to reach you. A line of current fills the progress rail as you go. Same fields and validation as
+   before (src/scripts/site.js forms), stepping lives in src/scripts/steps.js. */
 import { services, company } from '../data/site';
 import Icon from './Icon.astro';
 interface Props { preset?: string; compact?: boolean }
 const { preset = '', compact = false } = Astro.props;
-const opts = [...services.map((s) => ({ v: s.title, slug: s.slug })), { v: 'Not sure', slug: '' }];
+const icon: Record<string, string> = { commercial: 'buildings', residential: 'house-line', 'panel-upgrades': 'gauge', 'ev-charging': 'plug-charging', 'custom-lighting': 'lightbulb-filament', 'emergency-repairs': 'warning' };
+const opts = [...services.map((s) => ({ v: s.title, slug: s.slug, i: icon[s.slug] || 'lightning', em: !!s.emergency })), { v: 'Not sure yet', slug: '', i: 'question', em: false }];
+const steps = ['The job', 'Details', 'Your info'];
 ---
-<div class="qf wo">
-  <div class="wo-head">
-    <span class="wo-title">Work order</span>
-    <span class="wo-meta val"><span data-today>New request</span></span>
-  </div>
+<div class="qf sc" data-steps data-step-at="1">
+  <ol class="sc-rail" aria-hidden="true">
+    {steps.map((t, i) => <li data-rail={i + 1}><span class="val">{String(i + 1).padStart(2, '0')}</span>{t}</li>)}
+    <span class="sc-meter"><span></span></span>
+  </ol>
   <form class="qf-form" data-form data-endpoint="" novalidate enctype="multipart/form-data">
-    <fieldset class="wo-part">
-      <legend><span class="val">01</span>You</legend>
-      <div class="qf-row">
-        <div class="field"><label for="qf-name">Full name</label><input class="input" id="qf-name" name="name" autocomplete="name" required data-msg="Add your name so we know who to ask for." aria-describedby="qf-name-err" /><span class="err" id="qf-name-err"></span></div>
-        <div class="field"><label for="qf-phone">Mobile number</label><input class="input" id="qf-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required data-msg="Add a 10 digit number so we can call or text you back." aria-describedby="qf-phone-err" /><span class="err" id="qf-phone-err"></span></div>
-      </div>
-      <div class="qf-row">
-        <div class="field"><label for="qf-email">Email <span class="opt">optional</span></label><input class="input" id="qf-email" name="email" type="email" autocomplete="email" spellcheck="false" data-msg="That email does not look complete." aria-describedby="qf-email-err" /><span class="err" id="qf-email-err"></span></div>
-        <div class="field"><label for="qf-zip">ZIP code</label><input class="input" id="qf-zip" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" required data-msg="Add your ZIP so we know where the job is." aria-describedby="qf-zip-err" /><span class="err" id="qf-zip-err"></span></div>
-      </div>
-    </fieldset>
-
-    <fieldset class="wo-part">
-      <legend><span class="val">02</span>The job</legend>
-      <div class="wo-keys" role="radiogroup" aria-describedby="qf-service-err">
+    <fieldset class="sc-step" data-step="1">
+      <legend class="sc-q">What do you need help with?</legend>
+      <div class="sc-tiles" role="radiogroup" aria-describedby="qf-service-err">
         {opts.map((o, i) => (
-          <label><input type="radio" name="service" value={o.v} id={i === 0 ? 'qf-service' : undefined} required data-msg={i === 0 ? 'Choose the closest option.' : undefined} checked={!!preset && o.slug === preset} /><span><i></i>{o.v}</span></label>
+          <label class:list={[{ em: o.em }]}><input type="radio" name="service" value={o.v} id={i === 0 ? 'qf-service' : undefined} required data-msg={i === 0 ? 'Pick the closest one. Not sure is fine.' : undefined} checked={!!preset && o.slug === preset} /><span><Icon name={o.i} size={22} /><b>{o.v}</b></span></label>
         ))}
       </div>
       <span class="err" id="qf-service-err"></span>
     </fieldset>
-
-    <fieldset class="wo-part">
-      <legend><span class="val">03</span>Details</legend>
-      <div class="field"><label for="qf-msg">What is going on</label><textarea class="input" id="qf-msg" name="message" rows="3" required placeholder="What is happening, where, and how soon you need it" data-msg="A sentence or two helps us price it right." aria-describedby="qf-msg-err"></textarea><span class="err" id="qf-msg-err"></span></div>
+    <fieldset class="sc-step" data-step="2" hidden>
+      <legend class="sc-q">What is going on?</legend>
+      <div class="sc-f"><label for="qf-msg">A sentence or two is plenty</label><textarea class="sc-in" id="qf-msg" name="message" rows="4" required placeholder="Breaker keeps tripping in the kitchen. Would like it looked at this week." data-msg="A sentence or two helps us price it right." aria-describedby="qf-msg-err"></textarea><span class="err" id="qf-msg-err"></span></div>
       {!compact && (
-        <div class="field">
-          <label class="drop" for="qf-photos">
-            <Icon name="camera" size={20} />
-            <span><b>Add photos</b> of the panel or the problem <span class="opt">optional</span></span>
-          </label>
+        <div class="sc-f">
+          <label class="sc-drop" for="qf-photos"><Icon name="camera" size={20} /><span><b>Add photos</b> of the panel or the problem <span class="opt">optional</span></span></label>
           <input class="sr-only" id="qf-photos" name="photos" type="file" accept="image/*" multiple aria-describedby="qf-photos-list" />
           <span class="hint" id="qf-photos-list" aria-live="polite"></span>
         </div>
       )}
     </fieldset>
-
-    <p class="err" data-form-err role="alert"></p>
-    <div class="qf-submit">
-      <button class="btn btn-gold" type="submit"><span data-btn-label>Send request</span> <Icon name="arrow-right" size={18} class="ico-go" /></button>
-      <p class="wo-note">Reply within one business day. By sending, you agree we may call or text you about this request.</p>
+    <fieldset class="sc-step" data-step="3" hidden>
+      <legend class="sc-q">Where should we reach you?</legend>
+      <div class="sc-grid">
+        <div class="sc-f"><label for="qf-name">Full name</label><input class="sc-in" id="qf-name" name="name" autocomplete="name" required data-msg="Add your name so we know who to ask for." aria-describedby="qf-name-err" /><span class="err" id="qf-name-err"></span></div>
+        <div class="sc-f"><label for="qf-phone">Mobile number</label><input class="sc-in" id="qf-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required data-msg="Add a 10 digit number so we can call or text you back." aria-describedby="qf-phone-err" /><span class="err" id="qf-phone-err"></span></div>
+        <div class="sc-f"><label for="qf-zip">ZIP code</label><input class="sc-in" id="qf-zip" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" required data-msg="Add your ZIP so we know where the job is." aria-describedby="qf-zip-err" /><span class="err" id="qf-zip-err"></span></div>
+        <div class="sc-f"><label for="qf-email">Email <span class="opt">optional</span></label><input class="sc-in" id="qf-email" name="email" type="email" autocomplete="email" spellcheck="false" data-msg="That email does not look complete." aria-describedby="qf-email-err" /><span class="err" id="qf-email-err"></span></div>
+      </div>
+    </fieldset>
+    <p class="err sc-ferr" data-form-err role="alert"></p>
+    <div class="sc-nav">
+      <button class="sc-back" type="button" data-back hidden><Icon name="arrow-left" size={18} /> Back</button>
+      <button class="btn btn-gold" type="button" data-next><span>Continue</span> <Icon name="arrow-right" size={18} class="ico-go" /></button>
+      <button class="btn btn-gold" type="submit" hidden><span data-btn-label>Send request</span> <Icon name="arrow-right" size={18} class="ico-go" /></button>
+      <p class="sc-note" aria-live="polite" data-step-note>Step 1 of 3. About a minute.</p>
     </div>
   </form>
   <div class="qf-done" data-done hidden tabindex="-1">

@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
 import Photo from '../../components/Photo.astro';
 import QuoteForm from '../../components/QuoteForm.astro';
+import QA from '../../components/QA.astro';
 import Icon from '../../components/Icon.astro';
 import { services, company, type Service } from '../../data/site';
 export function getStaticPaths() { return services.map((s) => ({ params: { slug: s.slug }, props: { s } })); }
@@ -43,7 +44,7 @@ const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEn
 
   <section class="sec tight" aria-labelledby="sfaq-h">
     <div class="wrap split-7-5">
-      <div class="qa" data-on>{s.faq.map((f) => <details><summary>{f.q}<Icon name="caret-down" size={18} /></summary><p class="ans">{f.a}</p></details>)}</div>
+      <QA items={s.faq} />
       <div class="head"><h2 id="sfaq-h" class="t-h2" data-on>Common questions</h2><a class="link small" href="/faq/">See every answer</a></div>
     </div>
   </section>

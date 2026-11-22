@@ -234,6 +234,7 @@ function forms() {
       if (err) err.textContent = ok ? '' : f.dataset.msg;
       return ok;
     };
+    form._check = check;
     fields.forEach((f) => {
       f.addEventListener('input', () => { if (f.getAttribute('aria-invalid') === 'true') check(f); });
       if (f.type === 'radio') $$(`input[name="${f.name}"]`, form).forEach((r) => r.addEventListener('change', () => check(f)));
@@ -251,7 +252,7 @@ function forms() {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const bad = fields.filter((f) => !check(f));
-      if (bad.length) { bad[0].focus(); return; }
+      if (bad.length) { form.dispatchEvent(new CustomEvent('form:bad', { detail: bad[0] })); bad[0].focus(); return; }
       const btn = $('button[type=submit]', form), lab = $('[data-btn-label]', btn) || btn, label = lab.textContent;
       btn.disabled = true; btn.setAttribute('aria-busy', 'true'); lab.textContent = 'Sending…';
       try {

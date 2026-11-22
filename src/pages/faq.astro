@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import CtaPanel from '../components/CtaPanel.astro';
-import Icon from '../components/Icon.astro';
+import QA from '../components/QA.astro';
 import { faqGroups } from '../data/site';
 const schema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqGroups.flatMap((g) => g.items).map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
 ---
@@ -14,7 +14,7 @@ const schema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntit
       {faqGroups.map((g) => (
         <div class="faq-group">
           <h2 class="t-h3" data-on>{g.g}</h2>
-          <div class="qa" data-on>{g.items.map((f) => <details><summary>{f.q}<Icon name="caret-down" size={18} /></summary><p class="ans">{f.a}</p></details>)}</div>
+          <QA items={g.items} />
         </div>
       ))}
     </div>
