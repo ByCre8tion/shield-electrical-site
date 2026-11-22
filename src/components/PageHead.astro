@@ -18,18 +18,3 @@ const big = (word ?? current ?? '').toUpperCase();
   </div>
   <div class="phd-line" aria-hidden="true"><span></span></div>
 </section>
-<style is:global>
-.phd{position:relative;overflow:hidden;margin-top:-72px;padding-top:72px}
-.phd-word{position:absolute;right:-.04em;bottom:-.12em;font-weight:600;font-size:clamp(5rem,17vw,16rem);line-height:.8;letter-spacing:-.06em;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.08);pointer-events:none;-webkit-user-select:none;user-select:none}
-.phd-in{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:24px;padding-block:clamp(64px,9vw,128px) clamp(56px,7vw,96px)}
-.phd-hud{align-self:stretch;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid var(--seam)}
-.phd-h{max-width:15ch;font-size:clamp(2.6rem,5.6vw,5.25rem)}
-.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:8px;font-size:.875rem;color:var(--ink-3)}
-.crumbs li+li::before{content:"/";margin-right:8px;color:var(--ink-3)}
-.crumbs a{color:var(--ink-3);transition:color .15s ease-out}
-.crumbs [aria-current]{color:var(--volt)}
-@media (hover:hover){.crumbs a:hover{color:var(--ink)}}
-.phd-line{position:relative;height:1px;background:var(--seam);overflow:hidden}
-.phd-line span{position:absolute;top:0;left:var(--gut);width:96px;height:1px;background:var(--volt)}
-@media (max-width:640px){.phd-geo{display:none}}
-</style>

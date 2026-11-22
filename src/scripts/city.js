@@ -55,8 +55,14 @@ export function initCity() {
         // The word behind the skyline
         ctx.save();
         ctx.font = `600 ${fontPx}px "Sora Variable", Sora, system-ui, sans-serif`;
+        ctx.letterSpacing = '-0.04em';
+        // Stacked layouts: fit the whole word inside the screen with a margin so every letter reads
+        if (mobile) {
+          const fit = fontPx * (w * .84) / ctx.measureText('SHIELD').width;
+          if (Math.abs(fit - fontPx) > .5) { fontPx = fit; ctx.font = `600 ${fontPx}px "Sora Variable", Sora, system-ui, sans-serif`; }
+        }
         ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-        const wy = mobile ? h * .4 : h * .34;
+        const wy = mobile ? Math.max(h * .29, fontPx * .86) : h * .34;
         const grad = ctx.createLinearGradient(0, wy - fontPx * .8, 0, wy);
         grad.addColorStop(0, 'rgba(255,255,255,.16)'); grad.addColorStop(1, 'rgba(255,255,255,.03)');
         ctx.fillStyle = grad; ctx.letterSpacing = '-0.04em';

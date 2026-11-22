@@ -1,0 +1,16 @@
+---
+/* Home page FAQ: the questions people ask before they call, with a link to every answer. */
+import Icon from './Icon.astro';
+import { faqGroups } from '../data/site';
+const items = faqGroups.flatMap((g) => g.items).slice(0, 6);
+---
+<section class="sec" id="faq" aria-labelledby="hfaq-h">
+  <div class="wrap hfaq">
+    <div class="hfaq-side">
+      <h2 id="hfaq-h" class="t-h2" data-on>Questions before you call</h2>
+      <p class="lead" data-on>Pricing, permits, panels and chargers. The answers we give on the phone every week.</p>
+      <a class="btn btn-line" href="/faq/" data-on>Every answer <Icon name="arrow-right" size={18} class="ico-go" /></a>
+    </div>
+    <div class="qa" data-on>{items.map((f) => <details><summary>{f.q}<Icon name="caret-down" size={18} /></summary><p class="ans">{f.a}</p></details>)}</div>
+  </div>
+</section>

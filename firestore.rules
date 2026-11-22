@@ -1,5 +1,5 @@
 rules_version = '2';
-// Shield photo edit mode. Anyone can view photos; only listed editors can change them.
+// Shield edit mode. Anyone can view photos and published posts; only listed editors can change them.
 // Keep the list in sync with src/data/firebase.ts.
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -11,6 +11,15 @@ service cloud.firestore {
     match /photos/{slot} {
       allow read: if true;
       allow write: if isEditor() && slot.matches('^[a-z0-9]+$');
+    }
+    // Blog: anyone reads published posts, editors read drafts and write
+    match /posts/{slug} {
+      allow read: if resource.data.status == 'published' || isEditor();
+      allow create, update: if isEditor()
+        && slug.matches('^[a-z0-9]+(-[a-z0-9]+)*$') && slug.size() <= 80 && slug != 'post'
+        && request.resource.data.status in ['draft', 'published']
+        && request.resource.data.title is string && request.resource.data.title.size() > 0;
+      allow delete: if isEditor();
     }
     match /meta/{doc} {
       allow read: if true;

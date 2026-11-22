@@ -3,6 +3,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Nightly rebuild so new blog posts get static pages (they show live right away regardless)
+  schedule:
+    - cron: '17 10 * * *'
 permissions:
   contents: read
   id-token: write
@@ -21,6 +24,7 @@ jobs:
       - run: npm ci
       - run: npm install --no-save sharp@0.33.5
       - run: node scripts/fetch-media.mjs
+      - run: node scripts/fetch-posts.mjs
       - run: npm run build
       # Keyless login: GitHub proves it is this repo, Google trusts only this repo (see scripts/gcp-setup.sh)
       - uses: google-github-actions/auth@v2

@@ -14,6 +14,7 @@ export const pages = [
   { label: 'Gallery', href: '/gallery/', about: 'photos of recent work' },
   { label: 'About', href: '/about/', about: 'Jason, the team and values' },
   { label: 'Service areas', href: '/service-areas/', about: 'cities served' },
+  { label: 'Blog', href: '/blog/', about: 'guides and news on panels, chargers, lighting and safety' },
   { label: 'FAQ', href: '/faq/', about: 'pricing, permits, panels, EV' },
   { label: 'Careers', href: '/careers/', about: 'open roles and how to apply' },
   { label: 'Contact', href: '/contact/', about: 'schedule service, phone, address' },

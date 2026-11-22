@@ -1,0 +1,13 @@
+---
+/* Shell for posts published since the last build. firebase.json sends any unknown /blog/ address
+   here, and the post is read live. The nightly rebuild then gives it a static page. */
+import Base from '../../layouts/Base.astro';
+import PostView from '../../components/PostView.astro';
+---
+<Base title="Blog" description="From the Shield Electrical blog." noindex>
+  <PostView />
+</Base>
+<script>
+  import { initPost } from '../../scripts/blog.js';
+  initPost();
+</script>

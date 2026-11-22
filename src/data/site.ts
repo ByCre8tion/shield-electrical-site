@@ -21,6 +21,7 @@ export const nav = [
   { label: 'Gallery', href: '/gallery/' },
   { label: 'About', href: '/about/' },
   { label: 'Service areas', href: '/service-areas/' },
+  { label: 'Blog', href: '/blog/' },
   { label: 'FAQ', href: '/faq/' },
   { label: 'Careers', href: '/careers/' },
 ];

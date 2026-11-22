@@ -59,6 +59,12 @@
         "destination": "/#reviews",
         "type": 301
       }
+    ],
+    "rewrites": [
+      {
+        "source": "/blog/**",
+        "destination": "/blog/post/index.html"
+      }
     ]
   }
 }

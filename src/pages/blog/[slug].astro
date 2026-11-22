@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostView from '../../components/PostView.astro';
+import posts from '../../data/posts.json';
+export function getStaticPaths() {
+  return posts.filter((p) => p.slug !== 'post').map((p) => ({ params: { slug: p.slug }, props: { post: p } }));
+}
+const { post } = Astro.props;
+const site = Astro.site!;
+const schema = { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: post.title, description: post.summary || undefined, datePublished: post.date, dateModified: post.updated ? new Date(post.updated).toISOString() : post.date, image: post.cover ? new URL(post.cover, site).href : undefined, author: { '@type': 'Organization', name: 'Shield Electrical' }, publisher: { '@type': 'Organization', name: 'Shield Electrical', logo: { '@type': 'ImageObject', url: new URL('/brand/shield-logo.svg', site).href } }, mainEntityOfPage: new URL(`/blog/${post.slug}/`, site).href };
+---
+<Base title={post.title} description={post.summary || `${post.title}, from the Shield Electrical blog.`} image={post.cover || undefined} ogType="article">
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <PostView post={post} />
+</Base>
+<script>
+  import { initPost } from '../../scripts/blog.js';
+  initPost();
+</script>

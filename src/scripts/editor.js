@@ -111,11 +111,11 @@ function dot(state) { return el('span', `ed-dot ${state}`); }
 function btn(label, fn, kind = '') { const b = el('button', `ed-btn ${kind}`); b.type = 'button'; b.textContent = label; b.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); fn(); }); return b; }
 
 /* Turn the photo upright, cap it at 2000px wide and compress until it fits one document */
-async function shrink(file) {
+export async function shrink(file, limit = LIMIT, maxW = 2000) {
   let src;
   try { src = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
   catch { const url = URL.createObjectURL(file); src = new Image(); src.src = url; await src.decode(); }
-  let w = src.width, h = src.height, scale = Math.min(1, 2000 / w);
+  let w = src.width, h = src.height, scale = Math.min(1, maxW / w);
   const cv = document.createElement('canvas'), ctx = cv.getContext('2d');
   for (let tries = 0; tries < 8; tries++) {
     cv.width = Math.round(w * scale); cv.height = Math.round(h * scale);
@@ -123,7 +123,7 @@ async function shrink(file) {
     for (const q of [.82, .72, .62]) {
       let data = cv.toDataURL('image/webp', q);
       if (!data.startsWith('data:image/webp')) data = cv.toDataURL('image/jpeg', q);
-      if (data.length < LIMIT) return data;
+      if (data.length < limit) return data;
     }
     scale *= .8;
   }

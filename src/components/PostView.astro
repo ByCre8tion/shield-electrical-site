@@ -1,0 +1,30 @@
+---
+/* One blog post. Rendered at build time for published posts, and as an empty shell that
+   src/scripts/blog.js fills for posts published since the last build. */
+import { md, fmtDate, readMins } from '../scripts/blog-render.js';
+import Icon from './Icon.astro';
+interface Props { post?: { slug: string; title: string; summary: string; body: string; cover: string; date: string; updated: number } | null }
+const { post = null } = Astro.props;
+---
+<article class="post" data-post-view={post?.slug || ''} data-updated={post?.updated || 0}>
+  <header class="phd gridbg post-head">
+    <div class="wrap phd-in">
+      <div class="phd-hud">
+        <nav aria-label="Breadcrumb" class="crumbs"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Blog</a></li><li aria-current="page">Article</li></ol></nav>
+        <span class="hud phd-geo" aria-hidden="true">Scottsdale, AZ <b>33.4942° N 111.9261° W</b></span>
+      </div>
+      <p class="post-meta val" data-post-meta>{post ? `${fmtDate(post.date)} · ${readMins(post.body)} min read` : ' '}</p>
+      <h1 class="t-display post-h" data-post-title>{post ? post.title : 'Loading the post'}</h1>
+      <p class="lead" data-post-summary hidden={!post?.summary}>{post?.summary}</p>
+    </div>
+    <div class="phd-line" aria-hidden="true"><span></span></div>
+  </header>
+  <div class="wrap post-in">
+    <figure class="post-cover photo" data-post-cover hidden={!post?.cover}>{post?.cover && <img src={post.cover} alt="" decoding="async" fetchpriority="high" />}</figure>
+    <div class="prose" data-post-body set:html={post ? md(post.body) : ''} />
+    <footer class="post-foot">
+      <a class="slide" href="/blog/"><Icon name="arrow-left" size={18} /> All posts</a>
+      <a class="btn btn-gold" href="/contact/"><span>Book service</span> <Icon name="arrow-right" size={18} class="ico-go" /></a>
+    </footer>
+  </div>
+</article>

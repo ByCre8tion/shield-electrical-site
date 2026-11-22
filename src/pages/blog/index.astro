@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import CtaPanel from '../../components/CtaPanel.astro';
+import posts from '../../data/posts.json';
+import { card } from '../../scripts/blog-render.js';
+---
+<Base title="Blog" description="Plain answers from Shield Electrical on panels, EV chargers, lighting, permits and electrical safety for Scottsdale homes and businesses.">
+  <PageHead title="Notes from the panel" lead="Plain answers on panels, chargers, lighting and code for Scottsdale homes and Valley businesses." current="Blog" />
+  <section class="sec tight">
+    <div class="wrap">
+      <ul class="bl-list" data-blog-list set:html={posts.map((p, i) => card(p, i)).join('')} />
+      <div class="bl-empty" data-blog-empty hidden={posts.length > 0}>
+        <p class="t-h3">First posts are on the way</p>
+        <p>Guides on panel upgrades, EV chargers and lighting will land here soon.</p>
+      </div>
+    </div>
+  </section>
+  <CtaPanel title="Have a question we should write about?" text="Send it over. If it helps you, it probably helps your neighbors too." />
+</Base>
+<script>
+  import { initBlogList } from '../../scripts/blog.js';
+  initBlogList();
+</script>
