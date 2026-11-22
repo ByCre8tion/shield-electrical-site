@@ -24,9 +24,8 @@ export function startEditor() {
     bar.append(btn('Exit', exit));
     return;
   }
-  const host = location.hostname;
-  const authDomain = /\.(web\.app|firebaseapp\.com)$/.test(host) ? host : `${firebaseConfig.projectId}.firebaseapp.com`;
-  const app = initializeApp({ ...firebaseConfig, authDomain });
+  // Google's OAuth client trusts the default Firebase auth handler, so always sign in through it
+  const app = initializeApp({ ...firebaseConfig, authDomain: `${firebaseConfig.projectId}.firebaseapp.com` });
   const auth = getAuth(app), db = getFirestore(app);
   const pending = new Map(); // slot -> { data } or { remove: true }
   const originals = new Map(); // slot -> outerHTML of each frame before edits
