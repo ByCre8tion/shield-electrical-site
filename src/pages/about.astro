@@ -17,13 +17,12 @@ import { values } from '../data/site';
     <div class="wrap ab-story">
       <div class="ab-portrait" data-on><Photo k="jason" ratio="4 / 5" tag="Owner" sizes="(max-width: 900px) 100vw, 40vw" /></div>
       <div class="ab-copy">
-        <p class="hud" data-on>The person behind the panel</p>
         <h2 id="story-h" class="t-h2" data-on>An electrician who answers the phone</h2>
         <p class="ab-body" data-on>[Jason's story: how Shield started, the year, the kind of work that built the company and what he wants every customer to feel when the job is done. To be written with Jason.]</p>
         <dl class="ab-spec" data-on>
-          <div><dt class="hud">Focus</dt><dd>Scottsdale and Paradise Valley</dd></div>
-          <div><dt class="hud">Office</dt><dd>Chandler, Arizona</dd></div>
-          <div><dt class="hud">Work</dt><dd>Commercial and residential</dd></div>
+          <div><dt class="label">Focus</dt><dd>Scottsdale and Paradise Valley</dd></div>
+          <div><dt class="label">Office</dt><dd>Chandler, Arizona</dd></div>
+          <div><dt class="label">Work</dt><dd>Commercial and residential</dd></div>
         </dl>
         <figure class="sig" data-on><img src="/brand/jason.webp" alt="" width="52" height="52" /><figcaption><b>Jason</b><span>Owner, Shield Electrical</span></figcaption></figure>
         <div data-on><Socials /></div>
@@ -35,7 +34,7 @@ import { values } from '../data/site';
 
   <section class="sec gridbg" aria-labelledby="val-h">
     <div class="wrap ab-vals">
-      <div class="ab-vals-h"><p class="hud" data-on>Standards</p><h2 id="val-h" class="t-h2" data-on>What you can count on</h2></div>
+      <div class="ab-vals-h"><h2 id="val-h" class="t-h2" data-on>What you can count on</h2></div>
       <ol class="ab-list">
         {values.map((v, i) => (
           <li data-on><span class="val">0{i + 1}</span><h3 class="t-h3">{v.t}</h3><p>{v.d}</p></li>

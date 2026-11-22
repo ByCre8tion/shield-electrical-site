@@ -14,7 +14,7 @@ const frames = [
 ---
 <section class="sec fg" aria-labelledby="fg-h">
   <div class="wrap">
-    <div class="fg-head"><h2 id="fg-h" class="t-h2" data-on>{title}</h2><p class="hud" data-on>{note}</p></div>
+    <div class="fg-head"><h2 id="fg-h" class="t-h2" data-on>{title}</h2><p class="label" data-on>{note}</p></div>
     <div class="fg-grid">
       {frames.map((f, i) => <div class:list={['fg-cell', f.c]} data-on><Photo k={f.k} ratio={f.r} tag={`Frame 0${i + 1}`} sizes="(max-width: 900px) 100vw, 40vw" /></div>)}
     </div>

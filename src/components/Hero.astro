@@ -15,8 +15,10 @@ const sources = [{ k: 'google', l: 'Google' }, { k: 'facebook', l: 'Facebook' }]
 
   <div class="wrap hero-in">
     <div class="hero-copy">
-      <span class="hud hero-status" data-on>Grid status <b class="ok">Energized</b></span>
-      <span class="hero-pill" data-on><span class="spark" aria-hidden="true"></span>Licensed electrical contractor serving Scottsdale, AZ</span>
+      <div class="hero-kick" data-on>
+        <span class="hud hero-status">Grid status <b class="ok">Energized</b></span>
+        <span class="hero-lic">Licensed electrical contractor serving Scottsdale, AZ</span>
+      </div>
       <h1 id="hero-h" class="t-display" data-on>Power you can trust, <span class="hl">wired right.</span></h1>
       <p class="lead" data-on>Homes and businesses across the Valley. Written price before any work starts.</p>
       <div class="btn-row" data-on>
@@ -34,7 +36,6 @@ const sources = [{ k: 'google', l: 'Google' }, { k: 'facebook', l: 'Facebook' }]
   <div class="hero-hud wrap" aria-hidden="true">
     <div class="hud hh-l"><span>33.4942° N &nbsp;111.9261° W</span><span><b>Scottsdale, Arizona</b></span></div>
   </div>
-  <span class="hero-tick" aria-hidden="true"></span>
 </section>
 <style is:global>
 .hero{position:relative;overflow:hidden;margin-top:-72px;min-height:min(100svh,960px);display:flex;flex-direction:column;justify-content:center;padding-block:120px 96px}
@@ -42,13 +43,13 @@ const sources = [{ k: 'google', l: 'Google' }, { k: 'facebook', l: 'Facebook' }]
 .hero-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,var(--night) 0%,rgba(10,10,11,.86) 30%,rgba(10,10,11,0) 58%),linear-gradient(0deg,var(--night) 0%,rgba(10,10,11,0) 22%)}
 .hero-in{position:relative;width:100%;pointer-events:none}
 .hero-copy{display:flex;flex-direction:column;align-items:flex-start;gap:26px;max-width:640px}
-.hero-status{display:inline-flex;align-items:center;gap:8px;margin-bottom:-10px}
+.hero-kick{display:flex;flex-direction:column;gap:8px}
+.hero-status{display:inline-flex;align-items:center;gap:8px}
 .hero-status .ok{color:var(--live)}
-.hero-status::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--live);box-shadow:0 0 8px rgba(143,227,136,.8)}
+.hero-status::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--live)}
+.hero-lic{font-size:.9375rem;color:var(--ink-2)}
 .hero-copy>*{pointer-events:auto}
 .hero-copy h1{max-width:12ch}
-.hero-pill{display:inline-flex;align-items:center;gap:10px;min-height:34px;padding:0 14px 0 10px;border-radius:var(--r-pill);background:rgba(18,19,20,.6);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--seam);font-size:.8125rem;color:var(--ink-2)}
-.spark{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle,var(--volt-hi) 0 2px,rgba(242,207,74,.35) 3px,transparent 7px)}
 .trustrow{display:flex;align-items:center;gap:14px;margin-top:6px;border-radius:14px}
 .faces{display:flex}
 .faces span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;margin-left:-10px;border:2px solid var(--night);background:#2a2b2e;font:500 .6875rem/1 var(--display);color:var(--ink)}
@@ -66,13 +67,11 @@ const sources = [{ k: 'google', l: 'Google' }, { k: 'facebook', l: 'Facebook' }]
 .hh-r{display:flex;flex-direction:column;gap:6px;text-align:right}
 .hh-r .ok{color:var(--live)}
 .hero-hud .ok{color:var(--live)}
-.hero-tick{position:absolute;left:50%;bottom:28px;width:1px;height:40px;background:linear-gradient(var(--volt),transparent);opacity:.7}
-@media (max-width:760px){
-  .hero{min-height:0;justify-content:flex-start;padding-block:112px 0}
-  .hero-cv{position:relative;inset:auto;height:420px;margin-top:-40px;order:2}
+@media (max-width:1100px){
+  .hero{min-height:0;justify-content:flex-start;padding-block:128px 0}
+  .hero-cv{position:relative;inset:auto;height:clamp(380px,62vw,620px);margin-top:8px;order:2}
   .hero-fade{background:linear-gradient(180deg,var(--night) 0%,rgba(10,10,11,0) 45%),linear-gradient(0deg,var(--night) 0%,rgba(10,10,11,0) 18%)}
-  .hero-hud,.hero-tick,.hero-tr{display:none}
-  .tr-src{display:none}
+  .hero-hud,.hero-tr{display:none}
 }
-@media (max-width:640px){.hero-call{display:none}}
+@media (max-width:640px){.hero-call{display:none}.tr-src{display:none}}
 </style>

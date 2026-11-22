@@ -14,9 +14,9 @@ const facts = [
 ---
 <section class="sec cov gridbg" aria-labelledby="cov-h">
   <div class="wrap">
-    <div class="cov-head"><p class="hud" data-on>Coverage</p><h2 id="cov-h" class="t-h2" data-on>Scottsdale first, the whole Valley</h2></div>
+    <div class="cov-head"><h2 id="cov-h" class="t-h2" data-on>Scottsdale first, the whole Valley</h2></div>
     <div class="cov-grid" data-ring>
-      {facts.slice(0, 2).map((f) => <div class="cov-card panel"><span class="hud">{f.k}</span><b>{f.v}</b><p>{f.d}</p></div>)}
+      {facts.slice(0, 2).map((f) => <div class="cov-card panel"><span class="label">{f.k}</span><b>{f.v}</b><p>{f.d}</p></div>)}
       <div class="cov-ring">
         <svg viewBox="0 0 520 520" aria-hidden="true">
           <circle cx="260" cy="260" r="236" class="cov-thin" />
@@ -27,7 +27,7 @@ const facts = [
         </svg>
         <div class="cov-mid"><span class="cov-n">{areas.length}</span><span class="cov-l">cities across the Valley</span><span class="hud">Six services, one crew</span></div>
       </div>
-      {facts.slice(2).map((f) => <div class="cov-card panel"><span class="hud">{f.k}</span><b>{f.v}</b><p>{f.d}</p></div>)}
+      {facts.slice(2).map((f) => <div class="cov-card panel"><span class="label">{f.k}</span><b>{f.v}</b><p>{f.d}</p></div>)}
     </div>
     <div class="cov-more"><a class="btn btn-line" href="/service-areas/">See every city we cover <Icon name="arrow-right" size={18} class="ico-go" /></a></div>
   </div>

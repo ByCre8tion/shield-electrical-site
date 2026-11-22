@@ -47,7 +47,7 @@ Dark only. Neutrals are true greys with no tint, so yellow is the only color on 
 
 **Rules**
 - Yellow means power. It is on the travelling line, pings, active states, the open hour LED and one word in the hero. It is never a section background or body text.
-- Glow is allowed on energy only: lines, nodes, pings. A soft bloom like a sodium lamp, `0 0 12px rgba(242,207,74,.55)`. Never on buttons or cards.
+- Glow belongs to the current only: the travelling line and its nodes in the hero, the schematic and the globe. A soft bloom like a sodium lamp, `0 0 12px rgba(242,207,74,.55)`. Never on dots, buttons, cards, nav or the chat launcher.
 - The logo keeps its own brass gradient. Yellow sits beside it, it does not replace it.
 
 ## 4. Texture
@@ -73,7 +73,7 @@ Every screen carries the same three layers so it feels printed, not rendered.
 | HUD label | `0.6875rem` mono uppercase | 500 | 1.3 | 0.12em |
 
 **Rules**
-- Headlines mixed case. HUD labels are the only uppercase, and they label data, never a section.
+- Headlines mixed case. HUD labels are the only uppercase, and only for live data and coordinates. No labels above section headings; meta and footer headings use the sentence case `.label` style.
 - Emphasis in the hero only: one word in `--volt`. Elsewhere headlines stay plain.
 - Selected or current items step up in size and brightness (01 small, **02 large**, 03 small), like the wildlife slider.
 
@@ -102,7 +102,7 @@ All canvases: cap 30fps, pause offscreen and in background tabs, draw one still 
 | **Nav** | Flat on the page, no container. Logo left, five plain links, open status, a light pill button right. Gains a dark blurred bar only after scrolling. |
 | **Primary button** | Light pill `--ink` with dark text and a dark circle holding the arrow at the end. Hover: the circle turns yellow and the arrow nudges. Press 0.96. (Reference: Hydraoo, RooFix.) |
 | **Secondary button** | Outline pill; a yellow beam runs the rim once on hover. Phone numbers in mono. |
-| **Trust pill** | Small glass chip above the headline with a yellow spark: "Licensed ROC contractor, Chandler AZ". |
+| **Hero kicker** | Two quiet lines above the headline, no chip and no glow: a live "Grid status Energized" readout, then "Licensed electrical contractor serving Scottsdale, AZ". |
 | **Trust row** | Overlapping round avatars of real reviewers (initials until photos exist) with "Rated 5.0 by Valley homeowners", then Google, Facebook and BBB marks. |
 | **HUD corners** | Coordinates of the office, live Arizona time, grid status OK, scale ruler. Mono, grey, small. |
 | **Name plates** | Engraved plates for rating, years, license, BBB. Kept from v2. |
@@ -145,3 +145,13 @@ Check every section. If a line is true, fix it.
 - Glow on buttons or cards.
 - Vague claims ("top quality"). Say the measured thing or nothing.
 - Stock or generated imagery.
+
+## 13. Unslop pass (Nov 2026)
+
+Audit with unslop by Damir Sokolovsky (@heydamir, CC BY 4.0). Light slop, polished in place:
+- Hero badge pill and its spark removed; status and license read as two quiet lines.
+- Tablet hero stacks text over the city instead of laying copy on the buildings; no dead band.
+- Phones: the chat greeting no longer pops over the hero, and the call bar waits until the hero is scrolled past.
+- Section eyebrows removed; footer headings and meta in sentence case.
+- Decorative loops stopped (page header line, hero tick, map ping). The city, its radar ring and the globe stay as the moments.
+- Glow limited to the current. Name plates sit 2 by 2 on phones. Odometer digits match their label size.

@@ -19,9 +19,9 @@ const year = new Date().getFullYear();
         <p>Licensed commercial and residential electrical contractor. Written price before any work starts.</p>
         <Socials />
       </div>
-      <nav aria-label="Services" class="foot-col"><h2 class="hud">Services</h2><ul>{services.map((s) => <li><a href={`/services/${s.slug}/`}>{s.title}</a></li>)}</ul></nav>
-      <nav aria-label="Company" class="foot-col"><h2 class="hud">Company</h2><ul>{nav.filter((l) => l.href !== '/services/').map((l) => <li><a href={l.href}>{l.label}</a></li>)}<li><a href="/contact/">Book service</a></li></ul></nav>
-      <div class="foot-col"><h2 class="hud">Reach us</h2>
+      <nav aria-label="Services" class="foot-col"><h2 class="label">Services</h2><ul>{services.map((s) => <li><a href={`/services/${s.slug}/`}>{s.title}</a></li>)}</ul></nav>
+      <nav aria-label="Company" class="foot-col"><h2 class="label">Company</h2><ul>{nav.filter((l) => l.href !== '/services/').map((l) => <li><a href={l.href}>{l.label}</a></li>)}<li><a href="/contact/">Book service</a></li></ul></nav>
+      <div class="foot-col"><h2 class="label">Reach us</h2>
         <ul>
           <li><a class="val foot-tel" href={`tel:${company.tel}`}>{company.phone}</a></li>
           <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
@@ -32,7 +32,7 @@ const year = new Date().getFullYear();
       <div class="foot-trust"><BbbSeal /><span class="val">{company.roc}</span></div>
     </div>
   </div>
-  <div class="wrap foot-base"><span class="hud">© {year} {company.legal}</span><span class="hud">Bonded and insured in Arizona</span></div>
+  <div class="wrap foot-base"><span class="label">© {year} {company.legal}</span><span class="label">Bonded and insured in Arizona</span></div>
 </footer>
 <style is:global>
 .foot{position:relative;padding-top:clamp(48px,8vw,120px);border-top:1px solid var(--seam);overflow:hidden}

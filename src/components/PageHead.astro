@@ -9,7 +9,7 @@ const big = (word ?? current ?? '').toUpperCase();
   {big && <div class="phd-word" aria-hidden="true">{big}</div>}
   <div class="wrap phd-in">
     <div class="phd-hud">
-      {current && <nav aria-label="Breadcrumb" class="crumbs hud"><ol>{[{ label: 'Home', href: '/' }, ...crumbs].map((c) => <li><a href={c.href}>{c.label}</a></li>)}<li aria-current="page">{current}</li></ol></nav>}
+      {current && <nav aria-label="Breadcrumb" class="crumbs"><ol>{[{ label: 'Home', href: '/' }, ...crumbs].map((c) => <li><a href={c.href}>{c.label}</a></li>)}<li aria-current="page">{current}</li></ol></nav>}
       <span class="hud phd-geo" aria-hidden="true">Scottsdale, AZ <b>33.4942° N 111.9261° W</b></span>
     </div>
     <h1 class="t-display phd-h" data-on set:html={title} />
@@ -24,14 +24,12 @@ const big = (word ?? current ?? '').toUpperCase();
 .phd-in{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:24px;padding-block:clamp(64px,9vw,128px) clamp(56px,7vw,96px)}
 .phd-hud{align-self:stretch;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid var(--seam)}
 .phd-h{max-width:15ch;font-size:clamp(2.6rem,5.6vw,5.25rem)}
-.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:10px}
-.crumbs li+li::before{content:"/";margin-right:10px;color:var(--ink-3)}
+.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:8px;font-size:.875rem;color:var(--ink-3)}
+.crumbs li+li::before{content:"/";margin-right:8px;color:var(--ink-3)}
 .crumbs a{color:var(--ink-3);transition:color .15s ease-out}
 .crumbs [aria-current]{color:var(--volt)}
 @media (hover:hover){.crumbs a:hover{color:var(--ink)}}
 .phd-line{position:relative;height:1px;background:var(--seam);overflow:hidden}
-.phd-line span{position:absolute;top:0;left:0;width:22%;height:1px;background:linear-gradient(90deg,transparent,var(--volt),transparent);box-shadow:0 0 8px rgba(242,207,74,.8);animation:phd-run 4.5s cubic-bezier(.45,0,.2,1) infinite}
-@keyframes phd-run{from{translate:-100% 0}to{translate:460% 0}}
-@media (prefers-reduced-motion:reduce){.phd-line span{animation:none;translate:120% 0}}
+.phd-line span{position:absolute;top:0;left:var(--gut);width:96px;height:1px;background:var(--volt)}
 @media (max-width:640px){.phd-geo{display:none}}
 </style>

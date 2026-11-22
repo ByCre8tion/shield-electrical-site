@@ -35,9 +35,9 @@ export function initCity() {
 
     const scene = {
       build(st) {
-        mobile = st.w < 760;
+        mobile = st.w <= 1100 && st.w / st.h < 2.2;
         const span = (2 * N + 1) * C;
-        F = (mobile ? st.w * 1.05 : Math.min(st.w * .7, st.h * 1.2)) / span;
+        F = (mobile ? Math.min(st.w * 1.05, st.h * 1.5) : Math.min(st.w * .7, st.h * 1.2)) / span;
         ox = mobile ? st.w * .5 : st.w * .68; oy = mobile ? st.h * .62 : st.h * .6;
         fontPx = mobile ? st.w * .34 : Math.min(st.w * .2, 300);
       },

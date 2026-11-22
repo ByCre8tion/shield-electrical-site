@@ -77,7 +77,7 @@ const hq = cities[0];
 .gm-state{fill:rgba(255,255,255,.035);stroke:rgba(255,255,255,.55);stroke-width:1.2}
 .gm-county{fill:none;stroke:rgba(255,255,255,.16);stroke-width:.8;stroke-dasharray:3 3}
 .gm-box{fill:rgba(242,207,74,.08);stroke:var(--volt);stroke-width:1.2}
-.gm-hq{fill:var(--volt);filter:drop-shadow(0 0 6px rgba(242,207,74,.8))}
+.gm-hq{fill:var(--volt)}
 .gm-t{font:500 11px var(--mono);letter-spacing:.12em;fill:var(--ink-3)}
 .gm-y{fill:var(--volt)}
 .gm-valley{display:flex;flex-direction:column;gap:12px}
@@ -86,9 +86,7 @@ const hq = cities[0];
 .gm-city text{font:500 12px var(--mono);fill:var(--ink-2)}
 .gm-city.hq circle{fill:var(--volt)}
 .gm-city.hq text{fill:var(--volt);font-size:13px}
-.gm-ring{fill:none!important;stroke:var(--volt);stroke-width:1;opacity:.6;transform-box:fill-box;transform-origin:center;animation:gm-ping 2.8s ease-out infinite}
-@keyframes gm-ping{from{scale:.3;opacity:.9}to{scale:2.2;opacity:0}}
-@media (prefers-reduced-motion:reduce){.gm-ring{animation:none}}
+.gm-ring{fill:none!important;stroke:var(--volt);stroke-width:1;opacity:.5}
 .gm-note{padding:0 8px 6px;font-size:.9375rem;color:var(--ink-2)}
 @media (max-width:900px){.gmap{grid-template-columns:minmax(0,1fr)}}
 </style>

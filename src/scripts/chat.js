@@ -238,7 +238,7 @@ export function initChat() {
   /* Greeting bubble with a badge, once per visit */
   function hideHello() { hello.hidden = true; badge.hidden = true; store.set('cg-hello', '1'); }
   $('#cgHelloText').textContent = greet[1];
-  if (!store.get('cg-hello')) setTimeout(() => { if (!isOpen()) { hello.hidden = false; badge.hidden = false; } }, 6000);
+  if (!store.get('cg-hello')) setTimeout(() => { if (isOpen()) return; badge.hidden = false; if (!phoneSize()) hello.hidden = false; }, 6000);
   $('#cgHelloX').addEventListener('click', hideHello);
   $('#cgHelloOpen').addEventListener('click', open);
 }
