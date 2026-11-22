@@ -52,7 +52,7 @@ const star = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 1.8 2.5 5
 .reviews .mq-toggle{border-radius:var(--r-pill)!important}
 .reviews{overflow:hidden}
 .rv-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:28px;margin-bottom:20px}
-.rv-score{display:grid;grid-template-columns:auto auto auto;align-items:center;gap:16px;padding:16px 22px 16px 18px;border:1px solid var(--rule);border-radius:var(--r-photo);background:var(--white);transition:border-color .25s ease-out}
+.rv-score{display:grid;grid-template-columns:auto auto auto;align-items:center;gap:16px;padding:16px 22px 16px 18px;border:1px solid var(--rule);border-radius:var(--r-photo);background:var(--white);transition:border-color .25s var(--ease-out)}
 @media (hover:hover){ .rv-score:hover{border-color:var(--rule-strong)} .rv-score:hover .arr{transform:translateX(4px)} }
 .g-badge svg{width:34px;height:34px;display:block}
 .rv-num{font-family:var(--display);font-weight:700;font-size:3.25rem;line-height:.9;font-variant-numeric:tabular-nums}
@@ -66,7 +66,7 @@ const star = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 1.8 2.5 5
 .rv-row.rev .rv-track{animation-direction:reverse;--rv-dur:80s}
 .rv-rows.paused .rv-track{animation-play-state:paused}
 @keyframes rv-slide{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 8px))}}
-.rv-card{width:clamp(300px,30vw,400px);flex:none;display:flex;flex-direction:column;gap:16px;padding:24px;background:var(--white);border:1px solid var(--rule);border-radius:var(--r-photo);transition:border-color .25s ease-out}
+.rv-card{width:clamp(300px,30vw,400px);flex:none;display:flex;flex-direction:column;gap:16px;padding:24px;background:var(--white);border:1px solid var(--rule);border-radius:var(--r-photo);transition:border-color .25s var(--ease-out)}
 @media (hover:hover){ .rv-card:hover{border-color:var(--rule-strong)} }
 .rv-top{display:grid;grid-template-columns:44px minmax(0,1fr) 24px;align-items:center;gap:14px}
 .rv-av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--white);font-family:var(--display);font-weight:700;font-size:1.25rem}
@@ -101,3 +101,4 @@ const star = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 1.8 2.5 5
 .reviews .rv-meta .stars svg{width:13px;height:13px}
 @media (max-width:640px){.reviews .rv-meta .stars{display:none}}
 </style>
+<style is:global>.rv-track{align-items:flex-start}</style>

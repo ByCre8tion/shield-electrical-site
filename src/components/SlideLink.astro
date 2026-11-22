@@ -1,7 +1,0 @@
----
-/* Slide link: the label rolls up and a gold copy rolls in. One Button hover slide pattern (21st.dev), rebuilt. */
-import Icon from './Icon.astro';
-interface Props { href: string; text: string }
-const { href, text } = Astro.props;
----
-<a class="slide" href={href}><span class="slide-t"><span>{text}</span><span aria-hidden="true">{text}</span></span><Icon name="arrow-right" size={18} /></a>

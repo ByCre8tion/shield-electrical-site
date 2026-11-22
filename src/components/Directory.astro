@@ -14,7 +14,7 @@ import { services } from '../data/site';
         <a href={`/services/${s.slug}/`} data-dir-row={i}>
           <span class="dir-n val">{String(i + 1).padStart(2, '0')}</span>
           <span class="dir-t"><span class="dir-roll"><span>{s.title}</span><span aria-hidden="true">{s.title}</span></span></span>
-          <span class="dir-d">{s.emergency ? <><span class="led fault" aria-hidden="true"></span>Call first, any hour</> : s.short}</span>
+          <span class="dir-d">{s.emergency ? <><span class="led fault" aria-hidden="true"></span>Call first, do not book online</> : s.short}</span>
           <Icon name="arrow-right" size={20} class="dir-go" />
           <span class="dir-line" aria-hidden="true"></span>
         </a>
@@ -35,23 +35,24 @@ import { services } from '../data/site';
 .dir-list{list-style:none;border-top:1px solid var(--seam)}
 .dir-row{border-bottom:1px solid var(--seam)}
 .dir-row a{position:relative;display:grid;grid-template-columns:64px minmax(0,1.15fr) minmax(0,1fr) 24px;align-items:center;gap:24px;padding:28px 8px;min-height:104px}
-.dir-n{font-size:.875rem;color:var(--ink-3);transition:color .15s ease-out}
+.dir-n{font-size:.875rem;color:var(--ink-3);transition:color .15s var(--ease-out)}
 .dir-t{display:block;overflow:hidden;font-size:clamp(1.5rem,2.6vw,2.25rem);font-weight:300;line-height:1.2;letter-spacing:-.02em;color:var(--ink)}
 .dir-roll{position:relative;display:block}
-.dir-roll>span{display:block;transition:translate .35s cubic-bezier(.22,1,.36,1)}
+.dir-roll>span{display:block;transition:translate .35s var(--ease-out)}
 .dir-roll>span+span{position:absolute;inset:0;translate:0 105%;color:var(--volt-hi)}
 .dir-d{display:flex;align-items:center;gap:10px;font-size:.9375rem;line-height:1.5;color:var(--ink-2);max-width:44ch;text-wrap:pretty}
-.dir-go{color:var(--ink-3);transition-property:color,translate;transition-duration:.2s;transition-timing-function:cubic-bezier(.22,1,.36,1)}
-.dir-line{position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--volt);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.22,1,.36,1);box-shadow:0 0 10px rgba(242,207,74,.6)}
+.dir-go{color:var(--ink-3);transition-property:color,translate;transition-duration:.2s;transition-timing-function:var(--ease-out)}
+.dir-line{position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--volt);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease-out);box-shadow:0 0 10px rgba(242,207,74,.6)}
 .dir-em .dir-line{background:var(--fault);box-shadow:none}
 .dir-em .dir-d{color:var(--ink)}
-.dir-row a:is(:hover,:focus-visible) .dir-n{color:var(--volt)}
-.dir-em a:is(:hover,:focus-visible) .dir-n{color:var(--fault)}
-.dir-row a:is(:hover,:focus-visible) .dir-roll>span{translate:0 -105%}
-.dir-row a:is(:hover,:focus-visible) .dir-roll>span+span{translate:0 0}
-.dir-em a:is(:hover,:focus-visible) .dir-roll>span+span{color:var(--ink)}
-.dir-row a:is(:hover,:focus-visible) .dir-go{color:var(--ink);translate:4px 0}
-.dir-row a:is(:hover,:focus-visible) .dir-line{transform:scaleX(1)}
+.dir-row a:focus-visible .dir-n{color:var(--volt)}
+.dir-em a:focus-visible .dir-n{color:var(--fault)}
+.dir-row a:focus-visible .dir-roll>span{translate:0 -105%}
+.dir-row a:focus-visible .dir-roll>span+span{translate:0 0}
+.dir-em a:focus-visible .dir-roll>span+span{color:var(--ink)}
+.dir-row a:focus-visible .dir-go{color:var(--ink);translate:4px 0}
+.dir-row a:focus-visible .dir-line{transform:scaleX(1)}
+@media (hover:hover){.dir-row a:hover .dir-n{color:var(--volt)}.dir-em a:hover .dir-n{color:var(--fault)}.dir-row a:hover .dir-roll>span{translate:0 -105%}.dir-row a:hover .dir-roll>span+span{translate:0 0}.dir-em a:hover .dir-roll>span+span{color:var(--ink)}.dir-row a:hover .dir-go{color:var(--ink);translate:4px 0}.dir-row a:hover .dir-line{transform:scaleX(1)}}
 .dir-row a:focus-visible{outline:2px solid var(--volt-hi);outline-offset:-2px;border-radius:4px}
 /* Spec card that follows the cursor */
 .dir-peek{position:absolute;left:0;top:0;width:280px;pointer-events:none;opacity:0;scale:.96;translate:var(--px,0) var(--py,0);transition-property:opacity,scale;transition-duration:.2s;transition-timing-function:ease-out;z-index:3}

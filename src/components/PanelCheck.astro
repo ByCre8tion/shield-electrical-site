@@ -62,7 +62,7 @@ const arc = (f0: number, f1: number, r: number) => { const [x0, y0] = pt(f0, r),
 .keys label{position:relative;cursor:pointer}
 .keys input{position:absolute;opacity:0;pointer-events:none}
 .keys span{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 16px 0 14px;border-radius:10px;border:1px solid var(--seam-2);background:var(--deck-2);color:var(--ink-2);transition-property:border-color,color,background-color;transition-duration:.15s;transition-timing-function:ease-out}
-.keys i{width:6px;height:6px;border-radius:50%;background:#3c3d40;transition:background-color .15s ease-out}
+.keys i{width:6px;height:6px;border-radius:50%;background:#3c3d40;transition:background-color .15s var(--ease-out)}
 .keys b{font-weight:500;font-size:.9375rem}
 .keys small{font-size:.75rem;color:var(--ink-3)}
 .keys input:checked+span{border-color:rgba(242,207,74,.55);color:var(--ink);background:#1f1f1d}
@@ -76,7 +76,7 @@ const arc = (f0: number, f1: number, r: number) => { const [x0, y0] = pt(f0, r),
 .g-over{fill:none;stroke:var(--fault);stroke-width:2}
 .g-tick{stroke:rgba(255,255,255,.3);stroke-width:1.2}
 .g-lab{font:500 10px var(--mono);fill:var(--ink-3)}
-.g-needle{transform-origin:140px 140px;transform:rotate(var(--ang,0deg));transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.g-needle{transform-origin:140px 140px;transform:rotate(var(--ang,0deg));transition:transform .7s var(--ease-out)}
 .g-needle line{stroke:var(--volt);stroke-width:2.5;stroke-linecap:round}
 .g-needle circle{fill:var(--deck);stroke:var(--volt);stroke-width:2}
 .pc[data-state=warn] .g-needle line,.pc[data-state=warn] .g-needle circle{stroke:var(--fault)}

@@ -68,8 +68,8 @@ const loads = [
 .pp-steps{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:8px}
 .pp-steps li{display:grid;grid-template-columns:36px 1fr;gap:12px;padding:12px 0;opacity:.38;transition-property:opacity;transition-duration:.3s;transition-timing-function:ease-out}
 .pp-steps li .val{font-size:.8125rem;color:var(--ink-3);padding-top:4px}
-.pp-steps b{display:block;font-weight:500;font-size:1.0625rem;color:var(--ink);transition:font-size .3s var(--snap)}
-.pp-steps li>span>span{display:block;max-height:0;overflow:hidden;font-size:.9375rem;color:var(--ink-2);transition:max-height .4s var(--snap)}
+.pp-steps b{display:block;font-weight:500;font-size:1.0625rem;color:var(--ink);transition:font-size .3s var(--ease-out)}
+.pp-steps li>span>span{display:block;max-height:0;overflow:hidden;font-size:.9375rem;color:var(--ink-2);transition:max-height .4s var(--ease-out)}
 .pp-steps li.on{opacity:1}
 .pp-steps li.on b{font-size:1.5rem}
 .pp-steps li.on .val{color:var(--volt)}
@@ -82,7 +82,7 @@ const loads = [
 .pp-live .s3{stroke-dashoffset:calc(1 - clamp(0, (var(--p) - .45) * 10, 1))}
 .pp-live .s4{stroke-dashoffset:calc(1 - clamp(0, (var(--p) - .55) * 8, 1))}
 .pp-live .s5{stroke-dashoffset:calc(1 - clamp(0, (var(--p) - .7) * 6, 1))}
-.pp-nodes *{fill:none;stroke:var(--volt);stroke-width:2;opacity:0;transition:opacity .3s ease-out}
+.pp-nodes *{fill:none;stroke:var(--volt);stroke-width:2;opacity:0;transition:opacity .3s var(--ease-out)}
 .pp[data-s="1"] .n1,.pp[data-s="2"] .n1,.pp[data-s="3"] .n1,.pp[data-s="2"] .n2,.pp[data-s="3"] .n2,.pp[data-s="3"] .n3{opacity:1;filter:drop-shadow(0 0 6px rgba(242,207,74,.6))}
 .pp-labels text{font:500 13px var(--mono);letter-spacing:.1em;fill:var(--ink-3)}
 .pp-labels .big{font-size:18px;fill:var(--ink-2);letter-spacing:0}

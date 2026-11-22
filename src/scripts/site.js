@@ -86,7 +86,7 @@ function menu() {
   };
   btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !sheet.hidden) { set(false); btn.focus(); } });
-  matchMedia('(min-width: 1081px)').addEventListener('change', (m) => m.matches && set(false));
+  matchMedia('(min-width: 1121px)').addEventListener('change', (m) => m.matches && set(false));
 }
 
 /* Open now, from real hours in Arizona time (no daylight saving) */
@@ -253,7 +253,7 @@ function forms() {
       const bad = fields.filter((f) => !check(f));
       if (bad.length) { bad[0].focus(); return; }
       const btn = $('button[type=submit]', form), lab = $('[data-btn-label]', btn) || btn, label = lab.textContent;
-      btn.disabled = true; lab.textContent = 'Sending';
+      btn.disabled = true; btn.setAttribute('aria-busy', 'true'); lab.textContent = 'Sending…';
       try {
         const ep = form.dataset.endpoint;
         if (ep) { const r = await fetch(ep, { method: 'POST', body: new FormData(form) }); if (!r.ok) throw new Error('send'); }
@@ -263,7 +263,7 @@ function forms() {
       } catch (err) {
         const fe = $('[data-form-err]', form); if (fe) fe.textContent = 'That did not send. Please try again or call us.';
       }
-      btn.disabled = false; lab.textContent = label;
+      btn.disabled = false; btn.removeAttribute('aria-busy'); lab.textContent = label;
     });
   });
 }

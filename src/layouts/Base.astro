@@ -25,7 +25,7 @@ const schema = {
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>{full}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
@@ -57,7 +57,6 @@ const schema = {
   {!noChat && <Dispatch />}
   <script>
     import { initSite } from '../scripts/site.js';
-    import { initCircuits } from '../scripts/circuit.js';
     import { initDispatch } from '../scripts/dispatch.js';
     import { initCity } from '../scripts/city.js';
     import { initFields } from '../scripts/field.js';
@@ -65,7 +64,7 @@ const schema = {
     import { initWordmarks } from '../scripts/wordmark.js';
     import { loadPhotos } from '../scripts/photos.js';
     import { company } from '../data/site';
-    initSite(company); initCircuits(); initDispatch();
+    initSite(company); initDispatch();
     document.fonts.ready.then(() => { initCity(); initFields(); initGlobes(); initWordmarks(); });
     const heroEl = document.querySelector('.hero');
     if (heroEl) new IntersectionObserver(([e]) => document.documentElement.classList.toggle('in-hero', e.intersectionRatio > .35), { threshold: [0, .35, 1] }).observe(heroEl);

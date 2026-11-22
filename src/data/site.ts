@@ -103,8 +103,8 @@ export const services: Service[] = [
     short: 'Sparking outlets, burning smells, tripped mains and power loss. Call first.',
     lead: 'If you smell burning, see sparks or lose power to part of the house, call us. We find the cause, make it safe and fix it properly.',
     includes: ['Power loss and partial outages', 'Burning smells and hot outlets', 'Tripping breakers', 'Storm and water damage', 'Failed panels and meters', 'Make safe and temporary power'],
-    specs: [['First step', 'Call, do not book online'], ['Hours', 'Mon to Fri, 7am to 5pm'], ['After hours', 'TODO confirm emergency availability'], ['Danger', 'If anything is smoking, call 911 first']],
-    faq: [{ q: 'What should I do right now?', a: 'If there is smoke or fire, leave and call 911. If it is safe, switch off the breaker for that area and call us.' }, { q: 'Do you answer after hours?', a: 'TODO: confirm with Jason whether Shield takes after hours emergency calls.' }],
+    specs: [['First step', 'Call, do not book online'], ['Hours', 'Mon to Fri, 7am to 5pm'], ['Danger', 'If anything is smoking, call 911 first']],
+    faq: [{ q: 'What should I do right now?', a: 'If there is smoke or fire, leave and call 911. If it is safe, switch off the breaker for that area and call us.' }],
   },
 ];
 
@@ -146,7 +146,7 @@ export const roles = [
 ];
 /* TODO: Jason to confirm roles, pay ranges and benefits */
 
-export const perks = ['Steady year round work', 'Company vehicle for qualified roles', 'Paid training and licensing support', 'Health benefits (TODO confirm)', 'A team that answers the phone'];
+export const perks = ['Steady year round work', 'Company vehicle for qualified roles', 'Paid training and licensing support', 'A team that answers the phone'];
 
 export const projects = [
   { slug: 'office-ti', title: 'Office tenant improvement', city: 'Chandler', scope: 'Commercial', img: 'project1', spec: '6,000 sq ft, lighting and power' },

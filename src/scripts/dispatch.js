@@ -76,7 +76,7 @@ export function initDispatch() {
     if (bad.length) { err.textContent = bad[0][2]; bad[0][0].focus(); return; }
     err.textContent = '';
     const btn = $('button[type=submit]', form), lab = $('[data-send-label]', btn);
-    btn.disabled = true; lab.textContent = 'Sending';
+    btn.disabled = true; lab.textContent = 'Sending…';
     try {
       const ep = root.dataset.smsEndpoint, data = { topic: TOPIC[topic], message: msg.value.trim(), name: name.value.trim(), phone: digits, page: location.pathname };
       if (ep) { const r = await fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); if (!r.ok) throw new Error('send'); }
