@@ -30,22 +30,39 @@ import { roles, perks } from '../data/site';
   </section>
   <section class="sec" id="apply" aria-labelledby="apply-h">
     <div class="wrap split-7-5">
-      <div class="qf panel">
+      <div class="qf wo">
+        <div class="wo-head"><span class="wo-title">Application</span><span class="wo-meta val"><span data-today>New application</span></span></div>
         <form class="qf-form" data-form data-endpoint="" novalidate enctype="multipart/form-data">
-          <p class="hint">All fields are required unless marked optional.</p>
-          <div class="qf-row">
-            <div class="field"><label for="ap-name">Full name</label><input class="input" id="ap-name" name="name" autocomplete="name" required data-msg="Add your name." aria-describedby="ap-name-err" /><span class="err" id="ap-name-err"></span></div>
-            <div class="field"><label for="ap-phone">Mobile number</label><input class="input" id="ap-phone" name="phone" type="tel" autocomplete="tel" required data-msg="Add a 10 digit number." aria-describedby="ap-phone-err" /><span class="err" id="ap-phone-err"></span></div>
-          </div>
-          <div class="qf-row">
-            <div class="field"><label for="ap-email">Email</label><input class="input" id="ap-email" name="email" type="email" autocomplete="email" required data-msg="Add an email we can reach you at." aria-describedby="ap-email-err" /><span class="err" id="ap-email-err"></span></div>
-            <div class="field"><label for="ap-role">Role</label><select class="input" id="ap-role" name="role" required data-msg="Choose a role." aria-describedby="ap-role-err"><option value="">Choose one</option>{roles.map((r) => <option>{r.t}</option>)}<option>Other</option></select><span class="err" id="ap-role-err"></span></div>
-          </div>
-          <div class="field"><label for="ap-exp">Years of experience</label><select class="input" id="ap-exp" name="experience" required data-msg="Choose your experience." aria-describedby="ap-exp-err"><option value="">Choose one</option><option>Less than 1</option><option>1 to 3</option><option>4 to 7</option><option>8 or more</option></select><span class="err" id="ap-exp-err"></span></div>
-          <div class="field"><label for="ap-msg">Tell us about yourself <span class="opt">(optional)</span></label><textarea class="input" id="ap-msg" name="message"></textarea></div>
-          <div class="field"><span class="fl">Resume <span class="opt">(optional)</span></span><label class="drop" for="ap-file"><Icon name="file-text" size={26} /><span><b>Attach a resume</b><br />PDF or Word, up to 10 MB.</span></label><input class="sr-only" id="ap-file" name="resume" type="file" accept=".pdf,.doc,.docx" aria-describedby="ap-file-list" /><span class="hint" id="ap-file-list" aria-live="polite"></span></div>
+          <fieldset class="wo-part">
+            <legend><span class="val">01</span>You</legend>
+            <div class="qf-row">
+              <div class="field"><label for="ap-name">Full name</label><input class="input" id="ap-name" name="name" autocomplete="name" required data-msg="Add your name." aria-describedby="ap-name-err" /><span class="err" id="ap-name-err"></span></div>
+              <div class="field"><label for="ap-phone">Mobile number</label><input class="input" id="ap-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required data-msg="Add a 10 digit number." aria-describedby="ap-phone-err" /><span class="err" id="ap-phone-err"></span></div>
+            </div>
+            <div class="field"><label for="ap-email">Email</label><input class="input" id="ap-email" name="email" type="email" autocomplete="email" spellcheck="false" required data-msg="Add an email we can reach you at." aria-describedby="ap-email-err" /><span class="err" id="ap-email-err"></span></div>
+          </fieldset>
+          <fieldset class="wo-part">
+            <legend><span class="val">02</span>The role</legend>
+            <div class="wo-keys" role="radiogroup" aria-label="Role" aria-describedby="ap-role-err">
+              {[...roles.map((r) => r.t), 'Other'].map((t, i) => <label><input type="radio" name="role" value={t} id={i === 0 ? 'ap-role' : undefined} required data-msg={i === 0 ? 'Choose a role.' : undefined} /><span><i></i>{t}</span></label>)}
+            </div>
+            <span class="err" id="ap-role-err"></span>
+            <span class="fl">Years of experience</span>
+            <div class="wo-keys" role="radiogroup" aria-label="Years of experience" aria-describedby="ap-exp-err">
+              {['Less than 1', '1 to 3', '4 to 7', '8 or more'].map((t, i) => <label><input type="radio" name="experience" value={t} id={i === 0 ? 'ap-exp' : undefined} required data-msg={i === 0 ? 'Choose your experience.' : undefined} /><span><i></i>{t}</span></label>)}
+            </div>
+            <span class="err" id="ap-exp-err"></span>
+          </fieldset>
+          <fieldset class="wo-part">
+            <legend><span class="val">03</span>About you</legend>
+            <div class="field"><label for="ap-msg">Tell us about yourself <span class="opt">optional</span></label><textarea class="input" id="ap-msg" name="message" rows="3" placeholder="Licenses, the work you like, where you have worked"></textarea></div>
+            <div class="field"><label class="drop" for="ap-file"><Icon name="file-text" size={20} /><span><b>Attach a resume</b> PDF or Word, up to 10 MB <span class="opt">optional</span></span></label><input class="sr-only" id="ap-file" name="resume" type="file" accept=".pdf,.doc,.docx" aria-describedby="ap-file-list" /><span class="hint" id="ap-file-list" aria-live="polite"></span></div>
+          </fieldset>
           <p class="err" data-form-err role="alert"></p>
-          <button class="btn btn-gold" type="submit" style="align-self:flex-start">Send application <Icon name="paper-plane-tilt" size={18} /></button>
+          <div class="qf-submit">
+            <button class="btn btn-gold" type="submit"><span data-btn-label>Send application</span> <Icon name="arrow-right" size={18} class="ico-go" /></button>
+            <p class="wo-note">We read every application and reply within a week.</p>
+          </div>
         </form>
         <div class="qf-done" data-done hidden tabindex="-1"><span class="qf-tick" aria-hidden="true"><Icon name="check" size={26} /></span><h3 class="t-h3">Application sent</h3><p>Thanks. We will reach out within a week.</p></div>
       </div>

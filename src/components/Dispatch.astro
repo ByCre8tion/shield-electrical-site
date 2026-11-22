@@ -98,7 +98,7 @@ const routes = [
 .dp-launch-line{position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--volt);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.22,1,.36,1)}
 @media (hover:hover){.dp-launch:hover{border-color:rgba(255,255,255,.28)}.dp-launch:hover .dp-launch-line{transform:scaleX(1)}}
 .dp-launch:not(:disabled):active{scale:.97}
-.dp.open .dp-launch{opacity:0;translate:0 8px;pointer-events:none}
+.dp.open .dp-launch,.in-hero .dp:not(.open) .dp-launch{opacity:0;translate:0 8px;pointer-events:none}
 /* Panel unfolds from the launcher's corner */
 .dp-panel{position:absolute;right:0;bottom:0;width:min(392px,calc(100vw - 32px));max-height:min(620px,calc(100svh - 32px));display:flex;flex-direction:column;border-radius:18px;background:#121314;border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 80px -30px rgba(0,0,0,.95);overflow:hidden;
   clip-path:inset(calc(100% - 48px) 0 0 calc(100% - 140px) round 12px);opacity:0;transition-property:clip-path,opacity;transition-duration:.42s,.2s;transition-timing-function:cubic-bezier(.22,1,.36,1)}
@@ -171,7 +171,6 @@ const routes = [
 .dp-track{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px}
 .dp-track li{padding-top:10px;border-top:2px solid var(--seam-2);font-size:.75rem;color:var(--ink-3)}
 .dp-track li.on{border-top-color:var(--volt);color:var(--ink)}
-.in-hero .dp{}
 @media (max-width:640px){
   .dp{right:12px;bottom:max(12px,env(safe-area-inset-bottom))}
   .dp-panel{position:fixed;right:8px;left:8px;bottom:max(8px,env(safe-area-inset-bottom));width:auto;max-height:calc(100svh - 72px)}
