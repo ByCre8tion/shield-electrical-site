@@ -11,7 +11,7 @@ const year = new Date().getFullYear();
   <div class="wrap foot-main">
     <div class="foot-globe">
       <canvas data-globe aria-hidden="true"></canvas>
-      <div class="foot-globe-hud hud" aria-hidden="true"><span>Home base <b>Chandler, AZ</b></span><span>Service <b>Phoenix Valley</b></span></div>
+      <div class="foot-globe-hud hud" aria-hidden="true"><span>Focus <b>Scottsdale, AZ</b></span><span>Service <b>Phoenix Valley</b></span></div>
     </div>
     <div class="foot-cols">
       <div class="foot-brand">
@@ -26,7 +26,7 @@ const year = new Date().getFullYear();
           <li><a class="val foot-tel" href={`tel:${company.tel}`}>{company.phone}</a></li>
           <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
           <li>{company.address}<br />{company.city}</li>
-          <li><span class="status" data-open-status><span class="led" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span></li>
+          <li><span>{company.hours}</span></li>
         </ul>
       </div>
       <div class="foot-trust"><BbbSeal /><span class="val">{company.roc}</span></div>

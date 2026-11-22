@@ -56,7 +56,7 @@ export function initCity() {
         ctx.save();
         ctx.font = `600 ${fontPx}px "Sora Variable", Sora, system-ui, sans-serif`;
         ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-        const wy = mobile ? h * .46 : h * .44;
+        const wy = mobile ? h * .4 : h * .34;
         const grad = ctx.createLinearGradient(0, wy - fontPx * .8, 0, wy);
         grad.addColorStop(0, 'rgba(255,255,255,.16)'); grad.addColorStop(1, 'rgba(255,255,255,.03)');
         ctx.fillStyle = grad; ctx.letterSpacing = '-0.04em';

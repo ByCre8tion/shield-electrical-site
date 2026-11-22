@@ -17,8 +17,8 @@ const path = geoPath(proj);
 const grat = geoGraticule().step([1, 1]).extent([[-121, 29], [-102, 40]])();
 
 const cities: [string, number, number, 'l' | 'r'][] = [
-  ['Chandler', 33.3062, -111.8413, 'r'], ['Gilbert', 33.3528, -111.789, 'r'], ['Mesa', 33.4152, -111.8315, 'r'],
-  ['Tempe', 33.4255, -111.94, 'l'], ['Phoenix', 33.4484, -112.074, 'l'], ['Scottsdale', 33.4942, -111.9261, 'r'],
+  ['Scottsdale', 33.4942, -111.9261, 'r'], ['Chandler office', 33.3062, -111.8413, 'r'], ['Gilbert', 33.3528, -111.789, 'r'], ['Mesa', 33.4152, -111.8315, 'r'],
+  ['Tempe', 33.4255, -111.94, 'l'], ['Phoenix', 33.4484, -112.074, 'l'],
   ['Queen Creek', 33.2487, -111.6343, 'r'], ['San Tan Valley', 33.1911, -111.528, 'l'], ['Ahwatukee', 33.3417, -111.9845, 'l'],
   ['Sun Lakes', 33.2111, -111.8754, 'l'], ['Apache Junction', 33.4151, -111.5496, 'l'], ['Paradise Valley', 33.5431, -111.9426, 'r'],
   ['Goodyear', 33.4353, -112.3577, 'r'], ['Peoria', 33.5806, -112.2374, 'l'], ['Glendale', 33.5387, -112.186, 'l'], ['Avondale', 33.4656, -112.3496, 'l'],
@@ -51,7 +51,7 @@ const hq = cities[0];
     </svg>
   </figure>
   <figure class="gm-valley panel">
-    <div class="gm-hud hud"><span>Service area <b>Phoenix Valley</b></span><span>HQ <b>{fmt(hq[1], 'N', 'S')} / {fmt(hq[2], 'E', 'W')}</b></span></div>
+    <div class="gm-hud hud"><span>Service area <b>Phoenix Valley</b></span><span>Focus <b>{fmt(hq[1], 'N', 'S')} / {fmt(hq[2], 'E', 'W')}</b></span></div>
     <svg viewBox={`0 0 ${VW} ${VH}`} role="img" aria-label={`Cities served: ${cities.map((c) => c[0]).join(', ')}`}>
       <path d={vpath(vgrat)!} class="gm-grat" />
       {cities.map(([n, lat, lon, side], i) => {
@@ -65,7 +65,7 @@ const hq = cities[0];
         );
       })}
     </svg>
-    <p class="gm-note">Based in Chandler. Not on the map? We travel for commercial work and larger residential projects.</p>
+    <p class="gm-note">Focused on Scottsdale, with our office in Chandler. Not on the map? We travel for commercial work and larger residential projects.</p>
   </figure>
 </div>
 <style is:global>

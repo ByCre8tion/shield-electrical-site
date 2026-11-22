@@ -2,19 +2,18 @@
 import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
 import ServiceGrid from '../../components/ServiceGrid.astro';
-import Process from '../../components/Process.astro';
+import PowerPath from '../../components/PowerPath.astro';
 import CtaPanel from '../../components/CtaPanel.astro';
 import Schedule from '../../components/Schedule.astro';
+import FieldGallery from '../../components/FieldGallery.astro';
 ---
 <Base title="Electrical services" description="Commercial and residential electrical, panel and AC upgrades, EV chargers, custom lighting and emergency repairs in the Phoenix Valley.">
   <PageHead title='Six services, one licensed crew' lead="Every job gets a written price, a permit when it needs one, and a clean finish." current="Services">
     <div class="svc-sched" data-on><Schedule /></div>
   </PageHead>
   <section class="sec tight"><div class="wrap"><ServiceGrid /></div></section>
-  <section class="sec" aria-labelledby="p-h"><div class="wrap">
-    <div class="head"><h2 id="p-h" class="t-h2" data-on>How every job runs</h2></div>
-    <Process />
-  </div></section>
+  <FieldGallery title="On the job" />
+  <PowerPath />
   <CtaPanel title='Not sure which service you need?' text="Describe the problem or send a photo. We will tell you what it is and what it costs." />
 </Base>
 <style>.svc-sched{max-width:640px;margin-top:12px}</style>

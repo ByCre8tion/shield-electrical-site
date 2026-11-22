@@ -5,9 +5,9 @@ import Icon from './Icon.astro';
 <div class="office">
   <div class="panel office-card" data-on>
     <Icon name="map-pin" size={26} class="tb-ico" />
-    <h3 class="t-h3">Chandler office</h3>
+    <h3 class="t-h3">Our office</h3>
     <p class="small">{company.address}<br />{company.city}</p>
-    <span class="status" data-open-status><span class="led" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span>
+    <span>{company.hours}</span>
     <a class="link small" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(company.address + ' ' + company.city)}`} target="_blank" rel="noopener">Get directions<span class="sr-only"> (opens in a new tab)</span></a>
   </div>
   <div data-on>

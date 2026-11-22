@@ -1,25 +1,37 @@
 ---
-import Circuit from './Circuit.astro';
-interface Props { title: string; lead?: string; crumbs?: { label: string; href: string }[]; current?: string }
-const { title, lead, crumbs = [], current } = Astro.props;
+/* Page header v3: grid texture, HUD line with breadcrumb and coordinates, a giant outlined word
+   behind the title, and a hairline of current running along the bottom edge. */
+interface Props { title: string; lead?: string; crumbs?: { label: string; href: string }[]; current?: string; word?: string }
+const { title, lead, crumbs = [], current, word } = Astro.props;
+const big = (word ?? current ?? '').toUpperCase();
 ---
-<section class="phd">
-  <Circuit density={0.55} />
+<section class="phd gridbg">
+  {big && <div class="phd-word" aria-hidden="true">{big}</div>}
   <div class="wrap phd-in">
-    {current && <nav aria-label="Breadcrumb" class="crumbs"><ol>{[{ label: 'Home', href: '/' }, ...crumbs].map((c) => <li><a href={c.href}>{c.label}</a></li>)}<li aria-current="page">{current}</li></ol></nav>}
-    <h1 class="t-h1" data-on set:html={title} />
+    <div class="phd-hud">
+      {current && <nav aria-label="Breadcrumb" class="crumbs hud"><ol>{[{ label: 'Home', href: '/' }, ...crumbs].map((c) => <li><a href={c.href}>{c.label}</a></li>)}<li aria-current="page">{current}</li></ol></nav>}
+      <span class="hud phd-geo" aria-hidden="true">Scottsdale, AZ <b>33.4942° N 111.9261° W</b></span>
+    </div>
+    <h1 class="t-display phd-h" data-on set:html={title} />
     {lead && <p class="lead" data-on>{lead}</p>}
     <slot />
   </div>
+  <div class="phd-line" aria-hidden="true"><span></span></div>
 </section>
 <style is:global>
-.phd{position:relative;overflow:hidden;margin-top:-76px;padding-top:76px}
-.phd-in{position:relative;display:flex;flex-direction:column;gap:22px;padding-block:clamp(56px,8vw,112px) clamp(40px,5vw,72px);pointer-events:none}
-.phd-in>*{pointer-events:auto}
-.phd-in h1{max-width:17ch}
-.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:8px;font-size:.875rem;color:var(--ink-3)}
-.crumbs li+li::before{content:"/";margin-right:8px}
-.crumbs a{color:var(--ink-2)}
-.crumbs [aria-current]{color:var(--ink)}
+.phd{position:relative;overflow:hidden;margin-top:-72px;padding-top:72px}
+.phd-word{position:absolute;right:-.04em;bottom:-.12em;font-weight:600;font-size:clamp(5rem,17vw,16rem);line-height:.8;letter-spacing:-.06em;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.08);pointer-events:none;-webkit-user-select:none;user-select:none}
+.phd-in{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:24px;padding-block:clamp(64px,9vw,128px) clamp(56px,7vw,96px)}
+.phd-hud{align-self:stretch;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid var(--seam)}
+.phd-h{max-width:15ch;font-size:clamp(2.6rem,5.6vw,5.25rem)}
+.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:10px}
+.crumbs li+li::before{content:"/";margin-right:10px;color:var(--ink-3)}
+.crumbs a{color:var(--ink-3);transition:color .15s ease-out}
+.crumbs [aria-current]{color:var(--volt)}
 @media (hover:hover){.crumbs a:hover{color:var(--ink)}}
+.phd-line{position:relative;height:1px;background:var(--seam);overflow:hidden}
+.phd-line span{position:absolute;top:0;left:0;width:22%;height:1px;background:linear-gradient(90deg,transparent,var(--volt),transparent);box-shadow:0 0 8px rgba(242,207,74,.8);animation:phd-run 4.5s cubic-bezier(.45,0,.2,1) infinite}
+@keyframes phd-run{from{translate:-100% 0}to{translate:460% 0}}
+@media (prefers-reduced-motion:reduce){.phd-line span{animation:none;translate:120% 0}}
+@media (max-width:640px){.phd-geo{display:none}}
 </style>

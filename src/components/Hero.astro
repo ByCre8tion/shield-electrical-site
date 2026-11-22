@@ -15,7 +15,8 @@ const sources = [{ k: 'google', l: 'Google' }, { k: 'facebook', l: 'Facebook' }]
 
   <div class="wrap hero-in">
     <div class="hero-copy">
-      <span class="hero-pill" data-on><span class="spark" aria-hidden="true"></span>Licensed electrical contractor in Chandler, AZ</span>
+      <span class="hud hero-status" data-on>Grid status <b class="ok">Energized</b></span>
+      <span class="hero-pill" data-on><span class="spark" aria-hidden="true"></span>Licensed electrical contractor serving Scottsdale, AZ</span>
       <h1 id="hero-h" class="t-display" data-on>Power you can trust, <span class="hl">wired right.</span></h1>
       <p class="lead" data-on>Homes and businesses across the Valley. Written price before any work starts.</p>
       <div class="btn-row" data-on>
@@ -31,9 +32,8 @@ const sources = [{ k: 'google', l: 'Google' }, { k: 'facebook', l: 'Facebook' }]
   </div>
 
   <div class="hero-hud wrap" aria-hidden="true">
-    <div class="hud hh-l"><span>33.3062° N &nbsp;111.8413° W</span><span><b>Chandler, Arizona</b></span></div>
+    <div class="hud hh-l"><span>33.4942° N &nbsp;111.9261° W</span><span><b>Scottsdale, Arizona</b></span></div>
   </div>
-  <div class="hero-tr wrap" aria-hidden="true"><div class="hud hh-r"><span>Grid status <b class="ok">Energized</b></span><span>Valley time <b data-clock>--:--</b></span></div></div>
   <span class="hero-tick" aria-hidden="true"></span>
 </section>
 <style is:global>
@@ -42,6 +42,9 @@ const sources = [{ k: 'google', l: 'Google' }, { k: 'facebook', l: 'Facebook' }]
 .hero-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,var(--night) 0%,rgba(10,10,11,.86) 30%,rgba(10,10,11,0) 58%),linear-gradient(0deg,var(--night) 0%,rgba(10,10,11,0) 22%)}
 .hero-in{position:relative;width:100%;pointer-events:none}
 .hero-copy{display:flex;flex-direction:column;align-items:flex-start;gap:26px;max-width:640px}
+.hero-status{display:inline-flex;align-items:center;gap:8px;margin-bottom:-10px}
+.hero-status .ok{color:var(--live)}
+.hero-status::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--live);box-shadow:0 0 8px rgba(143,227,136,.8)}
 .hero-copy>*{pointer-events:auto}
 .hero-copy h1{max-width:12ch}
 .hero-pill{display:inline-flex;align-items:center;gap:10px;min-height:34px;padding:0 14px 0 10px;border-radius:var(--r-pill);background:rgba(18,19,20,.6);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--seam);font-size:.8125rem;color:var(--ink-2)}

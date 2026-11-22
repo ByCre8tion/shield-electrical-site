@@ -6,17 +6,17 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Concierge from '../components/Concierge.astro';
 import Icon from '../components/Icon.astro';
-import { company, services } from '../data/site';
+import { areas, company, services } from '../data/site';
 interface Props { title?: string; description?: string; noChat?: boolean }
-const { title, description = 'Licensed commercial and residential electricians in Chandler and the Phoenix Valley. Panel upgrades, EV chargers, lighting and repairs, with a written price before work starts.', noChat = false } = Astro.props;
-const full = title ? `${title} | Shield Electrical` : 'Shield Electrical | Electricians in Chandler and the Phoenix Valley';
+const { title, description = 'Licensed commercial and residential electricians serving Scottsdale and the Phoenix Valley. Panel upgrades, EV chargers, lighting and repairs, with a written price before work starts.', noChat = false } = Astro.props;
+const full = title ? `${title} | Shield Electrical` : 'Shield Electrical | Electricians in Scottsdale and the Phoenix Valley';
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const schema = {
   '@context': 'https://schema.org', '@type': 'Electrician', name: company.name, url: Astro.site?.href, telephone: company.tel, email: company.email,
   image: new URL('/brand/og.jpg', Astro.site).href,
   address: { '@type': 'PostalAddress', streetAddress: company.address, addressLocality: 'Chandler', addressRegion: 'AZ', postalCode: '85224', addressCountry: 'US' },
   openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '07:00', closes: '17:00' }],
-  areaServed: 'Phoenix metropolitan area, Arizona',
+  areaServed: areas.map((a) => ({ '@type': 'City', name: `${a}, AZ` })),
   hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Electrical services', itemListElement: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title } })) },
 };
 ---

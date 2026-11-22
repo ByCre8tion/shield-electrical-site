@@ -2,7 +2,7 @@
 /* Coverage ring: one number at the center of a segmented ring, four facts around it.
    Each segment is one of the six services. Draws in once when seen. */
 import { areas, services, company } from '../data/site';
-import SlideLink from './SlideLink.astro';
+import Icon from './Icon.astro';
 const R = 200, C = 2 * Math.PI * R, seg = C / services.length, gap = 14;
 const tones = ['#F2CF4A', '#D9B944', '#B39B45', '#8A8A8A', '#686868', '#4A4A4A'];
 const facts = [
@@ -14,7 +14,7 @@ const facts = [
 ---
 <section class="sec cov gridbg" aria-labelledby="cov-h">
   <div class="wrap">
-    <div class="cov-head"><h2 id="cov-h" class="t-h2" data-on>One crew, the whole Valley</h2><SlideLink href="/service-areas/" text="See every city we cover" /></div>
+    <div class="cov-head"><p class="hud" data-on>Coverage</p><h2 id="cov-h" class="t-h2" data-on>Scottsdale first, the whole Valley</h2></div>
     <div class="cov-grid" data-ring>
       {facts.slice(0, 2).map((f) => <div class="cov-card panel"><span class="hud">{f.k}</span><b>{f.v}</b><p>{f.d}</p></div>)}
       <div class="cov-ring">
@@ -29,10 +29,12 @@ const facts = [
       </div>
       {facts.slice(2).map((f) => <div class="cov-card panel"><span class="hud">{f.k}</span><b>{f.v}</b><p>{f.d}</p></div>)}
     </div>
+    <div class="cov-more"><a class="btn btn-line" href="/service-areas/">See every city we cover <Icon name="arrow-right" size={18} class="ico-go" /></a></div>
   </div>
 </section>
 <style is:global>
-.cov-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(32px,5vw,64px)}
+.cov-head{display:flex;flex-direction:column;gap:18px;margin-bottom:clamp(32px,5vw,64px)}
+.cov-more{display:flex;justify-content:center;margin-top:40px}
 .cov-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr);grid-template-rows:auto auto;gap:16px 32px;align-items:center}
 .cov-grid>.cov-card:nth-child(1){grid-column:1;grid-row:1;align-self:end}
 .cov-grid>.cov-card:nth-child(2){grid-column:1;grid-row:2;align-self:start}

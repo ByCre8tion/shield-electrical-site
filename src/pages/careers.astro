@@ -5,7 +5,7 @@ import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import { roles, perks } from '../data/site';
 ---
-<Base title="Careers" description="Electrician jobs at Shield Electrical in Chandler, Arizona. Journeyman, apprentice and service technician roles.">
+<Base title="Careers" description="Electrician jobs at Shield Electrical, serving Scottsdale and the Phoenix Valley. Journeyman, apprentice and service technician roles.">
   <PageHead title='Build your career with Shield' lead="We are hiring electricians who take pride in clean work and treat customers well." current="Careers">
     <div class="btn-row" data-on><a class="btn btn-gold" href="#apply">Apply now <Icon name="arrow-right" size={18} class="ico-go" /></a></div>
   </PageHead>
@@ -24,7 +24,7 @@ import { roles, perks } from '../data/site';
   </section>
   <section class="sec tight" aria-labelledby="perk-h">
     <div class="wrap split">
-      <div data-on><Photo k="crew" ratio="16 / 10" /></div>
+      <div data-on><Photo k="crew" ratio="16 / 10" tag="The crew" /></div>
       <div class="story"><h2 id="perk-h" class="t-h2" data-on>What you get</h2><ul class="chips" data-on>{perks.map((p) => <li><Icon name="check" size={16} />{p}</li>)}</ul></div>
     </div>
   </section>

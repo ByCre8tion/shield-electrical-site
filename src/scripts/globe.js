@@ -1,8 +1,8 @@
 /* Footer globe: grey land particles on a slowly turning earth, Arizona lit in yellow,
-   with pings at the Chandler office. Data (public/data/globe.json) loads only when the globe nears view. */
+   with pings at Scottsdale. Data (public/data/globe.json) loads only when the globe nears view. */
 import { stage } from './stage.js';
 
-const HQ = [-111.84, 33.31];
+const HQ = [-111.93, 33.49];
 const R2D = Math.PI / 180;
 
 export function initGlobes() {
@@ -46,8 +46,8 @@ export function initGlobes() {
           ctx.fillStyle = '#FFE68A'; ctx.beginPath(); ctx.arc(hq[0], hq[1], 3, 0, 7); ctx.fill();
           ctx.strokeStyle = 'rgba(242,207,74,.7)'; ctx.beginPath(); ctx.moveTo(hq[0], hq[1]); ctx.lineTo(hq[0] + 46, hq[1] - 40); ctx.lineTo(hq[0] + 58, hq[1] - 40); ctx.stroke();
           ctx.font = '500 10px "JetBrains Mono", ui-monospace, monospace'; ctx.textAlign = 'left';
-          ctx.fillStyle = 'rgba(242,207,74,1)'; ctx.fillText('SHIELD HQ', hq[0] + 62, hq[1] - 43);
-          ctx.fillStyle = 'rgba(237,237,237,.75)'; ctx.fillText('CHANDLER, AZ', hq[0] + 62, hq[1] - 30);
+          ctx.fillStyle = 'rgba(242,207,74,1)'; ctx.fillText('SHIELD', hq[0] + 62, hq[1] - 43);
+          ctx.fillStyle = 'rgba(237,237,237,.75)'; ctx.fillText('SCOTTSDALE, AZ', hq[0] + 62, hq[1] - 30);
         }
       },
     });

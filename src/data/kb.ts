@@ -2,7 +2,7 @@
 import { company, services, steps, faqGroups, areas, values } from './site';
 
 export const notes: string[] = [
-  'Owner: Jason. Shield Electrical is a licensed commercial and residential electrical contractor in Chandler, Arizona.',
+  'Owner: Jason. Shield Electrical is a licensed commercial and residential electrical contractor serving Scottsdale and the Phoenix Valley, with its office in Chandler, Arizona.',
   'Hours: Monday to Friday, 7am to 5pm Arizona time.',
   /* [Add onboarding answers: years in business, license number, warranty, after hours policy, brands, financing, etc.] */
 ];

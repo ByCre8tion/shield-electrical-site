@@ -13,7 +13,6 @@ const cur = (h: string) => (path.startsWith(h) ? 'page' : undefined);
       {main.map((l) => <a href={l.href} aria-current={cur(l.href)}>{l.label}</a>)}
     </nav>
     <div class="nav-end">
-      <span class="status nav-status" data-open-status><span class="led" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span>
       <a class="btn btn-gold nav-cta" href="/contact/">Book service</a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="sheet" data-menu aria-label="Menu"><Icon name="list" size={22} /></button>
     </div>

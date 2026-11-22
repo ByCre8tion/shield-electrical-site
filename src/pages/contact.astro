@@ -8,7 +8,7 @@ import Icon from '../components/Icon.astro';
 import JobTracker from '../components/JobTracker.astro';
 import { company } from '../data/site';
 ---
-<Base title="Book service" description="Book an electrician in Chandler and the Phoenix Valley. Call, text or send the form with a photo." noChat>
+<Base title="Book service" description="Book an electrician in Scottsdale and the Phoenix Valley. Call, text or send the form with a photo." noChat>
   <PageHead title='Book service' lead="Send the details and a photo if you have one. We reply within one business day." current="Book service" />
   <section class="sec tight">
     <div class="wrap split-7-5">
@@ -20,7 +20,7 @@ import { company } from '../data/site';
           <li><Icon name="phone" size={20} class="tb-ico" /><span><span class="small">Call</span><a class="val link" href={`tel:${company.tel}`}>{company.phone}</a></span></li>
           <li><Icon name="envelope-simple" size={20} class="tb-ico" /><span><span class="small">Email</span><a class="link" href={`mailto:${company.email}`}>{company.email}</a></span></li>
           <li><Icon name="map-pin" size={20} class="tb-ico" /><span><span class="small">Office</span><span>{company.address}, {company.city}</span></span></li>
-          <li><Icon name="clock" size={20} class="tb-ico" /><span><span class="small">Hours</span><span class="status" data-open-status><span class="led" aria-hidden="true"></span><span data-open-text>{company.hours}</span></span></span></li>
+          <li><Icon name="clock" size={20} class="tb-ico" /><span><span class="small">Hours</span><span>{company.hours}</span></span></li>
         </ul>
         <Socials />
         <BbbSeal />

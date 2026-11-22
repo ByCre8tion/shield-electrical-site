@@ -8,7 +8,9 @@ import PanelCheck from '../components/PanelCheck.astro';
 import Coverage from '../components/Coverage.astro';
 import Reviews from '../components/Reviews.astro';
 import QuoteForm from '../components/QuoteForm.astro';
-import SlideLink from '../components/SlideLink.astro';
+import FieldGallery from '../components/FieldGallery.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+import Icon from '../components/Icon.astro';
 import JobTracker from '../components/JobTracker.astro';
 ---
 <Base>
@@ -17,10 +19,13 @@ import JobTracker from '../components/JobTracker.astro';
 
   <section class="sec" aria-labelledby="svc-h">
     <div class="wrap">
-      <div class="head svc-head"><h2 id="svc-h" class="t-h2" data-on>One crew for every circuit</h2><SlideLink href="/services/" text="Every service in detail" /></div>
+      <div class="head svc-head"><p class="hud" data-on>Six services</p><h2 id="svc-h" class="t-h2" data-on>One crew for every circuit</h2></div>
       <ServiceGrid />
+      <div class="svc-more"><a class="btn btn-line" href="/services/">Every service in detail <Icon name="arrow-right" size={18} class="ico-go" /></a></div>
     </div>
   </section>
+
+  <FieldGallery />
 
   <PowerPath />
 
@@ -48,7 +53,7 @@ import JobTracker from '../components/JobTracker.astro';
   </section>
 </Base>
 <style is:global>
-.svc-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.svc-more{display:flex;justify-content:center;margin-top:32px}
 .charged{position:relative;overflow:hidden;padding-bottom:clamp(220px,26vw,380px)}
 .charged-cv{position:absolute;left:0;right:0;bottom:0;width:100%;height:62%;pointer-events:none;-webkit-mask:linear-gradient(180deg,transparent,#000 35%);mask:linear-gradient(180deg,transparent,#000 35%)}
 .charged-in{position:relative}

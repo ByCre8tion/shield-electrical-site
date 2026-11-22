@@ -4,8 +4,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { media } from '../data/site';
-interface Props { k: string; ratio?: string; class?: string; eager?: boolean; sizes?: string; label?: string }
-const { k, ratio = '4 / 3', class: cls = '', eager = false, sizes = '(max-width: 860px) 100vw, 50vw', label } = Astro.props;
+interface Props { k: string; ratio?: string; class?: string; eager?: boolean; sizes?: string; label?: string; tag?: string }
+const { k, ratio = '4 / 3', class: cls = '', eager = false, sizes = '(max-width: 860px) 100vw, 50vw', label, tag } = Astro.props;
 const m = media[k];
 const local = (w: number) => `/media/${k}-${w}.webp`;
 const has = fs.existsSync(path.join(process.cwd(), 'public', 'media', `${k}-1600.webp`));
@@ -15,9 +15,11 @@ const srcset = has ? `${local(800)} 800w, ${local(1600)} 1600w, ${local(2400)} 2
 {src ? (
   <div class:list={['photo', cls]} style={`aspect-ratio:${ratio}`}>
     <img src={src} srcset={srcset} sizes={srcset ? sizes : undefined} alt={m.alt} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} decoding="async" />
+    {tag && <span class="ph-tag hud">{tag}</span>}
   </div>
 ) : (
   <div class:list={['photo', 'ph', cls]} style={`aspect-ratio:${ratio}`} role="img" aria-label={m?.alt || label || 'Photo coming soon'}>
+    {tag && <span class="ph-tag hud">{tag}</span>}
     <span class="ph-cap"><b>{label || m?.need || 'Job photo'}</b><small>Real photo coming</small></span>
   </div>
 )}

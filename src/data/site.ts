@@ -38,6 +38,12 @@ export const media: Record<string, { src: string; alt: string; need?: string }> 
   emergency: { src: '', need: 'Night service call', alt: 'An electrician with a headlamp inspecting a panel at night' },
   tools: { src: '', need: 'The truck and tools', alt: 'An electrician tool belt and tools on a workbench' },
   crew: { src: '', need: 'Crew on a job', alt: 'Electricians pulling wire through a commercial ceiling' },
+  field1: { src: '', need: 'Crew on a job site', alt: 'The Shield crew working on a job site' },
+  field2: { src: '', need: 'Jason at a panel', alt: 'Jason working inside an electrical panel' },
+  field3: { src: '', need: 'Trucks and gear', alt: 'Shield Electrical service trucks loaded with gear' },
+  field4: { src: '', need: 'EV charger install', alt: 'An electrician mounting an EV charger in a garage' },
+  field5: { src: '', need: 'Commercial wire pull', alt: 'Electricians pulling wire in a commercial ceiling' },
+  jason: { src: '', need: 'Portrait of Jason', alt: 'Jason, owner of Shield Electrical' },
   copper: { src: '', need: 'Clean wiring, close up', alt: 'Close up of stripped copper conductors' },
 };
 
@@ -104,7 +110,7 @@ export const steps = [
   { t: 'Inspected and done', d: 'We walk you through it, pass inspection and clean up.' },
 ];
 
-export const areas = ['Chandler', 'Gilbert', 'Mesa', 'Tempe', 'Phoenix', 'Scottsdale', 'Queen Creek', 'San Tan Valley', 'Ahwatukee', 'Sun Lakes', 'Apache Junction', 'Paradise Valley', 'Goodyear', 'Peoria', 'Glendale', 'Avondale'];
+export const areas = ['Scottsdale', 'Paradise Valley', 'Phoenix', 'Tempe', 'Chandler', 'Gilbert', 'Mesa', 'Queen Creek', 'San Tan Valley', 'Ahwatukee', 'Sun Lakes', 'Apache Junction', 'Goodyear', 'Peoria', 'Glendale', 'Avondale'];
 
 export const values = [
   { t: 'Safety first', d: 'Every job is built to code and inspected. We do not cut corners you cannot see.' },

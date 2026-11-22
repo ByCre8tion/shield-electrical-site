@@ -3,45 +3,71 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Photo from '../components/Photo.astro';
 import TrustBar from '../components/TrustBar.astro';
+import FieldGallery from '../components/FieldGallery.astro';
+import Coverage from '../components/Coverage.astro';
 import CtaPanel from '../components/CtaPanel.astro';
 import Socials from '../components/Socials.astro';
-import Icon from '../components/Icon.astro';
 import { values } from '../data/site';
-const vi = ['shield-check', 'file-text', 'wrench'];
 ---
-<Base title="About" description="Shield Electrical is a licensed commercial and residential electrical contractor based in Chandler, Arizona.">
-  <PageHead title='Built on precision. Backed by power.' lead="A Chandler electrical contractor for homes and businesses that need it done right." current="About" />
+<Base title="About" description="Shield Electrical is a licensed commercial and residential electrical contractor serving Scottsdale and the Phoenix Valley.">
+  <PageHead title='Built on precision. Backed by power.' lead="A licensed electrical contractor for Scottsdale homes and Valley businesses that need it done right." current="About" />
   <TrustBar />
+
   <section class="sec" aria-labelledby="story-h">
-    <div class="wrap split">
-      <div data-on><Photo k="crew" ratio="4 / 3" /></div>
-      <div class="story">
+    <div class="wrap ab-story">
+      <div class="ab-portrait" data-on><Photo k="jason" ratio="4 / 5" tag="Owner" sizes="(max-width: 900px) 100vw, 40vw" /></div>
+      <div class="ab-copy">
+        <p class="hud" data-on>The person behind the panel</p>
         <h2 id="story-h" class="t-h2" data-on>An electrician who answers the phone</h2>
-        <p class="body" data-on>[Jason's story: how Shield started, the year, the kind of work that built the company and what he wants every customer to feel when the job is done. To be written with Jason.]</p>
+        <p class="ab-body" data-on>[Jason's story: how Shield started, the year, the kind of work that built the company and what he wants every customer to feel when the job is done. To be written with Jason.]</p>
+        <dl class="ab-spec" data-on>
+          <div><dt class="hud">Focus</dt><dd>Scottsdale and Paradise Valley</dd></div>
+          <div><dt class="hud">Office</dt><dd>Chandler, Arizona</dd></div>
+          <div><dt class="hud">Work</dt><dd>Commercial and residential</dd></div>
+        </dl>
         <figure class="sig" data-on><img src="/brand/jason.webp" alt="" width="52" height="52" /><figcaption><b>Jason</b><span>Owner, Shield Electrical</span></figcaption></figure>
         <div data-on><Socials /></div>
       </div>
     </div>
   </section>
-  <section class="sec tight" aria-labelledby="val-h">
-    <div class="wrap">
-      <div class="head"><h2 id="val-h" class="t-h2" data-on>What you can count on</h2></div>
-      <div class="vals">
-        {values.map((v, i) => <div class:list={['panel', 'val-c', { 'val-big': i === 0 }]} data-on><Icon name={vi[i]} size={28} class="tb-ico" /><h3 class="t-h3">{v.t}</h3><p class="small">{v.d}</p></div>)}
-      </div>
+
+  <FieldGallery title="The team, on the job" />
+
+  <section class="sec gridbg" aria-labelledby="val-h">
+    <div class="wrap ab-vals">
+      <div class="ab-vals-h"><p class="hud" data-on>Standards</p><h2 id="val-h" class="t-h2" data-on>What you can count on</h2></div>
+      <ol class="ab-list">
+        {values.map((v, i) => (
+          <li data-on><span class="val">0{i + 1}</span><h3 class="t-h3">{v.t}</h3><p>{v.d}</p></li>
+        ))}
+      </ol>
     </div>
   </section>
-  <CtaPanel title='Work with a crew that shows up.' />
+
+  <Coverage />
+
+  <CtaPanel title='Work with a crew that shows up.' text="Tell us what you need. A written price comes before any work starts." />
 </Base>
 <style is:global>
-.story{display:flex;flex-direction:column;gap:22px;align-items:flex-start}
+.ab-story{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,6vw,96px);align-items:center}
+.ab-copy{display:flex;flex-direction:column;align-items:flex-start;gap:22px}
+.ab-body{font-size:1.125rem;color:var(--ink-2);max-width:56ch}
+.ab-spec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:0;align-self:stretch;border-top:1px solid var(--seam);border-bottom:1px solid var(--seam)}
+.ab-spec div{padding:16px 16px 16px 0}
+.ab-spec div+div{padding-left:16px;border-left:1px solid var(--seam)}
+.ab-spec dd{margin:6px 0 0;font-size:.9375rem;color:var(--ink)}
 .sig{display:flex;align-items:center;gap:14px;margin:0}
-.sig img{width:52px;height:52px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--gold)}
+.sig img{width:52px;height:52px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--volt)}
 .sig figcaption{display:flex;flex-direction:column;font-size:.875rem;color:var(--ink-2)}
 .sig b{font-weight:500;color:var(--ink);font-size:1rem}
-.vals{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);grid-template-rows:auto auto;gap:14px}
-.val-c{padding:26px;display:flex;flex-direction:column;gap:12px}
-.val-big{grid-row:span 2;justify-content:flex-end;background:radial-gradient(120% 90% at 0% 0%,rgba(242,207,74,.12),transparent 60%),var(--deck)}
-.val-big .t-h3{font-size:1.75rem;font-weight:300;letter-spacing:-.02em}
-@media (max-width:760px){.vals{grid-template-columns:minmax(0,1fr)}.val-big{grid-row:auto}}
+.ab-vals{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(32px,6vw,96px);align-items:start}
+.ab-vals-h{display:flex;flex-direction:column;gap:18px;position:sticky;top:110px}
+.ab-list{list-style:none;display:flex;flex-direction:column}
+.ab-list li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px 20px;padding:28px 0;border-top:1px solid var(--seam)}
+.ab-list li:last-child{border-bottom:1px solid var(--seam)}
+.ab-list .val{grid-row:span 2;font-size:.875rem;color:var(--volt);padding-top:6px}
+.ab-list h3{font-size:clamp(1.5rem,2.4vw,2rem);font-weight:300;letter-spacing:-.025em}
+.ab-list p{color:var(--ink-2);max-width:52ch}
+@media (max-width:900px){.ab-story,.ab-vals{grid-template-columns:minmax(0,1fr)}.ab-vals-h{position:static}.ab-portrait{max-width:460px}}
+@media (max-width:520px){.ab-spec{grid-template-columns:minmax(0,1fr)}.ab-spec div+div{padding-left:0;border-left:0;border-top:1px solid var(--seam)}}
 </style>

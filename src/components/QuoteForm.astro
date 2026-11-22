@@ -56,6 +56,7 @@ const { preset = '', compact = false } = Astro.props;
 @media (hover:hover){.drop:hover{border-color:var(--gold);background:rgba(242,207,74,.05)}}
 .field:has(input[type=file]:focus-visible) .drop{outline:2px solid var(--gold-hi);outline-offset:2px}
 .qf-submit{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.qf-done[hidden]{display:none}
 .qf-done{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:8px 0}
 .qf-done:focus{outline:none}
 .qf-done p{color:var(--ink-2);max-width:44ch}

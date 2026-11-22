@@ -11,9 +11,9 @@ const i = services.findIndex((x) => x.slug === s.slug);
 const next = services[(i + 1) % services.length];
 const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: s.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
 ---
-<Base title={s.title} description={`${s.short} Shield Electrical, licensed electricians in Chandler and the Phoenix Valley.`}>
+<Base title={s.title} description={`${s.short} Shield Electrical, licensed electricians serving Scottsdale and the Phoenix Valley.`}>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-  <PageHead title={s.title} lead={s.lead} crumbs={[{ label: 'Services', href: '/services/' }]} current={s.title}>
+  <PageHead title={s.title} lead={s.lead} crumbs={[{ label: 'Services', href: '/services/' }]} current={s.title} word={s.n}>
     {s.emergency ? (
       <div class="panel em-alert" data-on>
         <span class="led fault" aria-hidden="true"></span>
@@ -26,7 +26,7 @@ const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEn
 
   <section class="sec tight" aria-labelledby="inc-h">
     <div class="wrap split">
-      <div data-on><Photo k={s.img} ratio="4 / 3" sizes="(max-width: 900px) 100vw, 50vw" /></div>
+      <div data-on><Photo k={s.img} ratio="4 / 3" tag={`Circuit ${s.n}`} sizes="(max-width: 900px) 100vw, 50vw" /></div>
       <div class="svc-inc">
         <h2 id="inc-h" class="t-h2" data-on>What is included</h2>
         <ul class="chips" data-on>{s.includes.map((x) => <li><Icon name="check" size={16} />{x}</li>)}</ul>
@@ -52,7 +52,7 @@ const faqSchema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEn
     <div class="wrap split-7-5">
       <QuoteForm preset={s.slug} />
       <div class="book-side">
-        <h2 id="sq-h" class="t-h2">Book {s.title.toLowerCase()}</h2>
+        <h2 id="sq-h" class="t-h2">Book {/^[A-Z][a-z]/.test(s.title) ? s.title.charAt(0).toLowerCase() + s.title.slice(1) : s.title}</h2>
         <p class="lead">We reply within one business day.</p>
         <a class="panel next-svc" href={`/services/${next.slug}/`}><span class="small">Next service</span><span class="t-h3">{next.title}</span><Icon name="arrow-right" size={20} /></a>
       </div>
