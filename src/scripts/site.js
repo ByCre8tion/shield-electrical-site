@@ -5,7 +5,7 @@ export const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export function initSite(company) {
   document.documentElement.classList.add('js');
-  scrolled(); menu(); openStatus(company); reveals(); meters(); forms(); reviews(); conductor(); panelCheck(); odometers(); spotlights(); compares(); powerPath(); clock(); rings();
+  scrolled(); menu(); openStatus(company); reveals(); meters(); forms(); reviews(); conductor(); panelCheck(); odometers(); spotlights(); compares(); powerPath(); clock(); rings(); directory();
 }
 
 /* Path of power: scroll progress through the pinned story, written to --p.
@@ -30,11 +30,33 @@ function powerPath() {
   });
 }
 
+/* Circuit directory: a spec card follows the cursor over the service rows (pointer devices only) */
+function directory() {
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  $$('[data-dir]').forEach((dir) => {
+    const cards = $$('[data-dir-card]', dir), peek = $('.dir-peek', dir);
+    let raf = 0, x = 0, y = 0;
+    const place = () => { raf = 0; peek.style.setProperty('--px', `${x}px`); peek.style.setProperty('--py', `${y}px`); };
+    dir.addEventListener('pointermove', (e) => {
+      const r = dir.getBoundingClientRect();
+      x = Math.min(e.clientX - r.left + 28, r.width - 290); y = e.clientY - r.top - 90;
+      if (!raf) raf = requestAnimationFrame(place);
+    });
+    $$('[data-dir-row]', dir).forEach((a) => a.addEventListener('pointerenter', () => {
+      cards.forEach((c) => c.classList.toggle('on', c.dataset.dirCard === a.dataset.dirRow));
+      dir.classList.add('peek');
+    }));
+    dir.addEventListener('pointerleave', () => dir.classList.remove('peek'));
+  });
+}
+
 /* Valley time for HUD readouts. Arizona has no daylight saving. */
 function clock() {
-  const els = $$('[data-clock]'); if (!els.length) return;
+  const els = $$('[data-clock]');
   const f = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Phoenix', hour: '2-digit', minute: '2-digit', hour12: false });
   const tick = () => els.forEach((e) => { e.textContent = f.format(new Date()); });
+  const d = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Phoenix', month: 'short', day: 'numeric', year: 'numeric' });
+  $$('[data-today]').forEach((e) => { e.textContent = `New request · ${d.format(new Date())}`; });
   tick(); setInterval(tick, 30000);
 }
 
@@ -118,23 +140,27 @@ function conductor() {
 function panelCheck() {
   const root = $('[data-panel-check]'); if (!root) return;
   const form = $('form', root), verdict = $('[data-pc-verdict]', root), why = $('[data-pc-why]', root);
+  const est = $('[data-pc-est]', root), cap = $('[data-pc-cap]', root);
   const load = { ev: 40, spa: 50, casita: 50, kitchen: 40 };
   const run = () => {
     const amps = +form.amps.value, ac = form.ac.value === '1';
     const adds = $$('input[name=add]:checked', form).map((i) => i.value);
     const want = adds.reduce((t, a) => t + load[a], 0);
     const base = (ac ? 45 : 15) + 40;
-    let state, v, w, pct;
-    if (!amps) { state = 'warn'; v = 'Send us a photo of your panel'; w = 'The label on the main breaker tells us the size. We will check it before quoting.'; pct = 55; }
-    else {
-      const room = amps * .8 - base;
-      pct = Math.min(100, Math.round(((base + want) / (amps * .8)) * 100));
+    let state, v, w, frac;
+    if (!amps) {
+      state = 'unknown'; v = 'Send us a photo of your panel'; w = 'The label on the main breaker tells us the size. We check it before quoting.'; frac = .5;
+      est.textContent = `${base + want}A`; cap.textContent = 'unknown';
+    } else {
+      const usable = amps * .8, room = usable - base;
+      frac = Math.min(1.25, (base + want) / usable) / 1.25;
+      est.textContent = `${base + want}A`; cap.textContent = `${Math.round(usable)}A`;
       if (!adds.length) { state = 'ok'; v = 'Your panel is likely fine as is'; w = 'Add what you are planning to see if there is room.'; }
-      else if (want <= room * .6) { state = 'ok'; v = 'Likely room to add this'; w = `A ${amps}A panel usually carries this with a load check first.`; }
-      else if (want <= room) { state = 'warn'; v = 'Possible with load management'; w = 'It may fit with a load management device instead of a full upgrade.'; }
+      else if (want <= room * .6) { state = 'ok'; v = 'Likely room to add this'; w = `A ${amps}A panel usually carries this, with a load check first.`; }
+      else if (want <= room) { state = 'ok'; v = 'Possible with load management'; w = 'It may fit with a load management device instead of a full upgrade.'; }
       else { state = 'warn'; v = 'Plan on a panel upgrade'; w = `A ${amps}A panel${ac ? ' with central AC' : ''} rarely has room for ${adds.length > 1 ? 'all of this' : 'this'}.`; }
     }
-    root.dataset.state = state; root.style.setProperty('--load', pct + '%');
+    root.dataset.state = state; root.style.setProperty('--ang', `${-90 + frac * 180}deg`);
     verdict.textContent = v; why.textContent = w;
   };
   form.addEventListener('change', run); run();
@@ -199,7 +225,7 @@ function forms() {
   $$('form[data-form]').forEach((form) => {
     const fields = $$('input, select, textarea', form).filter((f) => f.dataset.msg);
     const check = (f) => {
-      let ok = f.type === 'file' ? true : f.value.trim().length > 0;
+      let ok = f.type === 'file' ? true : f.type === 'radio' ? !!form.querySelector(`input[name="${f.name}"]:checked`) : f.value.trim().length > 0;
       if (f.type === 'tel' && ok) ok = f.value.replace(/\D/g, '').replace(/^1(?=\d{10})/, '').length === 10;
       if (f.type === 'email' && f.value.trim()) ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value.trim());
       if (f.type === 'email' && !f.required && !f.value.trim()) ok = true;
@@ -210,6 +236,7 @@ function forms() {
     };
     fields.forEach((f) => {
       f.addEventListener('input', () => { if (f.getAttribute('aria-invalid') === 'true') check(f); });
+      if (f.type === 'radio') $$(`input[name="${f.name}"]`, form).forEach((r) => r.addEventListener('change', () => check(f)));
       f.addEventListener('blur', () => { if (f.value) check(f); });
     });
     $$('input[type=tel]', form).forEach((t) => t.addEventListener('input', () => { t.value = fmtPhone(t.value); }));
@@ -225,8 +252,8 @@ function forms() {
       e.preventDefault();
       const bad = fields.filter((f) => !check(f));
       if (bad.length) { bad[0].focus(); return; }
-      const btn = $('button[type=submit]', form), label = btn.textContent;
-      btn.disabled = true; btn.textContent = 'Sending';
+      const btn = $('button[type=submit]', form), lab = $('[data-btn-label]', btn) || btn, label = lab.textContent;
+      btn.disabled = true; lab.textContent = 'Sending';
       try {
         const ep = form.dataset.endpoint;
         if (ep) { const r = await fetch(ep, { method: 'POST', body: new FormData(form) }); if (!r.ok) throw new Error('send'); }
@@ -236,7 +263,7 @@ function forms() {
       } catch (err) {
         const fe = $('[data-form-err]', form); if (fe) fe.textContent = 'That did not send. Please try again or call us.';
       }
-      btn.disabled = false; btn.textContent = label;
+      btn.disabled = false; lab.textContent = label;
     });
   });
 }

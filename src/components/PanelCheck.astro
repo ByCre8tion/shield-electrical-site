@@ -1,59 +1,90 @@
 ---
-/* An honest quick guide: is your panel ready for what you want to add? */
+/* Load check: an honest quick guide. Choices are breaker keys with a status light; the result is an
+   analog load meter whose needle swings to the estimated load against the panel's usable capacity. */
 import Icon from './Icon.astro';
+const ticks = Array.from({ length: 11 }, (_, i) => i / 10); // 0 to 125% of usable, in 12.5% steps
+const R = 118, cx = 140, cy = 140;
+const pt = (f: number, r: number) => { const a = Math.PI * (1 - f); return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; };
+const arc = (f0: number, f1: number, r: number) => { const [x0, y0] = pt(f0, r), [x1, y1] = pt(f1, r); return `M${x0.toFixed(1)} ${y0.toFixed(1)} A${r} ${r} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`; };
 ---
-<div class="pc panel" data-panel-check>
+<div class="pc" data-panel-check>
   <form class="pc-form" onsubmit="return false">
     <fieldset>
-      <legend>What size is your main panel?</legend>
-      <div class="seg">
-        <label><input type="radio" name="amps" value="100" checked /><span class="val">100A</span></label>
-        <label><input type="radio" name="amps" value="150" /><span class="val">150A</span></label>
-        <label><input type="radio" name="amps" value="200" /><span class="val">200A</span></label>
-        <label><input type="radio" name="amps" value="0" /><span>Not sure</span></label>
+      <legend>Main panel size</legend>
+      <div class="keys">
+        <label><input type="radio" name="amps" value="100" checked /><span><i></i><b class="val">100A</b></span></label>
+        <label><input type="radio" name="amps" value="150" /><span><i></i><b class="val">150A</b></span></label>
+        <label><input type="radio" name="amps" value="200" /><span><i></i><b class="val">200A</b></span></label>
+        <label><input type="radio" name="amps" value="0" /><span><i></i><b>Not sure</b></span></label>
       </div>
     </fieldset>
     <fieldset>
-      <legend>Does the home have central AC?</legend>
-      <div class="seg">
-        <label><input type="radio" name="ac" value="1" checked /><span>Yes</span></label>
-        <label><input type="radio" name="ac" value="0" /><span>No</span></label>
+      <legend>Central AC</legend>
+      <div class="keys">
+        <label><input type="radio" name="ac" value="1" checked /><span><i></i><b>Yes</b></span></label>
+        <label><input type="radio" name="ac" value="0" /><span><i></i><b>No</b></span></label>
       </div>
     </fieldset>
     <fieldset>
-      <legend>What do you want to add?</legend>
-      <div class="seg seg-wrap">
-        <label><input type="checkbox" name="add" value="ev" checked /><span>EV charger</span></label>
-        <label><input type="checkbox" name="add" value="spa" /><span>Pool or spa</span></label>
-        <label><input type="checkbox" name="add" value="casita" /><span>Casita or shop</span></label>
-        <label><input type="checkbox" name="add" value="kitchen" /><span>Electric kitchen</span></label>
+      <legend>What you want to add</legend>
+      <div class="keys">
+        <label><input type="checkbox" name="add" value="ev" checked /><span><i></i><b>EV charger</b><small class="val">40A</small></span></label>
+        <label><input type="checkbox" name="add" value="spa" /><span><i></i><b>Pool or spa</b><small class="val">50A</small></span></label>
+        <label><input type="checkbox" name="add" value="casita" /><span><i></i><b>Casita or shop</b><small class="val">50A</small></span></label>
+        <label><input type="checkbox" name="add" value="kitchen" /><span><i></i><b>Electric kitchen</b><small class="val">40A</small></span></label>
       </div>
     </fieldset>
   </form>
+
   <div class="pc-out" aria-live="polite">
-    <div class="pc-meter" aria-hidden="true"><span class="pc-fill"></span></div>
+    <div class="pc-gauge" aria-hidden="true">
+      <svg viewBox="0 0 280 156">
+        <path d={arc(0, .8, R)} class="g-track" />
+        <path d={arc(.8, 1, R)} class="g-over" />
+        {ticks.map((f) => { const [x0, y0] = pt(f, R - 10), [x1, y1] = pt(f, R + (f * 10 % 2 === 0 ? 8 : 4)); return <line x1={x0} y1={y0} x2={x1} y2={y1} class="g-tick" />; })}
+        {[[0, '0'], [.4, '50%'], [.8, '100%'], [1, '125%']].map(([f, l]) => { const [x, y] = pt(f as number, R + 22); return <text x={x} y={y + 4} text-anchor="middle" class="g-lab">{l}</text>; })}
+        <g class="g-needle"><line x1={cx} y1={cy} x2={cx} y2={cy - R + 18} /><circle cx={cx} cy={cy} r="6" /></g>
+      </svg>
+      <p class="pc-read"><b class="val" data-pc-est>125A</b><span>est. load of <b class="val" data-pc-cap>80A</b> usable</span></p>
+    </div>
     <p class="pc-verdict t-h3" data-pc-verdict>Plan on a panel upgrade</p>
-    <p class="pc-why small" data-pc-why>A 100A panel with central AC rarely has room for a Level 2 charger.</p>
+    <p class="pc-why" data-pc-why>A 100A panel with central AC rarely has room for this.</p>
     <a class="btn btn-gold" href="/contact/">Book service <Icon name="arrow-right" size={18} class="ico-go" /></a>
-    <p class="hint">A rough guide only. We confirm with a load calculation before any work.</p>
+    <p class="pc-note">A rough guide. We confirm with a load calculation before any work.</p>
   </div>
 </div>
 <style is:global>
-.pc{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);overflow:hidden}
-.pc-form{padding:clamp(20px,3vw,36px);display:flex;flex-direction:column;gap:26px}
-.pc fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
-.pc legend{font-weight:500;font-size:1rem;margin-bottom:12px;padding:0}
-.seg{display:flex;flex-wrap:wrap;gap:8px}
-.seg label{position:relative;cursor:pointer}
-.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
-.seg span{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:var(--r-pill);border:1px solid var(--seam-2);font-size:.9375rem;color:var(--ink-2);transition:background-color .15s ease-out,border-color .15s ease-out,color .15s ease-out}
-.seg input:checked+span{background:rgba(242,207,74,.14);border-color:var(--gold);color:var(--ink)}
-.seg input:focus-visible+span{outline:2px solid var(--gold-hi);outline-offset:2px}
-@media (hover:hover){.seg label:hover span{border-color:var(--ink-3)}}
-.pc-out{display:flex;flex-direction:column;gap:14px;align-items:flex-start;justify-content:center;padding:clamp(20px,3vw,36px);background:var(--deck-2);border-left:1px solid var(--seam)}
-.pc-meter{width:100%;height:6px;border-radius:var(--r-pill);background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:8px}
-.pc-fill{display:block;height:100%;width:var(--load,80%);background:linear-gradient(90deg,var(--gold),var(--gold-hi));border-radius:inherit;transition:width .45s var(--snap),background .3s ease-out}
-.pc[data-state=warn] .pc-fill{background:linear-gradient(90deg,var(--volt),var(--fault))}
-.pc-why{max-width:40ch}
+.pc{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);border:1px solid var(--seam);border-radius:var(--r-panel);background:var(--deck);overflow:hidden}
+.pc-form{display:flex;flex-direction:column;gap:28px;padding:clamp(24px,3.5vw,40px)}
+.pc fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;min-width:0}
+.pc legend{padding:0;margin-bottom:12px;font-size:.9375rem;font-weight:500;color:var(--ink)}
+.keys{display:flex;flex-wrap:wrap;gap:8px}
+.keys label{position:relative;cursor:pointer}
+.keys input{position:absolute;opacity:0;pointer-events:none}
+.keys span{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 16px 0 14px;border-radius:10px;border:1px solid var(--seam-2);background:var(--deck-2);color:var(--ink-2);transition-property:border-color,color,background-color;transition-duration:.15s;transition-timing-function:ease-out}
+.keys i{width:6px;height:6px;border-radius:50%;background:#3c3d40;transition:background-color .15s ease-out}
+.keys b{font-weight:500;font-size:.9375rem}
+.keys small{font-size:.75rem;color:var(--ink-3)}
+.keys input:checked+span{border-color:rgba(242,207,74,.55);color:var(--ink);background:#1f1f1d}
+.keys input:checked+span i{background:var(--volt)}
+.keys input:focus-visible+span{outline:2px solid var(--volt-hi);outline-offset:2px}
+@media (hover:hover){.keys label:hover span{border-color:rgba(255,255,255,.35);color:var(--ink)}}
+.pc-out{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:clamp(24px,3.5vw,40px);border-left:1px solid var(--seam);background:#151617}
+.pc-gauge{align-self:stretch;display:flex;flex-direction:column;align-items:center;gap:4px;padding-bottom:12px;margin-bottom:4px;border-bottom:1px solid var(--seam)}
+.pc-gauge svg{width:100%;max-width:320px;height:auto;overflow:visible}
+.g-track{fill:none;stroke:rgba(255,255,255,.14);stroke-width:2}
+.g-over{fill:none;stroke:var(--fault);stroke-width:2}
+.g-tick{stroke:rgba(255,255,255,.3);stroke-width:1.2}
+.g-lab{font:500 10px var(--mono);fill:var(--ink-3)}
+.g-needle{transform-origin:140px 140px;transform:rotate(var(--ang,0deg));transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.g-needle line{stroke:var(--volt);stroke-width:2.5;stroke-linecap:round}
+.g-needle circle{fill:var(--deck);stroke:var(--volt);stroke-width:2}
+.pc[data-state=warn] .g-needle line,.pc[data-state=warn] .g-needle circle{stroke:var(--fault)}
+.pc-read{display:flex;align-items:baseline;gap:8px;font-size:.875rem;color:var(--ink-3)}
+.pc-read>b{font-size:1.5rem;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.pc-read span b{font-weight:500;color:var(--ink-2)}
+.pc-why{color:var(--ink-2);font-size:.9375rem;max-width:40ch}
+.pc-note{font-size:.8125rem;color:var(--ink-3);max-width:40ch}
+@media (prefers-reduced-motion:reduce){.g-needle{transition:none}}
 @media (max-width:900px){.pc{grid-template-columns:minmax(0,1fr)}.pc-out{border-left:0;border-top:1px solid var(--seam)}}
 </style>

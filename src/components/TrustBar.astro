@@ -8,7 +8,7 @@ const g = '<svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M
 ---
 <section class="wrap trustbar-wrap" aria-label="Credentials">
   <ul class="trustbar" data-on>
-    <li><a class="tb-g" href="/reviews/"><span class="tb-gdot" set:html={g} /><span><b><span class="val">{reviews.rating.toFixed(1)}</span> on Google</b><span class="tb-stars">{[1,2,3,4,5].map(() => <Icon name="fill:star" size={13} />)}<span><span class="odo" data-odo={reviews.total}>{reviews.total}</span> reviews</span></span></span></a></li>
+    <li><a class="tb-g" href="/#reviews"><span class="tb-gdot" set:html={g} /><span><b><span class="val">{reviews.rating.toFixed(1)}</span> on Google</b><span class="tb-stars">{[1,2,3,4,5].map(() => <Icon name="fill:star" size={13} />)}<span><span class="odo" data-odo={reviews.total}>{reviews.total}</span> reviews</span></span></span></a></li>
     <li><Icon name="calendar-check" size={22} class="tb-ico" /><span><b><span class="odo val" data-odo={years}>{years}</span> years</b><span>wiring the Valley</span></span></li>
     <li><Icon name="shield-check" size={22} class="tb-ico" /><span><b>Licensed and insured</b><span class="val">{company.roc}</span></span></li>
     <li class="tb-bbb"><BbbSeal /></li>

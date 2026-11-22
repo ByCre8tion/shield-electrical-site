@@ -1,0 +1,69 @@
+---
+/* Circuit directory: the six services as numbered rows, like the printed directory in a breaker door.
+   Pointing at a row draws a line of current across it, lights its number and rolls its title.
+   On pointer devices a small spec card follows the cursor with the service's real numbers.
+   Patterns studied on 21st.dev (Rolling List, Super Hover List, Hover Preview), rebuilt for Shield. */
+import Icon from './Icon.astro';
+import Photo from './Photo.astro';
+import { services } from '../data/site';
+---
+<div class="dir" data-dir>
+  <ol class="dir-list">
+    {services.map((s, i) => (
+      <li class:list={['dir-row', { 'dir-em': s.emergency }]}>
+        <a href={`/services/${s.slug}/`} data-dir-row={i}>
+          <span class="dir-n val">{String(i + 1).padStart(2, '0')}</span>
+          <span class="dir-t"><span class="dir-roll"><span>{s.title}</span><span aria-hidden="true">{s.title}</span></span></span>
+          <span class="dir-d">{s.emergency ? <><span class="led fault" aria-hidden="true"></span>Call first, any hour</> : s.short}</span>
+          <Icon name="arrow-right" size={20} class="dir-go" />
+          <span class="dir-line" aria-hidden="true"></span>
+        </a>
+      </li>
+    ))}
+  </ol>
+  <div class="dir-peek" aria-hidden="true">
+    {services.map((s, i) => (
+      <div class="dir-card" data-dir-card={i}>
+        <Photo k={s.img} ratio="16 / 10" sizes="320px" />
+        <dl>{s.specs.slice(0, 2).map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+      </div>
+    ))}
+  </div>
+</div>
+<style is:global>
+.dir{position:relative}
+.dir-list{list-style:none;border-top:1px solid var(--seam)}
+.dir-row{border-bottom:1px solid var(--seam)}
+.dir-row a{position:relative;display:grid;grid-template-columns:64px minmax(0,1.15fr) minmax(0,1fr) 24px;align-items:center;gap:24px;padding:28px 8px;min-height:104px}
+.dir-n{font-size:.875rem;color:var(--ink-3);transition:color .15s ease-out}
+.dir-t{display:block;overflow:hidden;font-size:clamp(1.5rem,2.6vw,2.25rem);font-weight:300;line-height:1.2;letter-spacing:-.02em;color:var(--ink)}
+.dir-roll{position:relative;display:block}
+.dir-roll>span{display:block;transition:translate .35s cubic-bezier(.22,1,.36,1)}
+.dir-roll>span+span{position:absolute;inset:0;translate:0 105%;color:var(--volt-hi)}
+.dir-d{display:flex;align-items:center;gap:10px;font-size:.9375rem;line-height:1.5;color:var(--ink-2);max-width:44ch;text-wrap:pretty}
+.dir-go{color:var(--ink-3);transition-property:color,translate;transition-duration:.2s;transition-timing-function:cubic-bezier(.22,1,.36,1)}
+.dir-line{position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--volt);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.22,1,.36,1);box-shadow:0 0 10px rgba(242,207,74,.6)}
+.dir-em .dir-line{background:var(--fault);box-shadow:none}
+.dir-em .dir-d{color:var(--ink)}
+.dir-row a:is(:hover,:focus-visible) .dir-n{color:var(--volt)}
+.dir-em a:is(:hover,:focus-visible) .dir-n{color:var(--fault)}
+.dir-row a:is(:hover,:focus-visible) .dir-roll>span{translate:0 -105%}
+.dir-row a:is(:hover,:focus-visible) .dir-roll>span+span{translate:0 0}
+.dir-em a:is(:hover,:focus-visible) .dir-roll>span+span{color:var(--ink)}
+.dir-row a:is(:hover,:focus-visible) .dir-go{color:var(--ink);translate:4px 0}
+.dir-row a:is(:hover,:focus-visible) .dir-line{transform:scaleX(1)}
+.dir-row a:focus-visible{outline:2px solid var(--volt-hi);outline-offset:-2px;border-radius:4px}
+/* Spec card that follows the cursor */
+.dir-peek{position:absolute;left:0;top:0;width:280px;pointer-events:none;opacity:0;scale:.96;translate:var(--px,0) var(--py,0);transition-property:opacity,scale;transition-duration:.2s;transition-timing-function:ease-out;z-index:3}
+.dir.peek .dir-peek{opacity:1;scale:1}
+.dir-card{display:none;padding:8px;border-radius:16px;background:rgba(18,19,20,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--seam);box-shadow:0 24px 48px -20px rgba(0,0,0,.9)}
+.dir-card.on{display:block}
+.dir-card .photo{border-radius:10px}
+.dir-card .ph-cap small{display:none}
+.dir-card dl{margin:0;padding:12px 8px 6px;display:flex;flex-direction:column;gap:8px}
+.dir-card dt{font-size:.75rem;color:var(--ink-3)}
+.dir-card dd{margin:2px 0 0;font-size:.875rem;color:var(--ink)}
+@media (hover:none),(pointer:coarse){.dir-peek{display:none}}
+@media (max-width:900px){.dir-row a{grid-template-columns:44px minmax(0,1fr) 20px;grid-template-areas:"n t go" "n d go";gap:6px 16px;padding:22px 4px;min-height:0}.dir-n{grid-area:n;align-self:start;padding-top:8px}.dir-t{grid-area:t}.dir-d{grid-area:d}.dir-go{grid-area:go}}
+@media (prefers-reduced-motion:reduce){.dir-roll>span,.dir-line{transition:none}}
+</style>

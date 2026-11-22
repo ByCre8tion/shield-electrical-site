@@ -92,4 +92,12 @@ const star = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 1.8 2.5 5
   #rvToggle{display:none}
 }
 @media (max-width:640px){ .rv-score{grid-template-columns:auto auto;row-gap:8px} .rv-meta{grid-column:1/-1} }
+/* Compact rating: one quiet line, sized to sit beside the heading, not compete with it */
+.reviews .rv-score{display:inline-flex;align-items:center;gap:12px;padding:8px 18px 8px 10px!important;min-height:48px;border-radius:var(--r-pill)!important;background:var(--deck);border-color:var(--seam)}
+.reviews .g-badge{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff}
+.reviews .g-badge svg{width:17px;height:17px}
+.reviews .rv-num{font-family:var(--display);font-weight:500;font-size:1.125rem;line-height:1;color:var(--ink)}
+.reviews .rv-meta{flex-direction:row;align-items:center;gap:10px;font-weight:400;font-size:.875rem}
+.reviews .rv-meta .stars svg{width:13px;height:13px}
+@media (max-width:640px){.reviews .rv-meta .stars{display:none}}
 </style>

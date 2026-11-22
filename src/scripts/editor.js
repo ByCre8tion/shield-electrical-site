@@ -58,7 +58,7 @@ export function startEditor() {
       const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*'; input.hidden = true;
       input.addEventListener('change', async () => {
         const f = input.files?.[0]; if (!f) return;
-        say(`Preparing ${f.name}...`);
+        say(`Preparing ${f.name}…`);
         try {
           const data = await shrink(f);
           pending.set(slot, { data });
@@ -81,7 +81,7 @@ export function startEditor() {
   async function save() {
     const user = auth.currentUser; if (!user) return;
     const entries = [...pending.entries()];
-    say('Saving...');
+    say('Saving…');
     try {
       const idx = {};
       for (const [slot, p] of entries) {
@@ -133,7 +133,7 @@ async function shrink(file) {
 function injectStyles() {
   const s = document.createElement('style');
   s.textContent = `
-  .editing .cg,.editing .call-bar{display:none!important}
+  .editing .dp,.editing .call-bar{display:none!important}
   .ed-bar{position:fixed;left:50%;bottom:20px;translate:-50% 0;z-index:200;display:flex;flex-wrap:wrap;align-items:center;gap:10px;max-width:calc(100vw - 24px);padding:10px 10px 10px 16px;border-radius:999px;background:rgba(18,19,20,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(242,207,74,.45);box-shadow:0 20px 50px -20px rgba(0,0,0,.9);font-size:.875rem;color:#EDEDED}
   .ed-dot{width:8px;height:8px;border-radius:50%;background:#858585}.ed-dot.on{background:#8FE388;box-shadow:0 0 8px rgba(143,227,136,.8)}
   .ed-text{padding-right:6px}

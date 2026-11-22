@@ -4,7 +4,7 @@ import '@fontsource/jetbrains-mono/500.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import Concierge from '../components/Concierge.astro';
+import Dispatch from '../components/Dispatch.astro';
 import Icon from '../components/Icon.astro';
 import { areas, company, services } from '../data/site';
 interface Props { title?: string; description?: string; noChat?: boolean }
@@ -52,19 +52,19 @@ const schema = {
     <slot />
   </main>
   <Footer />
-  {!noChat && <Concierge />}
+  {!noChat && <Dispatch />}
   <a class="call-bar" href={`tel:${company.tel}`}><Icon name="phone" size={18} />Call <span class="val">{company.phone}</span></a>
   <script>
     import { initSite } from '../scripts/site.js';
     import { initCircuits } from '../scripts/circuit.js';
-    import { initChat } from '../scripts/chat.js';
+    import { initDispatch } from '../scripts/dispatch.js';
     import { initCity } from '../scripts/city.js';
     import { initFields } from '../scripts/field.js';
     import { initGlobes } from '../scripts/globe.js';
     import { initWordmarks } from '../scripts/wordmark.js';
     import { loadPhotos } from '../scripts/photos.js';
     import { company } from '../data/site';
-    initSite(company); initCircuits(); initChat();
+    initSite(company); initCircuits(); initDispatch();
     document.fonts.ready.then(() => { initCity(); initFields(); initGlobes(); initWordmarks(); });
     const heroEl = document.querySelector('.hero');
     if (heroEl) new IntersectionObserver(([e]) => document.documentElement.classList.toggle('in-hero', e.intersectionRatio > .35), { threshold: [0, .35, 1] }).observe(heroEl);

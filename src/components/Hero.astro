@@ -15,17 +15,14 @@ const sources = [{ k: 'google', l: 'Google' }, { k: 'facebook', l: 'Facebook' }]
 
   <div class="wrap hero-in">
     <div class="hero-copy">
-      <div class="hero-kick" data-on>
-        <span class="hud hero-status">Grid status <b class="ok">Energized</b></span>
-        <span class="hero-lic">Licensed electrical contractor serving Scottsdale, AZ</span>
-      </div>
+      <p class="hero-lic" data-on>Licensed electrical contractor serving Scottsdale, AZ</p>
       <h1 id="hero-h" class="t-display" data-on>Power you can trust, <span class="hl">wired right.</span></h1>
       <p class="lead" data-on>Homes and businesses across the Valley. Written price before any work starts.</p>
       <div class="btn-row" data-on>
         <a class="btn btn-gold" href="/contact/">Book service <Icon name="arrow-right" size={18} class="ico-go" /></a>
         <a class="btn btn-line hero-call" href={`tel:${company.tel}`}><Icon name="phone" size={18} />Call <span class="val">{company.phone}</span></a>
       </div>
-      <a class="trustrow" href="/reviews/" data-on>
+      <a class="trustrow" href="#reviews" data-on>
         <span class="faces" aria-hidden="true">{people.map((p: string) => <span>{p}</span>)}</span>
         <span class="tr-t"><b><span class="val">{reviews.rating.toFixed(1)}</span> from Valley customers</b><span>{reviews.total} reviews</span></span>
         <span class="tr-src">{sources.map((s) => <svg viewBox="0 0 24 24" role="img" aria-label={s.l}><path d={ic[s.k]} fill="currentColor" /></svg>)}</span>
@@ -38,16 +35,12 @@ const sources = [{ k: 'google', l: 'Google' }, { k: 'facebook', l: 'Facebook' }]
   </div>
 </section>
 <style is:global>
-.hero{position:relative;overflow:hidden;margin-top:-72px;min-height:min(100svh,960px);display:flex;flex-direction:column;justify-content:center;padding-block:120px 96px}
+.hero{position:relative;overflow:hidden;margin-top:-72px;min-height:min(86svh,820px);display:flex;flex-direction:column;justify-content:center;padding-block:136px 112px}
 .hero-cv{position:absolute;inset:0;width:100%;height:100%}
 .hero-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,var(--night) 0%,rgba(10,10,11,.86) 30%,rgba(10,10,11,0) 58%),linear-gradient(0deg,var(--night) 0%,rgba(10,10,11,0) 22%)}
 .hero-in{position:relative;width:100%;pointer-events:none}
 .hero-copy{display:flex;flex-direction:column;align-items:flex-start;gap:26px;max-width:640px}
-.hero-kick{display:flex;flex-direction:column;gap:8px}
-.hero-status{display:inline-flex;align-items:center;gap:8px}
-.hero-status .ok{color:var(--live)}
-.hero-status::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--live)}
-.hero-lic{font-size:.9375rem;color:var(--ink-2)}
+.hero-lic{font-size:.9375rem;color:var(--ink-2);margin-bottom:-4px}
 .hero-copy>*{pointer-events:auto}
 .hero-copy h1{max-width:12ch}
 .trustrow{display:flex;align-items:center;gap:14px;margin-top:6px;border-radius:14px}

@@ -2,7 +2,7 @@
 import { company, nav } from '../data/site';
 import Icon from './Icon.astro';
 const path = Astro.url.pathname;
-const main = nav.filter((l) => ['/services/', '/projects/', '/about/', '/reviews/', '/careers/'].includes(l.href));
+const main = nav.filter((l) => ['/services/', '/gallery/', '/about/', '/service-areas/', '/careers/'].includes(l.href));
 const cur = (h: string) => (path.startsWith(h) ? 'page' : undefined);
 ---
 <a class="skip" href="#main">Skip to content</a>
@@ -47,7 +47,7 @@ const cur = (h: string) => (path.startsWith(h) ? 'page' : undefined);
 .sheet[hidden]{display:none}
 .sheet-in{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
 .sheet ul{list-style:none;display:flex;flex-direction:column;gap:6px}
-.sheet li a{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:var(--r-panel);background:var(--deck);border:1px solid var(--seam);font-size:1.375rem;font-weight:300;letter-spacing:-.02em}
+.sheet li a{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:var(--r-panel);background:var(--deck);border:1px solid var(--seam);font-size:1.375rem;font-weight:400;letter-spacing:-.02em}
 .sheet li a .ico{color:var(--ink-3)}
 .sheet li a[aria-current]{border-color:rgba(242,207,74,.45)}
 .sheet li a[aria-current] .ico{color:var(--gold)}

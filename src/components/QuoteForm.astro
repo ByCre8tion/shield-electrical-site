@@ -1,65 +1,110 @@
 ---
+/* Booking form as a work order: a ticket in three numbered parts (you, the job, the details).
+   Underlined fields at 16px so phones never zoom, the service as choice keys instead of a dropdown,
+   and pending, sent and error states. Layout and states studied from 21st.dev contact forms. */
 import { services, company } from '../data/site';
 import Icon from './Icon.astro';
 interface Props { preset?: string; compact?: boolean }
 const { preset = '', compact = false } = Astro.props;
+const opts = [...services.map((s) => ({ v: s.title, slug: s.slug })), { v: 'Not sure', slug: '' }];
 ---
-<div class="qf panel">
+<div class="qf wo">
+  <div class="wo-head">
+    <span class="wo-title">Work order</span>
+    <span class="wo-meta val"><span data-today>New request</span></span>
+  </div>
   <form class="qf-form" data-form data-endpoint="" novalidate enctype="multipart/form-data">
-    <p class="hint">All fields are required unless marked optional.</p>
-    <div class="qf-row">
-      <div class="field"><label for="qf-name">Full name</label><input class="input" id="qf-name" name="name" autocomplete="name" required data-msg="Add your name so we know who to ask for." aria-describedby="qf-name-err" /><span class="err" id="qf-name-err"></span></div>
-      <div class="field"><label for="qf-phone">Mobile number</label><input class="input" id="qf-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required data-msg="Add a 10 digit number so we can call or text you back." aria-describedby="qf-phone-err" /><span class="err" id="qf-phone-err"></span></div>
-    </div>
-    <div class="qf-row">
-      <div class="field"><label for="qf-email">Email <span class="opt">(optional)</span></label><input class="input" id="qf-email" name="email" type="email" autocomplete="email" spellcheck="false" data-msg="That email does not look complete." aria-describedby="qf-email-err" /><span class="err" id="qf-email-err"></span></div>
-      <div class="field"><label for="qf-zip">ZIP code</label><input class="input" id="qf-zip" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" required data-msg="Add your ZIP so we know where the job is." aria-describedby="qf-zip-err" /><span class="err" id="qf-zip-err"></span></div>
-    </div>
-    <div class="field"><label for="qf-service">What do you need?</label>
-      <select class="input" id="qf-service" name="service" required data-msg="Choose the closest option." aria-describedby="qf-service-err">
-        <option value="">Choose one</option>
-        {services.map((s) => <option value={s.title} selected={s.slug === preset}>{s.title}</option>)}
-        <option value="Not sure">Not sure</option>
-      </select><span class="err" id="qf-service-err"></span>
-    </div>
-    <div class="field"><label for="qf-msg">Tell us what is going on</label><textarea class="input" id="qf-msg" name="message" required placeholder="What is happening, where, and how soon you need it" data-msg="A sentence or two helps us price it right." aria-describedby="qf-msg-err"></textarea><span class="err" id="qf-msg-err"></span></div>
-    {!compact && (
-      <div class="field">
-        <span class="fl">Photos <span class="opt">(optional)</span></span>
-        <label class="drop" for="qf-photos">
-          <Icon name="camera" size={26} />
-          <span><b>Add a photo of your panel or the problem</b><br />JPG, PNG or HEIC, up to 10 MB each. It helps us quote faster.</span>
-        </label>
-        <input class="sr-only" id="qf-photos" name="photos" type="file" accept="image/*" multiple aria-describedby="qf-photos-list" />
-        <span class="hint" id="qf-photos-list" aria-live="polite"></span>
+    <fieldset class="wo-part">
+      <legend><span class="val">01</span>You</legend>
+      <div class="qf-row">
+        <div class="field"><label for="qf-name">Full name</label><input class="input" id="qf-name" name="name" autocomplete="name" required data-msg="Add your name so we know who to ask for." aria-describedby="qf-name-err" /><span class="err" id="qf-name-err"></span></div>
+        <div class="field"><label for="qf-phone">Mobile number</label><input class="input" id="qf-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required data-msg="Add a 10 digit number so we can call or text you back." aria-describedby="qf-phone-err" /><span class="err" id="qf-phone-err"></span></div>
       </div>
-    )}
+      <div class="qf-row">
+        <div class="field"><label for="qf-email">Email <span class="opt">optional</span></label><input class="input" id="qf-email" name="email" type="email" autocomplete="email" spellcheck="false" data-msg="That email does not look complete." aria-describedby="qf-email-err" /><span class="err" id="qf-email-err"></span></div>
+        <div class="field"><label for="qf-zip">ZIP code</label><input class="input" id="qf-zip" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" required data-msg="Add your ZIP so we know where the job is." aria-describedby="qf-zip-err" /><span class="err" id="qf-zip-err"></span></div>
+      </div>
+    </fieldset>
+
+    <fieldset class="wo-part">
+      <legend><span class="val">02</span>The job</legend>
+      <div class="wo-keys" role="radiogroup" aria-describedby="qf-service-err">
+        {opts.map((o, i) => (
+          <label><input type="radio" name="service" value={o.v} id={i === 0 ? 'qf-service' : undefined} required data-msg={i === 0 ? 'Choose the closest option.' : undefined} checked={!!preset && o.slug === preset} /><span><i></i>{o.v}</span></label>
+        ))}
+      </div>
+      <span class="err" id="qf-service-err"></span>
+    </fieldset>
+
+    <fieldset class="wo-part">
+      <legend><span class="val">03</span>Details</legend>
+      <div class="field"><label for="qf-msg">What is going on</label><textarea class="input" id="qf-msg" name="message" rows="3" required placeholder="What is happening, where, and how soon you need it" data-msg="A sentence or two helps us price it right." aria-describedby="qf-msg-err"></textarea><span class="err" id="qf-msg-err"></span></div>
+      {!compact && (
+        <div class="field">
+          <label class="drop" for="qf-photos">
+            <Icon name="camera" size={20} />
+            <span><b>Add photos</b> of the panel or the problem <span class="opt">optional</span></span>
+          </label>
+          <input class="sr-only" id="qf-photos" name="photos" type="file" accept="image/*" multiple aria-describedby="qf-photos-list" />
+          <span class="hint" id="qf-photos-list" aria-live="polite"></span>
+        </div>
+      )}
+    </fieldset>
+
     <p class="err" data-form-err role="alert"></p>
     <div class="qf-submit">
-      <button class="btn btn-gold" type="submit">Send request <Icon name="paper-plane-tilt" size={18} /></button>
-      <p class="hint">We reply within one business day. By sending, you agree we may call or text you about this request.</p>
+      <button class="btn btn-gold" type="submit"><span data-btn-label>Send request</span> <Icon name="arrow-right" size={18} class="ico-go" /></button>
+      <p class="wo-note">Reply within one business day. By sending, you agree we may call or text you about this request.</p>
     </div>
   </form>
   <div class="qf-done" data-done hidden tabindex="-1">
-    <span class="qf-tick" aria-hidden="true"><Icon name="check" size={26} /></span>
-    <h3 class="t-h3">Request sent</h3>
-    <p>We will call or text you within one business day. If it is urgent, call <a class="tel" href={`tel:${company.tel}`}>{company.phone}</a>.</p>
+    <span class="qf-tick" aria-hidden="true"><Icon name="check" size={22} /></span>
+    <h3 class="t-h3">Request received</h3>
+    <p>We will call or text you within one business day. If it is urgent, call <a class="tel link" href={`tel:${company.tel}`}>{company.phone}</a>.</p>
   </div>
 </div>
 <style is:global>
-.qf{padding:clamp(20px,3vw,36px)}
-.qf-form{display:flex;flex-direction:column;gap:20px}
-.qf-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
-.drop{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px dashed var(--seam-2);border-radius:var(--r-input);cursor:pointer;font-size:.875rem;font-weight:400;color:var(--ink-2);transition:border-color .15s ease-out,background-color .15s ease-out}
-.drop .ico{color:var(--gold)}
+.wo{border:1px solid var(--seam);border-radius:var(--r-panel);background:var(--deck);overflow:hidden}
+.wo-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px clamp(20px,3vw,32px);border-bottom:1px dashed var(--seam-2);background:#151617}
+.wo-title{font-size:.9375rem;font-weight:500;color:var(--ink)}
+.wo-meta{font-size:.8125rem;color:var(--ink-3)}
+.qf-form{display:flex;flex-direction:column;gap:0}
+.wo-part{border:0;margin:0;padding:24px clamp(20px,3vw,32px) 28px;display:flex;flex-direction:column;gap:20px;min-width:0}
+.wo-part+.wo-part{border-top:1px solid var(--seam)}
+.wo-part legend{float:left;width:100%;display:flex;align-items:baseline;gap:12px;padding:0;margin-bottom:4px;font-size:.9375rem;font-weight:500;color:var(--ink)}
+.wo-part legend .val{font-size:.8125rem;color:var(--volt)}
+.wo-part legend+*{clear:both}
+.qf-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 24px}
+/* Underlined fields: no boxes, the line carries focus */
+.wo .field label,.wo .fl{font-size:.8125rem;font-weight:500;color:var(--ink-2)}
+.wo .opt{font-weight:400;color:var(--ink-3)}
+.wo .input{min-height:44px;padding:8px 0;border:0;border-bottom:1px solid var(--seam-2);border-radius:0;background:transparent;font-size:1rem;color:var(--ink);transition:border-color .15s ease-out}
+.wo textarea.input{min-height:88px;resize:vertical;line-height:1.5}
+.wo .input::placeholder{color:#6b6b6b}
+.wo .input:focus-visible{outline:none;border-bottom-color:var(--volt);box-shadow:0 1px 0 0 var(--volt)}
+.wo .input[aria-invalid=true]{border-bottom-color:var(--fault)}
+.wo-keys{display:flex;flex-wrap:wrap;gap:8px}
+.wo-keys label{position:relative;cursor:pointer}
+.wo-keys input{position:absolute;opacity:0;pointer-events:none}
+.wo-keys span{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 16px 0 14px;border-radius:10px;border:1px solid var(--seam-2);font-size:.9375rem;color:var(--ink-2);transition-property:border-color,color,background-color;transition-duration:.15s;transition-timing-function:ease-out}
+.wo-keys i{width:6px;height:6px;border-radius:50%;background:#3c3d40;transition:background-color .15s ease-out}
+.wo-keys input:checked+span{border-color:rgba(242,207,74,.55);color:var(--ink);background:#1f1f1d}
+.wo-keys input:checked+span i{background:var(--volt)}
+.wo-keys input:focus-visible+span{outline:2px solid var(--volt-hi);outline-offset:2px}
+@media (hover:hover){.wo-keys label:hover span{border-color:rgba(255,255,255,.35);color:var(--ink)}}
+.drop{display:flex;align-items:center;gap:12px;min-height:52px;padding:12px 16px;border:1px dashed var(--seam-2);border-radius:10px;cursor:pointer;font-size:.9375rem;color:var(--ink-2);transition-property:border-color,background-color;transition-duration:.15s;transition-timing-function:ease-out}
+.drop .ico{color:var(--ink-2)}
 .drop b{font-weight:500;color:var(--ink)}
-@media (hover:hover){.drop:hover{border-color:var(--gold);background:rgba(242,207,74,.05)}}
-.field:has(input[type=file]:focus-visible) .drop{outline:2px solid var(--gold-hi);outline-offset:2px}
-.qf-submit{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+@media (hover:hover){.drop:hover{border-color:rgba(255,255,255,.4)}}
+.field:has(input[type=file]:focus-visible) .drop{outline:2px solid var(--volt-hi);outline-offset:2px}
+.qf-submit{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;padding:20px clamp(20px,3vw,32px) 28px;border-top:1px solid var(--seam)}
+.wo-note{flex:1 1 240px;font-size:.8125rem;color:var(--ink-3);max-width:46ch}
+.wo [data-form-err]{padding:0 clamp(20px,3vw,32px)}
+.wo [data-form-err]:empty{display:none}
 .qf-done[hidden]{display:none}
-.qf-done{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:8px 0}
+.qf-done{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:clamp(28px,4vw,48px) clamp(20px,3vw,32px)}
 .qf-done:focus{outline:none}
 .qf-done p{color:var(--ink-2);max-width:44ch}
-.qf-tick{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:var(--on-gold);box-shadow:var(--glow)}
+.qf-tick{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(242,207,74,.55);color:var(--volt)}
 @media (max-width:560px){.qf-row{grid-template-columns:minmax(0,1fr)}}
 </style>
