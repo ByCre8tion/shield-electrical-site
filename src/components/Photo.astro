@@ -13,13 +13,13 @@ const src = has ? local(1600) : m?.src;
 const srcset = has ? `${local(800)} 800w, ${local(1600)} 1600w, ${local(2400)} 2400w` : undefined;
 ---
 {src ? (
-  <div class:list={['photo', cls]} style={`aspect-ratio:${ratio}`}>
+  <div class:list={['photo', cls]} style={`aspect-ratio:${ratio}`} data-slot={k}>
     <img src={src} srcset={srcset} sizes={srcset ? sizes : undefined} alt={m.alt} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} decoding="async" />
     {tag && <span class="ph-tag hud">{tag}</span>}
   </div>
 ) : (
-  <div class:list={['photo', 'ph', cls]} style={`aspect-ratio:${ratio}`} role="img" aria-label={m?.alt || label || 'Photo coming soon'}>
+  <div class:list={['photo', 'ph', cls]} style={`aspect-ratio:${ratio}`} role="img" aria-label={m?.alt || label || 'Photo coming soon'} data-slot={k} data-alt={m?.alt || label || ''}>
     {tag && <span class="ph-tag hud">{tag}</span>}
-    <span class="ph-cap"><b>{label || m?.need || 'Job photo'}</b><small>Add photos/{k}.jpg</small></span>
+    <span class="ph-cap"><b>{label || m?.need || 'Job photo'}</b><small>Photo coming</small></span>
   </div>
 )}

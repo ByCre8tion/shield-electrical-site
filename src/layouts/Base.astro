@@ -55,9 +55,13 @@ const schema = {
     import { initFields } from '../scripts/field.js';
     import { initGlobes } from '../scripts/globe.js';
     import { initWordmarks } from '../scripts/wordmark.js';
+    import { loadPhotos } from '../scripts/photos.js';
     import { company } from '../data/site';
     initSite(company); initCircuits(); initChat();
     document.fonts.ready.then(() => { initCity(); initFields(); initGlobes(); initWordmarks(); });
+    loadPhotos().finally(() => {
+      if (/[?&]edit\b/.test(location.search) || sessionStorage.getItem('shield-edit')) import('../scripts/editor.js').then((m) => m.startEditor());
+    });
   </script>
   <style is:global>
     /* Phones: a tap to call pill, kept clear of the chat button */

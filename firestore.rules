@@ -1,0 +1,23 @@
+rules_version = '2';
+// Shield photo edit mode. Anyone can view photos; only listed editors can change them.
+// Keep the list in sync with src/data/firebase.ts.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isEditor() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in ['contact@bycre8tive.com'];
+    }
+    match /photos/{slot} {
+      allow read: if true;
+      allow write: if isEditor() && slot.matches('^[a-z0-9]+$');
+    }
+    match /meta/{doc} {
+      allow read: if true;
+      allow write: if isEditor();
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
