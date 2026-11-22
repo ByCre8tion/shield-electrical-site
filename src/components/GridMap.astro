@@ -1,0 +1,94 @@
+---
+/* Grid map: Arizona and its neighbors in black and white with a degree grid, county lines,
+   and the Valley boxed and drawn large beside it with every city we serve.
+   Built at build time from us-atlas with d3-geo, shipped as static SVG. No client script. */
+import { geoMercator, geoPath, geoGraticule } from 'd3-geo';
+import { feature, mesh } from 'topojson-client';
+import us from 'us-atlas/counties-10m.json';
+
+const topo = us as any;
+const states = feature(topo, topo.objects.states) as any;
+const az = states.features.find((f: any) => f.id === '04');
+const countyLines = mesh(topo, topo.objects.counties, (a: any, b: any) => a !== b && String(a.id).startsWith('04') && String(b.id).startsWith('04'));
+
+const W = 620, H = 680;
+const proj = geoMercator().fitExtent([[40, 40], [W - 40, H - 40]], az);
+const path = geoPath(proj);
+const grat = geoGraticule().step([1, 1]).extent([[-121, 29], [-102, 40]])();
+
+const cities: [string, number, number, 'l' | 'r'][] = [
+  ['Chandler', 33.3062, -111.8413, 'r'], ['Gilbert', 33.3528, -111.789, 'r'], ['Mesa', 33.4152, -111.8315, 'r'],
+  ['Tempe', 33.4255, -111.94, 'l'], ['Phoenix', 33.4484, -112.074, 'l'], ['Scottsdale', 33.4942, -111.9261, 'r'],
+  ['Queen Creek', 33.2487, -111.6343, 'r'], ['San Tan Valley', 33.1911, -111.528, 'l'], ['Ahwatukee', 33.3417, -111.9845, 'l'],
+  ['Sun Lakes', 33.2111, -111.8754, 'l'], ['Apache Junction', 33.4151, -111.5496, 'l'], ['Paradise Valley', 33.5431, -111.9426, 'r'],
+  ['Goodyear', 33.4353, -112.3577, 'r'], ['Peoria', 33.5806, -112.2374, 'l'], ['Glendale', 33.5387, -112.186, 'l'], ['Avondale', 33.4656, -112.3496, 'l'],
+];
+// Valley inset box
+const box = { w: -112.48, e: -111.42, s: 33.12, n: 33.64 };
+const [bx0, by0] = proj([box.w, box.n])!, [bx1, by1] = proj([box.e, box.s])!;
+const VW = 640, VH = 420;
+const vp = geoMercator().fitExtent([[30, 30], [VW - 30, VH - 30]], { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[box.w, box.s], [box.w, box.n], [box.e, box.n], [box.e, box.s], [box.w, box.s]]] } } as any);
+const vgrat = geoGraticule().step([.1, .1]).extent([[box.w, box.s], [box.e + .01, box.n + .01]])();
+const vpath = geoPath(vp);
+const fmt = (v: number, pos: string, neg: string) => `${Math.abs(v).toFixed(4)}° ${v >= 0 ? pos : neg}`;
+const hq = cities[0];
+---
+<div class="gmap">
+  <figure class="gm-az panel">
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Map of Arizona with the Phoenix Valley service area marked">
+      <defs><clipPath id="gm-clip"><rect width={W} height={H} /></clipPath></defs>
+      <g clip-path="url(#gm-clip)">
+        <path d={path(grat)!} class="gm-grat" />
+        {states.features.filter((f: any) => f.id !== '04').map((f: any) => <path d={path(f)!} class="gm-other" />)}
+        <path d={path(az)!} class="gm-state" />
+        <path d={path(countyLines as any)!} class="gm-county" />
+        <rect x={bx0} y={by0} width={bx1 - bx0} height={by1 - by0} class="gm-box" />
+        <circle cx={proj([hq[2], hq[1]])![0]} cy={proj([hq[2], hq[1]])![1]} r="4" class="gm-hq" />
+      </g>
+      <text x="40" y={H - 18} class="gm-t">ARIZONA</text>
+      <text x={W - 40} y={H - 18} text-anchor="end" class="gm-t">1° GRID</text>
+      <text x={bx1 + 8} y={by0 - 6} class="gm-t gm-y">VALLEY SERVICE AREA</text>
+    </svg>
+  </figure>
+  <figure class="gm-valley panel">
+    <div class="gm-hud hud"><span>Service area <b>Phoenix Valley</b></span><span>HQ <b>{fmt(hq[1], 'N', 'S')} / {fmt(hq[2], 'E', 'W')}</b></span></div>
+    <svg viewBox={`0 0 ${VW} ${VH}`} role="img" aria-label={`Cities served: ${cities.map((c) => c[0]).join(', ')}`}>
+      <path d={vpath(vgrat)!} class="gm-grat" />
+      {cities.map(([n, lat, lon, side], i) => {
+        const [x, y] = vp([lon, lat])!;
+        return (
+          <g class:list={['gm-city', { hq: i === 0 }]}>
+            {i === 0 && <circle cx={x} cy={y} r="16" class="gm-ring" />}
+            <circle cx={x} cy={y} r={i === 0 ? 5 : 3} />
+            <text x={side === 'r' ? x + 10 : x - 10} y={y + 4} text-anchor={side === 'r' ? 'start' : 'end'}>{n}</text>
+          </g>
+        );
+      })}
+    </svg>
+    <p class="gm-note">Based in Chandler. Not on the map? We travel for commercial work and larger residential projects.</p>
+  </figure>
+</div>
+<style is:global>
+.gmap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:16px;align-items:stretch}
+.gmap figure{margin:0;position:relative;overflow:hidden;padding:16px}
+.gmap svg{width:100%;height:auto;display:block}
+.gm-grat{fill:none;stroke:rgba(255,255,255,.07);stroke-width:1}
+.gm-other{fill:none;stroke:rgba(255,255,255,.12);stroke-width:1}
+.gm-state{fill:rgba(255,255,255,.035);stroke:rgba(255,255,255,.55);stroke-width:1.2}
+.gm-county{fill:none;stroke:rgba(255,255,255,.16);stroke-width:.8;stroke-dasharray:3 3}
+.gm-box{fill:rgba(242,207,74,.08);stroke:var(--volt);stroke-width:1.2}
+.gm-hq{fill:var(--volt);filter:drop-shadow(0 0 6px rgba(242,207,74,.8))}
+.gm-t{font:500 11px var(--mono);letter-spacing:.12em;fill:var(--ink-3)}
+.gm-y{fill:var(--volt)}
+.gm-valley{display:flex;flex-direction:column;gap:12px}
+.gm-hud{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;padding:6px 8px 0}
+.gm-city circle{fill:var(--ink-2)}
+.gm-city text{font:500 12px var(--mono);fill:var(--ink-2)}
+.gm-city.hq circle{fill:var(--volt)}
+.gm-city.hq text{fill:var(--volt);font-size:13px}
+.gm-ring{fill:none!important;stroke:var(--volt);stroke-width:1;opacity:.6;transform-box:fill-box;transform-origin:center;animation:gm-ping 2.8s ease-out infinite}
+@keyframes gm-ping{from{scale:.3;opacity:.9}to{scale:2.2;opacity:0}}
+@media (prefers-reduced-motion:reduce){.gm-ring{animation:none}}
+.gm-note{padding:0 8px 6px;font-size:.9375rem;color:var(--ink-2)}
+@media (max-width:900px){.gmap{grid-template-columns:minmax(0,1fr)}}
+</style>

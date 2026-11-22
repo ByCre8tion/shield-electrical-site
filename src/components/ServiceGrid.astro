@@ -29,7 +29,7 @@ const icon: Record<string, string> = { commercial: 'buildings', residential: 'ho
 .brk-em{grid-column:1 / -1}
 .brk a{position:relative;isolation:isolate;overflow:hidden;height:100%;display:flex;flex-direction:column;gap:16px;padding:22px 22px 24px;transition-property:border-color,background-color;transition-duration:.22s;transition-timing-function:var(--snap)}
 /* Spotlight follows the pointer inside the tile */
-.brk a::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(360px circle at var(--mx,50%) var(--my,0%),rgba(216,183,118,.10),transparent 60%);opacity:0;transition:opacity .3s ease-out}
+.brk a::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(360px circle at var(--mx,50%) var(--my,0%),rgba(242,207,74,.10),transparent 60%);opacity:0;transition:opacity .3s ease-out}
 .brk-body{display:flex;flex-direction:column;gap:10px}
 .brk-lead .t-h3{font-size:clamp(1.6rem,2.4vw,2.1rem)}
 .brk-lead a{gap:22px;padding:28px}
@@ -47,13 +47,13 @@ const icon: Record<string, string> = { commercial: 'buildings', residential: 'ho
 .brk p{color:var(--ink-2);font-size:.9375rem;line-height:1.55}
 .brk-go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font-size:.875rem;color:var(--ink-2);transition:color .2s ease-out}
 .brk .status{margin-top:auto}
-.brk a:is(:hover,:focus-visible){border-color:rgba(216,183,118,.4)}
+.brk a:is(:hover,:focus-visible){border-color:rgba(242,207,74,.4)}
 .brk a:is(:hover,:focus-visible)::before{opacity:1}
-.brk a:is(:hover,:focus-visible) .switch{background:rgba(216,183,118,.18);border-color:var(--gold)}
+.brk a:is(:hover,:focus-visible) .switch{background:rgba(242,207,74,.18);border-color:var(--gold)}
 .brk a:is(:hover,:focus-visible) .switch span{translate:20px 0;background:var(--gold)}
 .brk-em a:is(:hover,:focus-visible) .switch span{background:var(--fault)}
 .brk-em a:is(:hover,:focus-visible) .switch{border-color:var(--fault);background:rgba(255,107,94,.14)}
-.brk a:is(:hover,:focus-visible) .brk-ico{color:var(--gold);border-color:rgba(216,183,118,.4)}
+.brk a:is(:hover,:focus-visible) .brk-ico{color:var(--gold);border-color:rgba(242,207,74,.4)}
 .brk a:is(:hover,:focus-visible) .brk-go{color:var(--gold-hi)}
 .brk a:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px}
 @media (max-width:1000px){.breakers{grid-template-columns:repeat(2,minmax(0,1fr))}.brk-lead{grid-row:auto;grid-column:1 / -1}}

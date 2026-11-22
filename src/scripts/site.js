@@ -5,7 +5,51 @@ export const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export function initSite(company) {
   document.documentElement.classList.add('js');
-  menu(); openStatus(company); reveals(); meters(); forms(); reviews(); conductor(); panelCheck(); odometers(); spotlights(); compares();
+  scrolled(); menu(); openStatus(company); reveals(); meters(); forms(); reviews(); conductor(); panelCheck(); odometers(); spotlights(); compares(); powerPath(); clock(); rings();
+}
+
+/* Path of power: scroll progress through the pinned story, written to --p.
+   A passive listener is attached only while the section is on screen. */
+function powerPath() {
+  $$('[data-powerpath]').forEach((el) => {
+    const steps = [...el.querySelectorAll('[data-step]')];
+    const set = (p) => {
+      el.style.setProperty('--p', p.toFixed(3));
+      const s = p < .2 ? 0 : p < .45 ? 1 : p < .7 ? 2 : 3;
+      if (el.dataset.s !== String(s)) { el.dataset.s = s; steps.forEach((li, i) => li.classList.toggle('on', i === s)); }
+    };
+    if (reduce || matchMedia('(max-width: 900px)').matches) return set(1);
+    let ticking = false, active = false;
+    const upd = () => { ticking = false; const r = el.getBoundingClientRect(); set(Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)))); };
+    const on = () => { if (!ticking) { ticking = true; requestAnimationFrame(upd); } };
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !active) { active = true; addEventListener('scroll', on, { passive: true }); upd(); }
+      else if (!e.isIntersecting && active) { active = false; removeEventListener('scroll', on); }
+    }).observe(el);
+    set(0);
+  });
+}
+
+/* Valley time for HUD readouts. Arizona has no daylight saving. */
+function clock() {
+  const els = $$('[data-clock]'); if (!els.length) return;
+  const f = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Phoenix', hour: '2-digit', minute: '2-digit', hour12: false });
+  const tick = () => els.forEach((e) => { e.textContent = f.format(new Date()); });
+  tick(); setInterval(tick, 30000);
+}
+
+/* Coverage ring draws in once when seen */
+function rings() {
+  $$('[data-ring]').forEach((el) => {
+    if (reduce) return el.classList.add('drawn');
+    new IntersectionObserver(([e], o) => { if (e.isIntersecting) { el.classList.add('drawn'); o.disconnect(); } }, { threshold: .35 }).observe(el);
+  });
+}
+
+function scrolled() {
+  const s = document.createElement('div'); s.style.cssText = 'position:absolute;top:0;height:24px;width:1px;pointer-events:none';
+  document.body.prepend(s);
+  new IntersectionObserver(([e]) => document.documentElement.classList.toggle('scrolled', !e.isIntersecting)).observe(s);
 }
 
 function menu() {

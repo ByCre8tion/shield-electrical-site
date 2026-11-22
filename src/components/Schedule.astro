@@ -1,0 +1,58 @@
+---
+/* Panel schedule: the printed directory inside every breaker door. Each circuit is a service. */
+import { services } from '../data/site';
+const slots = [...services.map((s) => ({ s })), { s: null }, { s: null }];
+---
+<nav class="sched" aria-label="Services">
+      <div class="sched-head">
+        <span class="sched-t">Panel schedule</span>
+        <span class="sched-main"><span class="led on" aria-hidden="true"></span>Main <span class="val">200A</span></span>
+      </div>
+      <ol class="sched-grid">
+        {slots.map((x, i) => (
+          <li class:list={[{ spare: !x.s, fault: x.s?.emergency }]}>
+            {x.s ? (
+              <a href={`/services/${x.s.slug}/`}>
+                <span class="sched-n val">{String(i + 1).padStart(2, '0')}</span>
+                <span class="sched-l">{x.s.title}</span>
+                <span class="sched-h" aria-hidden="true"></span>
+              </a>
+            ) : (
+              <span class="sched-row"><span class="sched-n val">{String(i + 1).padStart(2, '0')}</span><span class="sched-l">Spare</span><span class="sched-h" aria-hidden="true"></span></span>
+            )}
+          </li>
+        ))}
+      </ol>
+      <p class="sched-foot">Pick a circuit to see the service.</p>
+    </nav>
+<style is:global>
+/* Panel schedule card */
+.sched{position:relative;padding:22px;border-radius:24px;background:rgba(17,20,25,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--seam);box-shadow:var(--hl)}
+.sched::before{content:"";position:absolute;inset:10px;pointer-events:none;--c:rgba(216,183,118,.55);background:
+  linear-gradient(var(--c),var(--c)) 0 0/14px 1.5px,linear-gradient(var(--c),var(--c)) 0 0/1.5px 14px,
+  linear-gradient(var(--c),var(--c)) 100% 0/14px 1.5px,linear-gradient(var(--c),var(--c)) 100% 0/1.5px 14px,
+  linear-gradient(var(--c),var(--c)) 0 100%/14px 1.5px,linear-gradient(var(--c),var(--c)) 0 100%/1.5px 14px,
+  linear-gradient(var(--c),var(--c)) 100% 100%/14px 1.5px,linear-gradient(var(--c),var(--c)) 100% 100%/1.5px 14px;background-repeat:no-repeat}
+.sched-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 6px 16px;border-bottom:1px dashed var(--seam-2)}
+.sched-t{font:500 .8125rem/1 var(--mono);color:var(--ink-2)}
+.sched-main{display:inline-flex;align-items:center;gap:8px;font-size:.8125rem;color:var(--ink-2)}
+.sched-main .val{color:var(--ink)}
+.sched-grid{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:16px}
+.sched-grid a,.sched-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;min-height:56px;padding:10px 12px 10px 14px;border-radius:14px;background:var(--deck-2);border:1px solid var(--seam);transition-property:border-color,background-color;transition-duration:.15s;transition-timing-function:ease-out}
+.sched-n{font-size:.75rem;color:var(--ink-3)}
+.sched-l{font-size:.875rem;line-height:1.25;color:var(--ink)}
+.spare .sched-l{color:var(--ink-3)}
+/* Breaker handle: a small rocker that throws when the circuit is hovered */
+.sched-h{position:relative;width:14px;height:26px;border-radius:4px;background:#0c0e12;border:1px solid var(--seam-2)}
+.sched-h::after{content:"";position:absolute;left:2px;right:2px;top:2px;height:10px;border-radius:2px;background:#3a4049;transition:translate .22s var(--snap),background-color .22s var(--snap)}
+.sched-grid a:focus-visible{outline-offset:2px}
+@media (hover:hover){
+  .sched-grid a:hover{border-color:rgba(216,183,118,.45);background:#1b2027}
+  .sched-grid a:hover .sched-h::after{translate:0 10px;background:var(--gold)}
+  .sched-grid a:hover .sched-n{color:var(--gold-hi)}
+}
+.sched-grid a:focus-visible .sched-h::after{translate:0 10px;background:var(--gold)}
+.fault .sched-h::after{background:var(--fault)}
+.sched-foot{padding:16px 6px 2px;font-size:.8125rem;color:var(--ink-3)}
+@media (max-width:420px){.sched-grid{grid-template-columns:1fr}.sched-grid .spare{display:none}}
+</style>

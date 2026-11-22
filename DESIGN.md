@@ -1,166 +1,147 @@
-# Shield Electrical: DESIGN.md (v2)
+# Shield Electrical: DESIGN.md (v3)
 
-**The control room after dark.** A single dark world, cool graphite instead of black, soft instrument panels, light type that reads like an engineer's display, and champagne gold used only where power is flowing.
+**The grid at night.** A monochrome world of graphite, grain and fine grid lines, like a utility map or a wiring schematic printed on black. One color moves through it: signal yellow, the current. Where the yellow travels, things light up. Everything else stays quiet, grey and exact.
 
-Shield shares an owner with Apex Builders, so this file exists to keep the two brands apart. If a choice below would make Shield look like Apex, it is wrong.
+Shield shares an owner with Apex Builders. This file keeps the two brands apart. If a choice would make Shield look like Apex, it is wrong.
 
-## 0. Shield is not Apex
+## 0. What Shield is
+
+Shield Electrical is a licensed commercial and residential electrical contractor based in Chandler, Arizona, working across the Phoenix Valley and growing into more states. Services: commercial electrical, residential electrical, panel and AC upgrades, EV chargers, custom lighting and emergency repairs. Customers are homeowners and facility managers who want a licensed crew, a written price and power back on. The site must feel like the company that runs the grid, not a handyman.
+
+## 1. Shield is not Apex
 
 | Decision | Apex Builders | Shield Electrical |
 | --- | --- | --- |
-| World | Light, warm white and chalk | Dark only, cool graphite |
+| World | Light, warm white and chalk | Black and grey, grain, grid lines |
 | Display type | Barlow Condensed, bold, UPPERCASE | Sora Light 300, mixed case, tight tracking |
-| Accent | Safety orange | Champagne gold from the shield, used only for power and the one primary action |
-| Shape | Square, 2px buttons, 4px photos | Soft: pill controls, 20px panels, 14px inputs |
-| Section headers | Numbered labels (01 SERVICES) | No numbers, no eyebrows. The headline is enough |
-| Services | Hairline list | Breaker panel: tiles you switch on |
-| Signature | House line drawings on paper | Live circuit traces and current |
-| Motion | Rise and fade | Power on: a short flicker, switches throwing, current running |
+| Accent | Safety orange | Signal yellow, only where power flows |
+| Shape | Square | Pill controls, 20px panels, hairline grids |
+| Imagery | House line drawings, photos | Generated in code: wireframe city, particles, dots, schematics. Real job photos only, never generated photos |
+| Signature | Drawings on paper | A line of current that travels and powers things on |
 | Voice | Warm craftsman | Calm technician. Short, exact, measured |
 
-## 1. Design read and dials
+## 2. Design read and dials
 
-Local service site for homeowners and facility managers in the Phoenix Valley, in a premium dark instrument language. **Variance 7, motion 6, density 4.**
+Local service company presented like infrastructure. Premium, cinematic, monochrome with one live color. **Variance 8, motion 7, density 4.** Lots of open space around very few elements (reference: Hydraoo hero).
 
-## 2. Color
+## 3. Color
 
-One theme, dark, locked. No section ever flips to a light background. Neutrals carry a slight cool bias toward the gold's complement, so the gold reads warmer.
+Dark only. Neutrals are true greys with no tint, so yellow is the only color on the page.
 
-| Token | Hex | Role | Contrast |
-| --- | --- | --- | --- |
-| `--night` | `#0B0D10` | Page canvas | |
-| `--deck` | `#111419` | Panels, nav, cards | |
-| `--deck-2` | `#171B21` | Raised panel, inputs | |
-| `--seam` | `rgba(200,214,230,.09)` | Panel edges, dividers | |
-| `--seam-2` | `rgba(200,214,230,.22)` | Input borders, outline buttons | 3:1 non text |
-| `--ink` | `#E9EDF2` | Primary text | 16.6:1 on night |
-| `--ink-2` | `#9AA4AF` | Secondary text | 7.7:1 on night |
-| `--ink-3` | `#808A95` | Captions and meta only | 5.5:1 on night, 4.9:1 on deck-2 |
-| `--gold` | `#D8B776` | Primary button fill, active switch, current | 10.2:1 on night |
-| `--gold-hi` | `#F3DDA8` | Current core, highlighted words | |
-| `--on-gold` | `#15130E` | Text on gold | 9.7:1 |
-| `--live` | `#57D9A3` | Open now only | |
-| `--fault` | `#FF6B5E` | Emergency only, always with words | |
+| Token | Hex | Role |
+| --- | --- | --- |
+| `--night` | `#0A0A0B` | Canvas |
+| `--deck` | `#121314` | Panels |
+| `--deck-2` | `#1A1B1D` | Raised panels, inputs |
+| `--wire` | `rgba(255,255,255,.07)` | Grid lines, wireframes |
+| `--seam` | `rgba(255,255,255,.10)` | Panel edges |
+| `--seam-2` | `rgba(255,255,255,.22)` | Outline controls (3:1) |
+| `--ink` | `#EDEDED` | Primary text, 17:1 |
+| `--ink-2` | `#A3A3A3` | Secondary text, 8:1 |
+| `--ink-3` | `#858585` | Captions and HUD labels, 5.4:1 |
+| `--volt` | `#F2CF4A` | Current, live data, active states, focus |
+| `--volt-hi` | `#FFE68A` | The bright core of a line or ping |
+| `--on-volt` | `#141208` | Text on yellow |
+| `--live` | `#8FE388` | Open now, system OK readouts. Never decorative |
+| `--fault` | `#FF5A4E` | Emergency only, always with words |
 
 **Rules**
-- Gold appears on one action per view, on switched on states, and on current. Never as body text, never as a section background.
-- Gradients only as light: a soft radial glow behind the hero panel and under active switches. No gradient fills on buttons or text.
-- No pure black, no pure white.
+- Yellow means power. It is on the travelling line, pings, active states, the open hour LED and one word in the hero. It is never a section background or body text.
+- Glow is allowed on energy only: lines, nodes, pings. A soft bloom like a sodium lamp, `0 0 12px rgba(242,207,74,.55)`. Never on buttons or cards.
+- The logo keeps its own brass gradient. Yellow sits beside it, it does not replace it.
 
-## 3. Type
+## 4. Texture
+
+Every screen carries the same three layers so it feels printed, not rendered.
+1. **Grain:** an SVG noise layer over the whole page at 6% opacity, fixed.
+2. **Grid:** 96px hairline grid in `--wire` behind hero and story sections, fading at the edges.
+3. **HUD marks:** corner brackets, crosshairs, tick rulers, coordinates. Small, grey, mono.
+
+## 5. Type
 
 | Family | Role |
 | --- | --- |
-| **Sora** variable | Display at 300, UI and body at 400 to 600 |
-| **JetBrains Mono** | Measured values only: amps, volts, ratings, license, phone in tables |
+| **Sora** variable | Display at 300, UI and body 400 to 500 |
+| **JetBrains Mono** | Data: amps, coordinates, times, license, phone, HUD labels |
 
 | Step | Size | Weight | Line | Tracking |
 | --- | --- | --- | --- | --- |
-| Display | `clamp(2.6rem, 5.4vw, 5rem)` | 300 | 1.02 | -0.04em |
-| H1 page | `clamp(2.4rem, 4.6vw, 4rem)` | 300 | 1.05 | -0.035em |
-| H2 | `clamp(1.9rem, 3.4vw, 3rem)` | 300 | 1.08 | -0.03em |
+| Display | `clamp(3rem, 6.6vw, 6.25rem)` | 300 | 1 | -0.045em |
+| H2 | `clamp(2rem, 3.8vw, 3.4rem)` | 300 | 1.05 | -0.035em |
 | H3 | `1.375rem` | 500 | 1.25 | -0.01em |
 | Body | `1.0625rem` | 400 | 1.65 | 0 |
-| Small | `0.875rem` | 400 | 1.5 | 0 |
-| Value | `0.8125rem` mono | 500 | 1.3 | 0 |
+| HUD label | `0.6875rem` mono uppercase | 500 | 1.3 | 0.12em |
 
 **Rules**
-- Mixed case everywhere. No uppercase headlines, no tracked uppercase labels above sections.
-- Emphasis inside a headline is the same family at 500 in `--gold-hi`. One phrase max.
-- Headlines max 2 lines in the hero, `text-wrap: balance`. Body max 62ch, `text-wrap: pretty`.
-- Mono is for numbers that were measured, never for labels.
+- Headlines mixed case. HUD labels are the only uppercase, and they label data, never a section.
+- Emphasis in the hero only: one word in `--volt`. Elsewhere headlines stay plain.
+- Selected or current items step up in size and brightness (01 small, **02 large**, 03 small), like the wildlife slider.
 
-## 4. Shape and surface
+## 6. Shape and surface
 
-- **Radius rule:** interactive controls are pills (999px). Surfaces and photos are 20px. Inputs are 14px. Nothing else.
-- **Panels, not lines.** Content groups sit on `--deck` panels with a 1px `--seam` edge and a 1px inner top highlight `rgba(255,255,255,.04)`. No hairline lists with rules under every row.
-- **Depth** comes from surface steps and light: a panel that is "on" gets a soft gold glow `0 0 0 1px rgba(216,183,118,.35), 0 20px 60px -30px rgba(216,183,118,.45)`. No drop shadows otherwise.
-- **Photography: real jobs only.** No generated images anywhere on the site, ever. Until Jason sends job photos, every image slot is a viewfinder placeholder: a 20px frame on `--deck`, gold corner brackets, a mono caption naming the shot we need ("Panel upgrade, after"). When real photos land: dark, warm practical light, inside the same frame, never full bleed behind text.
-- **Gold is a material, not a glow.** Gold surfaces read as brushed brass: a top to bottom gradient `#F0D49A` to `#C9A25E`, a 1px light inner top edge and a 1px dark outer edge. No colored bloom shadows under buttons.
+- Pills for controls, 20px for panels, 14px for inputs.
+- No floating rounded hero card. The hero runs edge to edge and the nav sits directly on it.
+- Panels are flat `--deck` with a `--seam` edge. Glass only on HUD chips over moving canvases: `rgba(18,19,20,.6)` with 12px blur.
+- No colored shadows.
 
-## 5. Signature: power
+## 7. Signature moments (all drawn in code)
 
-1. **Live circuit.** Gold traces behind the hero and the final call to action. Current pulses travel the traces, traces brighten near the cursor, a rare short arc. Static under reduced motion.
-2. **Breaker panel.** Each service is a tile with a real switch. Hovering or focusing a tile throws the switch on: the toggle slides, the tile edge lights, the photo brightens. 220ms, `cubic-bezier(.2,0,0,1)`.
-3. **Power on reveal.** Headlines and panels enter with a 3 step flicker, opacity 0 to .7 to .25 to 1 over 260ms, then settle. Used once per section, never on repeat interactions.
-4. **Current line.** The process is a horizontal conductor. As it scrolls into view, current fills the line from node to node and each node lights.
-5. **Page change.** The old page dims out in 180ms, the new one powers on.
+1. **Grid city hero.** A wireframe city in grey line work, seen from above at an angle. A yellow line of current runs from a substation through the streets to one building, which powers on: its windows light and a radar ring pulses from it. The word SHIELD sits behind the buildings so the towers cut through it. Cursor moves the camera slightly. (References: city wireframe, wildlife radar, V2V glow.)
+2. **Path of power.** A scroll story on a schematic background. The section pins; as you scroll, current draws along the schematic from the meter to the panel to the circuits, and each step label grows when it is current. (References: shipping container pinned over text, wiring schematic.)
+3. **Charged field.** A terrain of tiny yellow dots that ripples slowly; the cursor sends a wave through it. Behind the panel check. (Reference: yellow dots over the green field.)
+4. **Coverage ring.** One big number in the middle of a segmented ring, four data cards around it. (Reference: land ring stats.)
+5. **Particle globe footer.** A grey dot globe turning slowly, Arizona in yellow with pings at the office and the Valley. Above the footer links the word SHIELD made of particles that drift away from the cursor. (References: particle footer, globe, Solvana.)
+6. **Grid map.** Service areas page: black and white map of Arizona and its neighbors, grid overlay, coordinates, city pins. (Reference: Interzone map.)
 
-## 6. Components
+All canvases: cap 30fps, pause offscreen and in background tabs, draw one still frame under reduced motion, and never block text.
 
-Patterns studied on 21st.dev and rebuilt by hand for this system (no copied code, no React). Each line names the source pattern so the lineage is clear.
+## 8. Components
 
-### Buttons
+| Component | Spec |
+| --- | --- |
+| **Nav** | Flat on the page, no container. Logo left, five plain links, open status, a light pill button right. Gains a dark blurred bar only after scrolling. |
+| **Primary button** | Light pill `--ink` with dark text and a dark circle holding the arrow at the end. Hover: the circle turns yellow and the arrow nudges. Press 0.96. (Reference: Hydraoo, RooFix.) |
+| **Secondary button** | Outline pill; a yellow beam runs the rim once on hover. Phone numbers in mono. |
+| **Trust pill** | Small glass chip above the headline with a yellow spark: "Licensed ROC contractor, Chandler AZ". |
+| **Trust row** | Overlapping round avatars of real reviewers (initials until photos exist) with "Rated 5.0 by Valley homeowners", then Google, Facebook and BBB marks. |
+| **HUD corners** | Coordinates of the office, live Arizona time, grid status OK, scale ruler. Mono, grey, small. |
+| **Name plates** | Engraved plates for rating, years, license, BBB. Kept from v2. |
+| **Service tiles** | Breaker tiles with switch and spotlight. Kept from v2. |
+| **Panel check** | Kept, set over the charged field. |
+| **Reviews** | One drifting row, the only marquee per page. |
+| **Forms, job tracker, FAQ, before and after, 404** | Kept from v2 in the new colors. |
 
-| Name | Use | Build | Source pattern |
-| --- | --- | --- | --- |
-| **Brass** (primary) | Book service, Send request | Brushed gold gradient, 1px light inner top edge, 1px dark outer edge, ink text. Hover: a narrow light sheen sweeps left to right once (450ms). Press: 0.96 and the inner edge flips to a shadow so it looks pushed in | Texture Button, Liquid Metal Button |
-| **Conduit** (secondary) | Call, secondary actions | Pill with `--seam-2` edge. Hover: a short gold beam runs around the edge once (conic gradient, 900ms). Phone number in mono | Spinning Border Button, Border Beam |
-| **Slide link** (tertiary) | "See the service", "All projects" | Text plus arrow. Hover: the label slides up and an identical gold copy slides in from below, arrow nudges 3px | One Button, hover slide |
-| **Switch** | Service tiles | The breaker toggle already in the tile throws on hover or focus | Shield original |
-
-One label per intent: "Book service" for booking, "Call" plus the number for calls. Press is 0.96 on every button. Disabled never scales.
-
-### Sections
-
-| Section | Build | Source pattern |
-| --- | --- | --- |
-| **Nav** | Floating pill bar, five links, open status LED, Brass "Book service". Active link sits on a soft pill | Limelight Nav (restrained) |
-| **Hero** | Headline and two buttons left. Right: a **panel schedule**, the printed card inside every breaker door, drawn as a corner framed instrument. Twelve numbered circuits, each labeled with a service, each with a live LED; hovering a row lights it and links to the service | Corner Frame, Shield original |
-| **Name plates** (trust) | Four engraved metal plates screwed to the page: Google rating, ROC license, Licensed and insured, BBB. Anodized dark finish, mono engraving, four screw heads | Engraved Client Plates |
-| **Odometer numbers** | Inside the name plates: years in business and Google review count sit on mechanical drums that roll into place once when seen. No separate stats band. Static under reduced motion | Mechanical Odometer, Rolling Digits |
-| **Breaker tiles** (services) | Bento of service tiles with the switch. Cursor spotlight: a soft gold radial follows the pointer inside the tile | Spotlight Card |
-| **Panel check** | The quick load tool. Output meter fills like a gauge | Shield original, KPI Tile |
-| **Conductor** (process) | Four steps on a line that fills as the section enters | Scroll Timeline |
-| **Before and after** (projects) | Draggable divider between two frames; keyboard arrows move it 5%. Placeholders until real photos | Image Compare |
-| **Job tracker** (book page) | What happens after you send the form: Received, Called back, Written price, Scheduled. First step lit | Order Tracking, Delivery Progress |
-| **FAQ** | Panels with a plus that turns into a minus | Accordion Plus Minus |
-| **Reviews** | One row drifting at constant pace, the only marquee on the page, Pause control | Testimonials marquee |
-| **Wordmark footer** | Link columns, status line, then SHIELD set huge and cut off at the bottom, fading into the night | Wordmark Footer, Large Name Footer |
-| **404** | "404" in seven segment digits, headline "This circuit is dead", buttons home and back | Oversized 404 Numeral, 7 Segment Number |
-| **Forms** | Dark panel, 14px inputs on `--deck-2`, labels above, errors in words below, photo drop zone | Shield original |
-| **Text widget** | Round launcher with Jason's photo, gold ring, deck panel | Shield original |
-
-## 7. Motion values
+## 9. Motion values
 
 | Thing | Duration | Easing |
 | --- | --- | --- |
 | Hover and color | 150ms | ease-out |
-| Switch throw | 220ms | `cubic-bezier(.2,0,0,1)` |
-| Power on reveal | 260ms flicker then 500ms settle | steps then ease-out |
-| Panels open | 350ms in, 180ms out | `cubic-bezier(.16,1,.3,1)` |
 | Press | 0.96, 150ms | ease-out |
-| Brass sheen | 450ms once per hover | ease-out |
-| Conduit beam | 900ms once per hover | linear |
-| Odometer roll | 900ms, drums staggered 60ms | `cubic-bezier(.2,0,0,1)` |
+| Current travel in hero | 2.4s per run, then hold | ease-in-out |
+| Radar ring | 2.8s, repeats while lit | ease-out |
+| Story steps | Driven by scroll position | linear |
+| Reveal | 600ms, 12px rise and fade | `cubic-bezier(.16,1,.3,1)` |
 
-Everything collapses to instant under `prefers-reduced-motion`.
+Reduced motion: every canvas draws one still, lit frame. Nothing loops.
 
-## 8. Voice
+## 10. Voice
 
-Calm technician. Say the measured thing: "200 amp panel, power back the same afternoon." Short sentences. No hype, no exclamation marks, no em dashes.
+Calm technician. "200 amp panel, power back the same afternoon." No hype, no exclamation marks, no em dashes, no hyphens in copy.
 
-## 9. Pages
+## 11. Never
 
-Home, Services, six service pages, Projects, About, Service areas, Reviews, FAQ, Careers, Book service (contact), 404.
+- Generated photos or generated people anywhere. Image slots stay as labeled placeholders until Jason sends real photos.
+- Colored backgrounds, gradients as decoration, purple or blue glow.
+- A rounded card hero floating inside the page.
+- Gold highlighted words in every headline.
+- Fake numbers. Unconfirmed stats are marked TODO for Jason.
+- Two marquees on one page. More than one canvas animating in the same viewport.
 
-## 10. Never
+## 12. Does this look made by AI?
 
-- Uppercase display type, numbered section labels, tracked eyebrows over every section.
-- Light sections, paper textures, orange.
-- Square buttons, hairline lists, spec tables with a rule under every row.
-- Lightning bolt clip art, neon blue glows, stock sparks.
-- Two marquees on one page.
-- Generated images of any kind.
-
-## 11. Does this look made by AI?
-
-Run this before shipping any section. If any line is true, fix it.
-
-- A highlighted gold word in every headline. Gold emphasis appears in the hero only.
-- Every section opens with the same headline plus grey lead block. Vary it: some sections lead with the component, some with a single line.
-- Glow shadows under buttons or cards. Gold is a material (section 4).
-- Three or four equal cards in a row with an icon on top of each.
-- Vague claims ("top quality", "unmatched service"). Say the measured thing or say nothing.
-- Fake numbers. Stats show TODO values marked for Jason until real ones exist.
-- Stock or generated photos. Placeholders until real job photos.
+Check every section. If a line is true, fix it.
+- Three or four equal cards with icons on top.
+- The same headline and grey paragraph opening every section.
+- Glow on buttons or cards.
+- Vague claims ("top quality"). Say the measured thing or nothing.
+- Stock or generated imagery.

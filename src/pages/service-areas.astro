@@ -2,10 +2,12 @@
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import Office from '../components/Office.astro';
+import GridMap from '../components/GridMap.astro';
 import CtaPanel from '../components/CtaPanel.astro';
 ---
 <Base title="Service areas" description="Shield Electrical serves Chandler, Gilbert, Mesa, Tempe, Phoenix, Scottsdale, Queen Creek and the rest of the Phoenix Valley.">
   <PageHead title='Chandler based. Valley wide.' lead="We work across the East Valley and the greater Phoenix area." current="Service areas" />
+  <section class="sec tight gridbg"><div class="wrap"><GridMap /></div></section>
   <section class="sec tight"><div class="wrap"><Office /></div></section>
   <CtaPanel title='Not on the list? Ask anyway.' text="We travel for commercial work and larger residential projects." />
 </Base>

@@ -1,0 +1,58 @@
+---
+/* Coverage ring: one number at the center of a segmented ring, four facts around it.
+   Each segment is one of the six services. Draws in once when seen. */
+import { areas, services, company } from '../data/site';
+import SlideLink from './SlideLink.astro';
+const R = 200, C = 2 * Math.PI * R, seg = C / services.length, gap = 14;
+const tones = ['#F2CF4A', '#D9B944', '#B39B45', '#8A8A8A', '#686868', '#4A4A4A'];
+const facts = [
+  { k: 'Reply', v: '1 day', d: 'Every request answered within one business day.' },
+  { k: 'Price', v: 'Written', d: 'Before any work starts. No surprise invoice.' },
+  { k: 'Permits', v: 'Pulled', d: 'Inspected and signed off by the city.' },
+  { k: 'License', v: 'ROC', d: `${company.roc}. Bonded and insured in Arizona.` },
+];
+---
+<section class="sec cov gridbg" aria-labelledby="cov-h">
+  <div class="wrap">
+    <div class="cov-head"><h2 id="cov-h" class="t-h2" data-on>One crew, the whole Valley</h2><SlideLink href="/service-areas/" text="See every city we cover" /></div>
+    <div class="cov-grid" data-ring>
+      {facts.slice(0, 2).map((f) => <div class="cov-card panel"><span class="hud">{f.k}</span><b>{f.v}</b><p>{f.d}</p></div>)}
+      <div class="cov-ring">
+        <svg viewBox="0 0 520 520" aria-hidden="true">
+          <circle cx="260" cy="260" r="236" class="cov-thin" />
+          <circle cx="260" cy="260" r="168" class="cov-thin" />
+          {services.map((s, i) => (
+            <circle cx="260" cy="260" r={R} class="cov-seg" stroke={tones[i]} style={`--len:${seg - gap};--d:${i * 90}ms;stroke-dasharray:${seg - gap} ${C};transform:rotate(${i * 60 - 90}deg)`}><title>{s.title}</title></circle>
+          ))}
+        </svg>
+        <div class="cov-mid"><span class="cov-n">{areas.length}</span><span class="cov-l">cities across the Valley</span><span class="hud">Six services, one crew</span></div>
+      </div>
+      {facts.slice(2).map((f) => <div class="cov-card panel"><span class="hud">{f.k}</span><b>{f.v}</b><p>{f.d}</p></div>)}
+    </div>
+  </div>
+</section>
+<style is:global>
+.cov-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(32px,5vw,64px)}
+.cov-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr);grid-template-rows:auto auto;gap:16px 32px;align-items:center}
+.cov-grid>.cov-card:nth-child(1){grid-column:1;grid-row:1;align-self:end}
+.cov-grid>.cov-card:nth-child(2){grid-column:1;grid-row:2;align-self:start}
+.cov-ring{grid-column:2;grid-row:1 / 3;position:relative;max-width:520px;margin:0 auto;width:100%}
+.cov-grid>.cov-card:nth-child(4){grid-column:3;grid-row:1;align-self:end}
+.cov-grid>.cov-card:nth-child(5){grid-column:3;grid-row:2;align-self:start}
+.cov-card{display:flex;flex-direction:column;gap:6px;padding:20px 22px;background:rgba(18,19,20,.7);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.cov-card b{font-weight:300;font-size:2.25rem;line-height:1.1;letter-spacing:-.03em;color:var(--ink)}
+.cov-card p{font-size:.9375rem;color:var(--ink-2)}
+.cov-ring svg{width:100%;height:auto;overflow:visible}
+.cov-thin{fill:none;stroke:rgba(255,255,255,.08);stroke-width:1}
+.cov-seg{fill:none;stroke-width:18;transform-origin:260px 260px;stroke-dashoffset:var(--len);transition:stroke-dashoffset 1.1s var(--snap) var(--d)}
+.drawn .cov-seg,html:not(.js) .cov-seg{stroke-dashoffset:0}
+.cov-mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center}
+.cov-n{font-weight:300;font-size:clamp(5rem,11vw,8.5rem);line-height:.9;letter-spacing:-.06em;color:var(--ink)}
+.cov-l{font-size:1rem;color:var(--ink-2);margin-bottom:10px}
+@media (max-width:980px){
+  .cov-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .cov-ring{grid-column:1 / -1;grid-row:1}
+  .cov-grid>.cov-card:nth-child(n){grid-column:auto;grid-row:auto;align-self:stretch}
+}
+@media (max-width:520px){.cov-grid{grid-template-columns:minmax(0,1fr)}}
+</style>

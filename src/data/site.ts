@@ -154,5 +154,5 @@ export const socials = [
   { key: 'youtube', label: 'YouTube', href: '' },
   { key: 'tiktok', label: 'TikTok', href: '' },
   { key: 'x', label: 'X', href: '' },
-  { key: 'nextdoor', label: 'Nextdoor', href: '' },
+  { key: 'houzz', label: 'Houzz', href: '' },
 ];
